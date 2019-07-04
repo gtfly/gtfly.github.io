@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="学习XML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="结构化文件存储-XML">
+<meta property="og:url" content="http://yoursite.com/2019/02/12/结构化文件存储/index.html">
+<meta property="og:site_name" content="gtfly">
+<meta property="og:description" content="学习XML">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/Loo5Zu5.png">
+<meta property="og:updated_time" content="2019-05-04T22:22:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="结构化文件存储-XML">
+<meta name="twitter:description" content="学习XML">
+<meta name="twitter:image" content="https://i.imgur.com/Loo5Zu5.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/12/结构化文件存储/">
+
+
+
+
+
+  <title>结构化文件存储-XML | gtfly</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script> 
+ function GetRandomNum(Min,Max) 
+ { 
+    var Range = Max - Min; 
+    var Rand = Math.random(); 
+    return(Min + Math.round(Rand * Range)); 
+ } 
+ function setSidebarMarginTop (headerOffset) { 
+    return $('#sidebar').css({ 'margin-top': headerOffset }); 
+ } 
+ function getHeaderOffset () { 
+    return $('.header-inner').height() + CONFIG.sidebar.offset; 
+ }
+    window.onload=function() { 
+    var subtitle = "人生如逆旅，我亦是行人。"; 
+    var mytitle = subtitle.split("W"); 
+    var max = mytitle.length-1;
+    var index = GetRandomNum(0,max); 
+    var text = mytitle[index]; 
+    $("#helloTitle").html(text); 
+    var headOffset = getHeaderOffset(); 
+    setSidebarMarginTop(headOffset); 
+// alert(getHeaderOffset()); 
+ }  
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gtfly</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人生如逆旅，我亦是行人。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="https://github.com/gtfly?tab=stars" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/12/结构化文件存储/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gtfly">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gtfly">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">结构化文件存储-XML</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-12T20:29:19+08:00">
+                2019-02-12
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-05-05T06:22:48+08:00">
+                2019-05-05
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/02/12/结构化文件存储/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/02/12/结构化文件存储/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>学习XML</p>
+<a id="more"></a>
+
+<h3 id="XML文件"><a href="#XML文件" class="headerlink" title="XML文件"></a>XML文件</h3><p>XML(eXtensibleMarkupLanguage, 可扩展标记语言)</p>
+<ul>
+<li><p>标记语言： 语言中可使用尖括号括起来文本字符串</p>
+</li>
+<li><p>可扩展：   用户可以自定义需要的标记</p>
+</li>
+<li><p>XML描述的是数据本身，即数据的结构和语义</p>
+</li>
+<li><p>XML文件以.xml结尾</p>
+</li>
+</ul>
+<h4 id="XML文档的构成"><a href="#XML文档的构成" class="headerlink" title="XML文档的构成"></a>XML文档的构成</h4><ul>
+<li>处理指令(可以认为一个文件内只有一个处理指令)<ul>
+<li>最多只有一行，且位于第一行；内容是与xml相关的一些声明或指令 </li>
+</ul>
+</li>
+<li>根元素(一个文件内只有一个根元素)</li>
+<li>子元素</li>
+<li>属性</li>
+<li>内容</li>
+<li>注释<ul>
+<li>注释不能嵌套在标签里</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>例如</p>
+<pre><code>&lt;?xml version=&apos;1.0&apos; encoding=&apos;utf-8&apos; ?&gt;
+&lt;Class&gt;
+    &lt;Student1&gt;
+        &lt;name&gt;xiaoming&lt;/name&gt;
+        &lt;age&gt;15&lt;/age&gt;
+    &lt;/Student1&gt;
+
+    &lt;Student2&gt;
+        &lt;name&gt;xiaohong&lt;/name&gt;
+        &lt;age&gt;13&lt;/age&gt;
+    &lt;/Student2&gt;
+&lt;/Class&gt;</code></pre><p>第一行为处理指令，根元素为Class，Class的子元素为Student</p>
+<p>可以双击xml文件在浏览器运行：</p>
+<p><img src="https://i.imgur.com/Loo5Zu5.png" alt></p>
+<p>若想有多个Class，由于只能有一个根元素，那么此时Class不再是根元素，需后要在最外面增加一个根元素，否则运行会报错</p>
+<hr>
+<p>添加属性</p>
+<pre><code>&lt;?xml version=&apos;1.0&apos; encoding=&apos;utf-8&apos; ?&gt;
+&lt;School&gt;
+    &lt;Class type=&apos;online&apos; location=&apos;Zhengzhou&apos;&gt;
+        &lt;Student&gt;
+            &lt;name&gt;xiaoming&lt;/name&gt;
+            &lt;age&gt;15&lt;/age&gt;
+        &lt;/Student&gt;
+
+        &lt;Student&gt;
+            &lt;name&gt;xiaohong&lt;/name&gt;
+            &lt;age&gt;13&lt;/age&gt;
+        &lt;/Student&gt;
+    &lt;/Class&gt;
+
+    &lt;Class type=&apos;normal&apos; location=&apos;Beijing&apos;&gt;
+        &lt;Student&gt;
+            &lt;name&gt;xiaoming&lt;/name&gt;
+            &lt;age&gt;15&lt;/age&gt;
+        &lt;/Student&gt;
+
+        &lt;Student&gt;
+            &lt;name&gt;xiaohong&lt;/name&gt;
+            &lt;age&gt;13&lt;/age&gt;
+        &lt;/Student&gt;
+    &lt;/Class&gt;
+&lt;/School&gt;</code></pre><hr>
+<p>使用注释</p>
+<pre><code>&lt;!-- This is a zhushi --&gt;
+&lt;!-- This-is-a-zhushi --&gt;  注释内容可以有一个短横线
+&lt;!---This-is-a-zhushi--&gt;   三短横线只能出现在开头</code></pre><h4 id="保留字符的处理"><a href="#保留字符的处理" class="headerlink" title="保留字符的处理"></a>保留字符的处理</h4><p>XML中使用的符号可能跟保留字符相冲突</p>
+<p>1.可以使用实体引用(EntityReference)表示来保留字符(转义)</p>
+<pre><code>&lt;score&gt; score&gt;80 &lt;/score&gt;  出错
+&lt;score&gt; score &amp;gt; 80 &lt;/score&gt;  使用实体引用</code></pre><p>2.可以把含有保留字符的部分放在CDATA块内部(不会被解析器解析)</p>
+<pre><code>&lt;![CDATA[&lt;&gt;&lt;&gt;&gt;&lt;&lt;&lt;]]&gt;</code></pre><p>3.与CDATA功能相反的，PCDATA可以包含被解析的字符数据</p>
+<h4 id="XML标签命名规则"><a href="#XML标签命名规则" class="headerlink" title="XML标签命名规则"></a>XML标签命名规则</h4><ul>
+<li>用英文表示，首字母大写</li>
+<li>大小写严格区分</li>
+<li>标签要配对、一致</li>
+</ul>
+<p>空标签：没有值，所以可以不提供结束标签，但是要必须关闭</p>
+<p>如：</p>
+<pre><code>&lt;Name /&gt;</code></pre><h4 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h4><p>如果将多个内容合并，可能会产生冲突</p>
+<pre><code>&lt;Room&gt;
+    &lt;Name&gt; bedroom &lt;/Name&gt;
+    &lt;Location&gt; there &lt;/Location&gt;
+&lt;/Room&gt;
+
+&lt;Person&gt;
+    &lt;Name&gt; xiaoming &lt;/Name&gt;
+    &lt;Age&gt; 15 &lt;/Age&gt;
+&lt;/Person&gt;</code></pre><p>合并：</p>
+<pre><code>&lt;Info&gt;
+    &lt;Name&gt; bedroom &lt;/Name&gt;
+    &lt;Location&gt; there &lt;/Location&gt;
+
+    &lt;Name&gt; xiaoming &lt;/Name&gt;
+    &lt;Age&gt; 15 &lt;/Age&gt;
+&lt;/Info&gt;</code></pre><p>上述就产生了冲突</p>
+<p>为了避免冲突，需要给可能冲突的元素添加命名空间xmlns(xml name space)</p>
+<pre><code>&lt;Infor xmlns:Room=&quot;http://my_room&quot; xmlns:Person=&quot;http://my_person&quot;&gt;
+    &lt;Room:Name&gt; bedroom &lt;/Room:Name&gt;
+    &lt;Location&gt; there &lt;/Location&gt;
+
+    &lt;Name&gt; xiaoming &lt;/Name&gt;
+    &lt;Age&gt; 15 &lt;/Age&gt;
+&lt;/Infor&gt;</code></pre><h4 id="XML-DOM"><a href="#XML-DOM" class="headerlink" title="XML DOM"></a>XML DOM</h4><p>XML DOM 定义了访问和处理 XML 文档的标准方法。</p>
+<p>根据 DOM，XML 文档中的每个成分都是一个节点。</p>
+<p>DOM 是这样规定的：</p>
+<ul>
+<li>整个文档是一个文档节点</li>
+<li>每个 XML 标签是一个元素节点</li>
+<li>包含在 XML 元素中的文本是文本节点</li>
+<li>每一个 XML 属性是一个属性节点</li>
+<li>注释属于注释节点</li>
+</ul>
+<p>使用python进行解析或增改xml时，要以节点进行操作</p>
+<h5 id="解析xml"><a href="#解析xml" class="headerlink" title="解析xml"></a>解析xml</h5><p>python中的minidom模块</p>
+<ul>
+<li>minidom.parse():加载读取的xml文件，也可以是xml代码</li>
+<li>doc.documentElement:获取xml文档对象(根节点)</li>
+<li>node.getAttribute():获取xml节点的属性值</li>
+<li>node.getElementsByTagName():得到一个节点对象集合</li>
+<li>node.childNodes:得到所有孩子节点</li>
+<li>node.childNodes[index].nodeValue:获得单个节点值</li>
+</ul>
+<p>例如，xml文件内容：</p>
+<pre><code>&lt;?xml version=&apos;1.0&apos; encoding=&apos;utf-8&apos; ?&gt;
+&lt;Infor&gt;
+    &lt;Student1&gt;
+        &lt;Location&gt; there &lt;/Location&gt;
+        &lt;Name&gt; xiaoming &lt;/Name&gt;
+        &lt;Age&gt; 15 &lt;/Age&gt;
+    &lt;/Student1&gt;
+
+    &lt;Student2&gt;
+        &lt;Location&gt; here &lt;/Location&gt;
+        &lt;Name&gt; xiaohong &lt;/Name&gt;
+        &lt;Age&gt; 18 &lt;/Age&gt;
+    &lt;/Student2&gt;
+&lt;/Infor&gt;</code></pre><p>使用minidom来解析这个xml文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.dom.minidom</span><br><span class="line"><span class="keyword">from</span> xml.dom.minidom <span class="keyword">import</span> parse</span><br><span class="line"></span><br><span class="line">DomTree = xml.dom.minidom.parse(<span class="string">'C:/Users/腾飞/Desktop/a.xml'</span>)  <span class="comment"># 获取dom对象</span></span><br><span class="line"></span><br><span class="line">doc = DomTree.documentElement  <span class="comment"># 获取根节点</span></span><br><span class="line">print(doc)  <span class="comment"># Infor</span></span><br><span class="line"></span><br><span class="line">childNodes = doc.childNodes  <span class="comment"># 得到所有孩子节点列表</span></span><br><span class="line">print(childNodes)    <span class="comment"># Student1、Student2</span></span><br><span class="line"></span><br><span class="line">t = doc.getElementsByTagName(<span class="string">'Student1'</span>)  <span class="comment"># 得到Student1节点对象列表</span></span><br><span class="line">print(t)</span><br><span class="line"></span><br><span class="line">t1 = t[<span class="number">0</span>]  <span class="comment"># 取出Student1元素节点</span></span><br><span class="line">t1_name = t1.childNodes  <span class="comment"># 得到该节点下的所有孩子节点 </span></span><br><span class="line">print(t1_name)  <span class="comment"># Location、Name、Age</span></span><br><span class="line"></span><br><span class="line">t1_location = t1.getElementsByTagName(<span class="string">'Location'</span>)[<span class="number">0</span>]  <span class="comment"># 得到Student1的location元素节点</span></span><br><span class="line">t1_location_text = t1_location.childNodes[<span class="number">0</span>]  <span class="comment"># 得到location文本节点</span></span><br><span class="line">print(t1_location_text.data)  <span class="comment"># 使用data方法获得文本</span></span><br></pre></td></tr></table></figure>
+
+<p>打印结果：</p>
+<pre><code>&lt;DOM Element: Infor at 0x155cd50&gt;
+[&lt;DOM Text node &quot;&apos;\n\t&apos;&quot;&gt;, &lt;DOM Element: Student1 at 0x1589760&gt;, &lt;DOM Text node &quot;&apos;\n\n\t&apos;&quot;&gt;, &lt;DOM Element: Student2 at 0x1589850&gt;, &lt;DOM Text node &quot;&apos;\n&apos;&quot;&gt;]
+[&lt;DOM Element: Student1 at 0x1589760&gt;]
+[&lt;DOM Text node &quot;&apos;\n\t\t&apos;&quot;&gt;, &lt;DOM Element: Location at 0x15897b0&gt;, &lt;DOM Text node &quot;&apos;\n\t\t&apos;&quot;&gt;, &lt;DOM Element: Name at 0x1589710&gt;, &lt;DOM Text node &quot;&apos;\n\t\t&apos;&quot;&gt;, &lt;DOM Element: Age at 0x1589800&gt;, &lt;DOM Text node &quot;&apos;\n\t&apos;&quot;&gt;]
+ there </code></pre><h5 id="写入xml"><a href="#写入xml" class="headerlink" title="写入xml"></a>写入xml</h5><ul>
+<li>minidom.Document()：创建dom树对象</li>
+<li>dom.createElement():创建根/子节点</li>
+<li>dom.appendChild():添加节点</li>
+<li>node.setAttribute():设置节点属性</li>
+<li>dom.createTextNode():创建文本节点</li>
+<li>dom.writexml():写入xml</li>
+</ul>
+<p>使用minidom生成一个xml文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#导入minidom</span></span><br><span class="line"><span class="keyword">from</span> xml.dom <span class="keyword">import</span> minidom</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建DOM树对象</span></span><br><span class="line">dom = minidom.Document()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建根节点。每次都要用DOM对象来创建任何节点。</span></span><br><span class="line">root_node=dom.createElement(<span class="string">'root'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用DOM对象添加根节点</span></span><br><span class="line">dom.appendChild(root_node)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用DOM对象创建元素子节点</span></span><br><span class="line">book_node=dom.createElement(<span class="string">'Book'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置该节点的属性</span></span><br><span class="line">book_node.setAttribute(<span class="string">'Price'</span>,<span class="string">'199'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用父节点对象添加元素子节点</span></span><br><span class="line">root_node.appendChild(book_node)</span><br><span class="line"></span><br><span class="line">name_node = dom.createElement(<span class="string">'Name'</span>)</span><br><span class="line">root_node.appendChild(name_node)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用DOM创建文本节点，把文本节点（文字内容）看成子节点</span></span><br><span class="line">name_text=dom.createTextNode(<span class="string">'计算机程序设计语言 第1版'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用添加了文本的节点对象（看成文本节点的父节点）添加文本节点</span></span><br><span class="line">name_node.appendChild(name_text)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 每一个结点对象（包括dom对象本身）都有输出XML内容的方法，如：toxml()--字符串, toprettyxml()--美化树形格式。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'C:/Users/腾飞/Desktop/dom_write.xml'</span>,<span class="string">'w'</span>,encoding=<span class="string">'UTF-8'</span>) <span class="keyword">as</span> fh:</span><br><span class="line">        <span class="comment"># 4.writexml()第一个参数是目标文件对象，第二个参数是根节点的缩进格式，第三个参数是其他子节点的缩进格式，</span></span><br><span class="line">        <span class="comment"># 第四个参数制定了换行格式，第五个参数制定了xml内容的编码。</span></span><br><span class="line">        dom.writexml(fh,indent=<span class="string">''</span>,addindent=<span class="string">'\t'</span>,newl=<span class="string">'\n'</span>,encoding=<span class="string">'UTF-8'</span>)</span><br><span class="line">        print(<span class="string">'写入xml OK!'</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">    print(<span class="string">'错误信息：&#123;0&#125;'</span>.format(err))</span><br></pre></td></tr></table></figure>
+
+<p>打印结果</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;root&gt;
+    &lt;Book Price=&quot;199&quot;/&gt;
+    &lt;Name&gt;计算机程序设计语言 第1版&lt;/Name&gt;
+&lt;/root&gt;</code></pre>
+      
+    </div>
+    
+    
+    
+
+  <div>
+    
+      ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+  </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="gtfly 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/aipay.jpg" alt="gtfly 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    gtfly
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2019/02/12/结构化文件存储/" title="结构化文件存储-XML">http://yoursite.com/2019/02/12/结构化文件存储/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/10/协程学习/" rel="next" title="协程学习">
+                <i class="fa fa-chevron-left"></i> 协程学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/16/结构化文件存储-Json/" rel="prev" title="结构化文件存储-Json">
+                结构化文件存储-Json <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">gtfly</p>
+              <p class="site-description motion-element" itemprop="description">轻描时光漫长低唱语焉不详.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">148</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.bugku.com/login?next=challenges" title="Bugku" target="_blank">Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://new.bugku.com/" title="new Bugku" target="_blank">new Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.linkedbyx.com/home" title="X计划平台" target="_blank">X计划平台</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.shiyanbar.com/ctf/practice" title="实验吧" target="_blank">实验吧</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ctf.jasec.cn/index.php?page=login" title="Jactf" target="_blank">Jactf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jarvisoj.com/login" title="Javis" target="_blank">Javis</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cgctf.nuptsast.com/challenges#Web" title="CGctf" target="_blank">CGctf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com/" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.ssleye.com/" title="ctf在线工具" target="_blank">ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.194nb.com/" title="aman ctf在线工具" target="_blank">aman ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.ctfwp.com/" title="ctfwp" target="_blank">ctfwp</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://skysec.top/" title="一叶飘零" target="_blank">一叶飘零</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#XML文件"><span class="nav-number">1.</span> <span class="nav-text">XML文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#XML文档的构成"><span class="nav-number">1.1.</span> <span class="nav-text">XML文档的构成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#保留字符的处理"><span class="nav-number">1.2.</span> <span class="nav-text">保留字符的处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XML标签命名规则"><span class="nav-number">1.3.</span> <span class="nav-text">XML标签命名规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命名空间"><span class="nav-number">1.4.</span> <span class="nav-text">命名空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XML-DOM"><span class="nav-number">1.5.</span> <span class="nav-text">XML DOM</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#解析xml"><span class="nav-number">1.5.1.</span> <span class="nav-text">解析xml</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#写入xml"><span class="nav-number">1.5.2.</span> <span class="nav-text">写入xml</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gtfly</span>
+
+ <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+ <script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("07/16/2018 12:49:00");//此处修改你的建站时间或者网站上线时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已存在 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+ setInterval("createtime()",250);
+ </script>
+
+<!--
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </div></footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9Pgz8ir0b40IXQ5V3bjRc8m0-gzGzoHsz',
+        appKey: 'VCCuCSQHpPqX3hmOh0PlmfXu',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+ <!-- ҳ����С���� -->
+ <script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+  
+  <!--������ƭ-->
+ <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+  <script>
+  $("body").backstretch("https://myqinshimoon.github.io/background.jpg");
+  </script>
+
+
+</body>
+</html>

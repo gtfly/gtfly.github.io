@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Tkinter 是 Python 的标准 GUI 库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tkinter基础">
+<meta property="og:url" content="http://yoursite.com/2018/08/06/tkinter基础/index.html">
+<meta property="og:site_name" content="gtfly">
+<meta property="og:description" content="Tkinter 是 Python 的标准 GUI 库">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-08T23:23:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tkinter基础">
+<meta name="twitter:description" content="Tkinter 是 Python 的标准 GUI 库">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/06/tkinter基础/">
+
+
+
+
+
+  <title>tkinter基础 | gtfly</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script> 
+ function GetRandomNum(Min,Max) 
+ { 
+    var Range = Max - Min; 
+    var Rand = Math.random(); 
+    return(Min + Math.round(Rand * Range)); 
+ } 
+ function setSidebarMarginTop (headerOffset) { 
+    return $('#sidebar').css({ 'margin-top': headerOffset }); 
+ } 
+ function getHeaderOffset () { 
+    return $('.header-inner').height() + CONFIG.sidebar.offset; 
+ }
+    window.onload=function() { 
+    var subtitle = "人生如逆旅，我亦是行人。"; 
+    var mytitle = subtitle.split("W"); 
+    var max = mytitle.length-1;
+    var index = GetRandomNum(0,max); 
+    var text = mytitle[index]; 
+    $("#helloTitle").html(text); 
+    var headOffset = getHeaderOffset(); 
+    setSidebarMarginTop(headOffset); 
+// alert(getHeaderOffset()); 
+ }  
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gtfly</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人生如逆旅，我亦是行人。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="https://github.com/gtfly?tab=stars" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/06/tkinter基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gtfly">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gtfly">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">tkinter基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-06T17:50:09+08:00">
+                2018-08-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-09-09T07:23:58+08:00">
+                2018-09-09
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/06/tkinter基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/06/tkinter基础/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Tkinter 是 Python 的标准 GUI 库</p>
+<a id="more"></a>
+<p>tkinter是内置到python的安装包中的</p>
+<h3 id="创建根窗口"><a href="#创建根窗口" class="headerlink" title="创建根窗口"></a>创建根窗口</h3><pre><code>from tkinter import *
+
+exe = Tk()
+#生成顶级窗口的实例
+
+exe.title(&apos;复杂世界里，一个就够了&apos;)
+#标题
+
+root.iconbitmap(&apos;spider_128px_1169260_easyicon.net.ico&apos;)
+#设置窗口图标
+
+thelabel = Label(exe,text=&apos;the sky is crying as i waiting for you&apos;)
+#Label标签主要用于显示文本，图片
+
+thelabel.pack()
+#pack()用于自动调节组件的尺寸，位置
+
+
+exe.mainloop()#窗口的主事件循环</code></pre><h3 id="pack"><a href="#pack" class="headerlink" title="pack()"></a>pack()</h3><p>pack()中可传入side参数，可以调整标签位置，参数可以为</p>
+<pre><code>LEFT
+RIGHT
+TOP
+BOTTOM
+padx=10
+pady=10</code></pre><p>指定显示位置</p>
+<pre><code>anchor= #九个值
+W E N S NW SW NE SE CENTER</code></pre><h3 id="grid"><a href="#grid" class="headerlink" title="grid"></a>grid</h3><p>以表格的形式管理</p>
+<pre><code>label = Label()
+label.grid(row=0,column=0) #行与列</code></pre><p>指定显示位置</p>
+<pre><code>sticky = #九个值
+W E N S NW SW NE SE CENTER</code></pre><h3 id="Label控件"><a href="#Label控件" class="headerlink" title="Label控件"></a>Label控件</h3><h4 id="Label显示图片"><a href="#Label显示图片" class="headerlink" title="Label显示图片"></a>Label显示图片</h4><p>tkinter是只支持gif的格式，如果要加载png或者jpg的话就要使用PIL模块</p>
+<p>gif格式：</p>
+<pre><code>photo = PhotoImage(file=&apos;&apos;)
+imageLabel = Label(exe,image=photo)
+#image值为tk图片对象
+imageLabel.pack()</code></pre><p>jpg or png格式：</p>
+<pre><code>from PIL import Image, ImageTk
+
+img = Image.open(&apos;ques.png&apos;)  # 打开图片
+photo = ImageTk.PhotoImage(img)  # 用PIL模块的PhotoImage打开</code></pre><h4 id="显示文本"><a href="#显示文本" class="headerlink" title="显示文本"></a>显示文本</h4><pre><code>Label(exe,text=&apos;&apos;)
+#若设置了image，则该选项会被忽略</code></pre><h4 id="显示文本变量"><a href="#显示文本变量" class="headerlink" title="显示文本变量"></a>显示文本变量</h4><pre><code>var = IntVar() # tkinter的整数变量
+var = StringVar() # tkinter的字符串变量
+var.set(&apos;&apos;) #设置变量的内容
+
+Label(exe,textvariable=var)</code></pre><h4 id="justify文本左对齐"><a href="#justify文本左对齐" class="headerlink" title="justify文本左对齐"></a>justify文本左对齐</h4><pre><code>Label(exe,text=&apos;&apos;,justify=&apos;Left&apos;)</code></pre><h4 id="font设置文本字体类型、尺寸"><a href="#font设置文本字体类型、尺寸" class="headerlink" title="font设置文本字体类型、尺寸"></a>font设置文本字体类型、尺寸</h4><pre><code>Label(exe,text=&apos;&apos;,font=(&apos;type&apos;，size))</code></pre><h4 id="fg设置文本字体颜色"><a href="#fg设置文本字体颜色" class="headerlink" title="fg设置文本字体颜色"></a>fg设置文本字体颜色</h4><pre><code>Label(exe,text=&apos;&apos;,fg=&apos;color&apos;)</code></pre><h4 id="compound图片文本混合模式"><a href="#compound图片文本混合模式" class="headerlink" title="compound图片文本混合模式"></a>compound图片文本混合模式</h4><pre><code>Label(exe,text=&apos;&apos;,image=photo,compound=center)</code></pre><h3 id="窗口常用设置"><a href="#窗口常用设置" class="headerlink" title="窗口常用设置"></a>窗口常用设置</h3><h4 id="设置窗口标题"><a href="#设置窗口标题" class="headerlink" title="设置窗口标题"></a>设置窗口标题</h4><pre><code>exe.title()</code></pre><h4 id="设置窗口大小"><a href="#设置窗口大小" class="headerlink" title="设置窗口大小"></a>设置窗口大小</h4><pre><code>exe.geometry(&quot;500x500&quot;)</code></pre><h4 id="设置窗口是否可以变化长宽"><a href="#设置窗口是否可以变化长宽" class="headerlink" title="设置窗口是否可以变化长宽"></a>设置窗口是否可以变化长宽</h4><pre><code>exe.resizable(width=False,height=True)</code></pre><h3 id="按钮"><a href="#按钮" class="headerlink" title="按钮"></a>按钮</h3><h4 id="点击Button"><a href="#点击Button" class="headerlink" title="点击Button"></a>点击Button</h4><pre><code>t = Text(exe)
+
+def print_hrllo():
+    t.insert(&apos;hello&apos;)
+Button(exe,text=&apos;点我&apos;,command=print_hello).pack(side=BOTTOM)
+#可以设置边框样式：relief=GROOVE</code></pre><p>退出</p>
+<pre><code>command=exe.quit #在idle中不能直接退出</code></pre><h4 id="勾选Checkbutton"><a href="#勾选Checkbutton" class="headerlink" title="勾选Checkbutton"></a>勾选Checkbutton</h4><p>设置单个勾选</p>
+<pre><code>var = IntVar()
+c = Checkbutton(exe,text=&apos;test&apos;,variable=var)
+#variable：变量，variable 的值为 1 或 0，代表着选中或不选中</code></pre><p>设置多个勾选</p>
+<pre><code>from tkinter import*
+
+exe = Tk()
+
+exe.title(&apos;复杂世界里，一个就够了&apos;)
+
+exe.geometry(&apos;700x500&apos;)
+
+girls = [&apos;西施&apos;,&apos;貂蝉&apos;,&apos;王昭君&apos;]
+v = []
+
+for girl in girls:
+        v.append(IntVar)
+        c = Checkbutton(exe,text=girl,variable=v[-1])
+        c.pack(anchor=W)
+
+mainloop()</code></pre><h4 id="按钮列表"><a href="#按钮列表" class="headerlink" title="按钮列表"></a>按钮列表</h4><pre><code>LB = Listbox(exe)</code></pre><p>插入按钮</p>
+<pre><code>LB.insert(END,&apos;第一个选项&apos;) #第一个参数为插入的起始位置，第二个参数为按钮名</code></pre><p>删除按钮</p>
+<pre><code>LB.delete(0,END) #有两个参数时，第一个参数为起始位置，第二个参数为结束位置
+
+LB.delete(1) #有一个参数时为删除以该参数为下标所对应的按钮</code></pre><h3 id="输入框"><a href="#输入框" class="headerlink" title="输入框"></a>输入框</h3><p>绘制单行文本使用Label组件</p>
+<p>多行选项使用Listbox组件</p>
+<p>输入框使用Entry组件</p>
+<p>显示和处理多行文本使用Text组件</p>
+<h4 id="Entry"><a href="#Entry" class="headerlink" title="Entry"></a>Entry</h4><pre><code>e = Entry(exe)
+e.pack()</code></pre><p>插入、删除文本</p>
+<pre><code>e.insert(0,&apos;test&apos;) #在开始插入‘test’文本
+e.delete(0,END) #删除所有文本</code></pre><p>获取输入</p>
+<pre><code>e.get()</code></pre><p>显示输入</p>
+<pre><code>Entry(exe,text=&apos;&apos;,show=&apos;*&apos;) #输入的文本会变成‘*’</code></pre><h4 id="Text"><a href="#Text" class="headerlink" title="Text"></a>Text</h4><p>t = Text(根对象,height=2,width=30)</p>
+<p>插入:t.insert(mark, 内容)</p>
+<p>删除:t.delete(mark1, mark2)</p>
+<p>其中,mark可以是行号,或者特殊标识,例如</p>
+<pre><code>INSERT:光标的插入点CURRENT:鼠标的当前位置所对应的字符位置
+END:这个Textbuffer的最后一个字符
+SEL_FIRST:选中文本域的第一个字符，如果没有选中区域则会引发异常
+SEL_LAST：选中文本域的最后一个字符，如果没有选中区域则会引发 异常</code></pre><p>获取输入</p>
+<pre><code>t.get(&apos;0.0&apos;,&apos;end&apos;) #获取所有输入;0.0表示第0行第0列</code></pre><p>删除输入</p>
+<pre><code>t.delete(&apos;0.0&apos;,&apos;end&apos;) #删除所有输入;0.0表示第0行第0列</code></pre><p>让用户无法编辑text内容</p>
+<pre><code>output_form.config(state=NORMAL) #可以编辑、插入、删除
+output_form.config(state=DISABLED) #无法编辑、插入、删除</code></pre><h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><pre><code>photo_frame = Frame(exe)
+photo_frame.pack()</code></pre><h3 id="创建toplevel"><a href="#创建toplevel" class="headerlink" title="创建toplevel"></a>创建toplevel</h3><p>Toplevel（顶级窗口），类似于弹出窗口，具有独立的窗口属性（如标题栏、边框等） </p>
+<pre><code>top = Toplevel()</code></pre><h3 id="创建滑动条"><a href="#创建滑动条" class="headerlink" title="创建滑动条"></a>创建滑动条</h3><pre><code>scroll = Scrollbar(exe)
+scroll.pack(side=RIGHT, fill=Y) #位于右侧，在Y方向上充满</code></pre><p>此时文本内容仍是独立的，与滑动条无关联</p>
+<p>相互配置</p>
+<pre><code>text = Text(exe)
+scroll.config(command=text.yview)
+text.config(yscrollcommand=scroll.set)</code></pre>
+      
+    </div>
+    
+    
+    
+
+  <div>
+    
+      ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+  </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="gtfly 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/aipay.jpg" alt="gtfly 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    gtfly
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2018/08/06/tkinter基础/" title="tkinter基础">http://yoursite.com/2018/08/06/tkinter基础/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/06/easygui/" rel="next" title="python-easygui">
+                <i class="fa fa-chevron-left"></i> python-easygui
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/07/解题思路-黑客游戏/" rel="prev" title="解题思路-黑客游戏">
+                解题思路-黑客游戏 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">gtfly</p>
+              <p class="site-description motion-element" itemprop="description">轻描时光漫长低唱语焉不详.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">148</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.bugku.com/login?next=challenges" title="Bugku" target="_blank">Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://new.bugku.com/" title="new Bugku" target="_blank">new Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.linkedbyx.com/home" title="X计划平台" target="_blank">X计划平台</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.shiyanbar.com/ctf/practice" title="实验吧" target="_blank">实验吧</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ctf.jasec.cn/index.php?page=login" title="Jactf" target="_blank">Jactf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jarvisoj.com/login" title="Javis" target="_blank">Javis</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cgctf.nuptsast.com/challenges#Web" title="CGctf" target="_blank">CGctf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com/" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.ssleye.com/" title="ctf在线工具" target="_blank">ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.194nb.com/" title="aman ctf在线工具" target="_blank">aman ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.ctfwp.com/" title="ctfwp" target="_blank">ctfwp</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://skysec.top/" title="一叶飘零" target="_blank">一叶飘零</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建根窗口"><span class="nav-number">1.</span> <span class="nav-text">创建根窗口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pack"><span class="nav-number">2.</span> <span class="nav-text">pack()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#grid"><span class="nav-number">3.</span> <span class="nav-text">grid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Label控件"><span class="nav-number">4.</span> <span class="nav-text">Label控件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Label显示图片"><span class="nav-number">4.1.</span> <span class="nav-text">Label显示图片</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#显示文本"><span class="nav-number">4.2.</span> <span class="nav-text">显示文本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#显示文本变量"><span class="nav-number">4.3.</span> <span class="nav-text">显示文本变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#justify文本左对齐"><span class="nav-number">4.4.</span> <span class="nav-text">justify文本左对齐</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#font设置文本字体类型、尺寸"><span class="nav-number">4.5.</span> <span class="nav-text">font设置文本字体类型、尺寸</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fg设置文本字体颜色"><span class="nav-number">4.6.</span> <span class="nav-text">fg设置文本字体颜色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#compound图片文本混合模式"><span class="nav-number">4.7.</span> <span class="nav-text">compound图片文本混合模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#窗口常用设置"><span class="nav-number">5.</span> <span class="nav-text">窗口常用设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置窗口标题"><span class="nav-number">5.1.</span> <span class="nav-text">设置窗口标题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置窗口大小"><span class="nav-number">5.2.</span> <span class="nav-text">设置窗口大小</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置窗口是否可以变化长宽"><span class="nav-number">5.3.</span> <span class="nav-text">设置窗口是否可以变化长宽</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#按钮"><span class="nav-number">6.</span> <span class="nav-text">按钮</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#点击Button"><span class="nav-number">6.1.</span> <span class="nav-text">点击Button</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#勾选Checkbutton"><span class="nav-number">6.2.</span> <span class="nav-text">勾选Checkbutton</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#按钮列表"><span class="nav-number">6.3.</span> <span class="nav-text">按钮列表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入框"><span class="nav-number">7.</span> <span class="nav-text">输入框</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Entry"><span class="nav-number">7.1.</span> <span class="nav-text">Entry</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Text"><span class="nav-number">7.2.</span> <span class="nav-text">Text</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#框架"><span class="nav-number">8.</span> <span class="nav-text">框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建toplevel"><span class="nav-number">9.</span> <span class="nav-text">创建toplevel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建滑动条"><span class="nav-number">10.</span> <span class="nav-text">创建滑动条</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gtfly</span>
+
+ <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+ <script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("07/16/2018 12:49:00");//此处修改你的建站时间或者网站上线时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已存在 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+ setInterval("createtime()",250);
+ </script>
+
+<!--
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </div></footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9Pgz8ir0b40IXQ5V3bjRc8m0-gzGzoHsz',
+        appKey: 'VCCuCSQHpPqX3hmOh0PlmfXu',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+ <!-- ҳ����С���� -->
+ <script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+  
+  <!--������ƭ-->
+ <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+  <script>
+  $("body").backstretch("https://myqinshimoon.github.io/background.jpg");
+  </script>
+
+
+</body>
+</html>

@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这一周对web学习差不多快结束了，在此总结一下本周所做的题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Practice of Web">
+<meta property="og:url" content="http://yoursite.com/2018/07/20/Sum-of-Web/index.html">
+<meta property="og:site_name" content="gtfly">
+<meta property="og:description" content="这一周对web学习差不多快结束了，在此总结一下本周所做的题">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/ka9i41E.png">
+<meta property="og:image" content="https://i.imgur.com/ZSOYqCu.png">
+<meta property="og:image" content="https://i.imgur.com/ATx5pdj.png">
+<meta property="og:image" content="https://i.imgur.com/bt9c1Qo.png">
+<meta property="og:image" content="https://i.imgur.com/LDSfdfN.png">
+<meta property="og:image" content="https://i.imgur.com/XeDSbCH.png">
+<meta property="og:image" content="https://i.imgur.com/oOySLQP.png">
+<meta property="og:image" content="https://i.imgur.com/VXqdMvO.png">
+<meta property="og:image" content="https://i.imgur.com/CckXOvf.png">
+<meta property="og:image" content="https://i.imgur.com/LLi9cVQ.png">
+<meta property="og:image" content="https://i.imgur.com/LxbUKOf.png">
+<meta property="og:image" content="https://i.imgur.com/9zWZVCz.png">
+<meta property="og:image" content="https://i.imgur.com/M3omCNY.png">
+<meta property="og:image" content="https://i.imgur.com/1ElYhVI.png">
+<meta property="og:image" content="https://i.imgur.com/CWjxk3R.png">
+<meta property="og:image" content="https://i.imgur.com/pcnmj0C.png">
+<meta property="og:image" content="https://i.imgur.com/YHBZur3.png">
+<meta property="og:image" content="https://i.imgur.com/m2W2Tp0.png">
+<meta property="og:image" content="https://i.imgur.com/1EWWZml.png">
+<meta property="og:image" content="https://i.imgur.com/2AqcJon.png">
+<meta property="og:image" content="https://i.imgur.com/fovKwhA.png">
+<meta property="og:image" content="https://i.imgur.com/Q5mYtLG.png">
+<meta property="og:image" content="https://i.imgur.com/OSRpPU4.png">
+<meta property="og:image" content="https://i.imgur.com/t3VtYGA.png">
+<meta property="og:image" content="https://i.imgur.com/hBC6Rpp.png">
+<meta property="og:image" content="https://i.imgur.com/WLUxXgF.png">
+<meta property="og:image" content="https://i.imgur.com/ndj1woM.png">
+<meta property="og:image" content="https://i.imgur.com/abgQfty.png">
+<meta property="og:image" content="https://i.imgur.com/s8NouNx.png">
+<meta property="og:image" content="https://i.imgur.com/Xb8OAug.png">
+<meta property="og:image" content="https://i.imgur.com/pjJY69t.png">
+<meta property="og:image" content="https://i.imgur.com/0LtkfZG.png">
+<meta property="og:image" content="https://i.imgur.com/kwh1GPG.png">
+<meta property="og:image" content="https://i.imgur.com/EKNPgcT.png">
+<meta property="og:image" content="https://i.imgur.com/H91loKW.png">
+<meta property="og:image" content="https://i.imgur.com/e4wIQAG.png">
+<meta property="og:image" content="https://i.imgur.com/kaiMcMv.png">
+<meta property="og:image" content="https://i.imgur.com/hSQsdsB.png">
+<meta property="og:image" content="https://i.imgur.com/Asz4pNI.png">
+<meta property="og:image" content="https://i.imgur.com/rTcumNz.png">
+<meta property="og:image" content="https://i.imgur.com/7WHuv20.png">
+<meta property="og:image" content="https://i.imgur.com/NYmqVw3.png">
+<meta property="og:image" content="https://i.imgur.com/sxledj1.jpg">
+<meta property="og:image" content="https://i.imgur.com/l3aA9of.png">
+<meta property="og:image" content="https://i.imgur.com/MWX2xKT.png">
+<meta property="og:image" content="https://i.imgur.com/HAByEIX.png">
+<meta property="og:image" content="https://i.imgur.com/k5wKH4x.png">
+<meta property="og:image" content="https://i.imgur.com/apd9urx.png">
+<meta property="og:image" content="https://i.imgur.com/RuFpfFH.png">
+<meta property="og:image" content="https://i.imgur.com/7RGfMZY.png">
+<meta property="og:image" content="https://i.imgur.com/CILcCaA.png">
+<meta property="og:image" content="https://i.imgur.com/vlKgV8V.png">
+<meta property="og:image" content="https://i.imgur.com/vGKm2V7.png">
+<meta property="og:image" content="https://i.imgur.com/Wuxyza3.png">
+<meta property="og:image" content="https://i.imgur.com/YXCsTh1.png">
+<meta property="og:image" content="https://i.imgur.com/NFlqgJm.png">
+<meta property="og:image" content="https://i.imgur.com/LUkl35T.png">
+<meta property="og:image" content="https://i.imgur.com/lZVE4Lt.png">
+<meta property="og:image" content="https://i.imgur.com/5jZc0yS.png">
+<meta property="og:image" content="https://i.imgur.com/6brsc2P.png">
+<meta property="og:image" content="https://i.imgur.com/Z53Cfoz.png">
+<meta property="og:image" content="https://i.imgur.com/7j97Egw.png">
+<meta property="og:image" content="https://i.imgur.com/jmN2gqc.png">
+<meta property="og:image" content="https://i.imgur.com/XxtnixI.png">
+<meta property="og:image" content="https://i.imgur.com/k5QN27V.png">
+<meta property="og:image" content="https://i.imgur.com/PDUEc2u.png">
+<meta property="og:image" content="https://i.imgur.com/GcZN2g4.png">
+<meta property="og:image" content="https://i.imgur.com/CFGzHhZ.png">
+<meta property="og:image" content="https://i.imgur.com/r2qWcz3.png">
+<meta property="og:image" content="https://i.imgur.com/68n8nmK.png">
+<meta property="og:image" content="https://i.imgur.com/rhhEeQi.png">
+<meta property="og:image" content="https://i.imgur.com/OAGzIsj.png">
+<meta property="og:image" content="https://i.imgur.com/aVJdU3T.png">
+<meta property="og:image" content="https://i.imgur.com/7xU4jpD.png">
+<meta property="og:updated_time" content="2018-07-27T15:20:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Practice of Web">
+<meta name="twitter:description" content="这一周对web学习差不多快结束了，在此总结一下本周所做的题">
+<meta name="twitter:image" content="https://i.imgur.com/ka9i41E.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/20/Sum-of-Web/">
+
+
+
+
+
+  <title>Practice of Web | gtfly</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script> 
+ function GetRandomNum(Min,Max) 
+ { 
+    var Range = Max - Min; 
+    var Rand = Math.random(); 
+    return(Min + Math.round(Rand * Range)); 
+ } 
+ function setSidebarMarginTop (headerOffset) { 
+    return $('#sidebar').css({ 'margin-top': headerOffset }); 
+ } 
+ function getHeaderOffset () { 
+    return $('.header-inner').height() + CONFIG.sidebar.offset; 
+ }
+    window.onload=function() { 
+    var subtitle = "人生如逆旅，我亦是行人。"; 
+    var mytitle = subtitle.split("W"); 
+    var max = mytitle.length-1;
+    var index = GetRandomNum(0,max); 
+    var text = mytitle[index]; 
+    $("#helloTitle").html(text); 
+    var headOffset = getHeaderOffset(); 
+    setSidebarMarginTop(headOffset); 
+// alert(getHeaderOffset()); 
+ }  
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gtfly</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人生如逆旅，我亦是行人。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="https://github.com/gtfly?tab=stars" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/20/Sum-of-Web/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gtfly">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gtfly">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Practice of Web</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-20T15:41:34+08:00">
+                2018-07-20
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-27T23:20:16+08:00">
+                2018-07-27
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/20/Sum-of-Web/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/07/20/Sum-of-Web/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这一周对web学习差不多快结束了，在此总结一下本周所做的题</p>
+<a id="more"></a>
+
+<h3 id="签到题"><a href="#签到题" class="headerlink" title="签到题"></a>签到题</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/ka9i41E.png" alt></p>
+<p>点开后</p>
+<p><img src="https://i.imgur.com/ZSOYqCu.png" alt></p>
+<p>由于题目说不用使用工具，则右击-查看页面源代码-成功找到flag</p>
+<p><img src="https://i.imgur.com/ATx5pdj.png" alt></p>
+<h3 id="怎么做都好做，没flag就抓包"><a href="#怎么做都好做，没flag就抓包" class="headerlink" title="怎么做都好做，没flag就抓包"></a>怎么做都好做，没flag就抓包</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/bt9c1Qo.png" alt></p>
+<p>点开后</p>
+<p><img src="https://i.imgur.com/LDSfdfN.png" alt></p>
+<p>点击链接</p>
+<p><img src="https://i.imgur.com/XeDSbCH.png" alt></p>
+<p>则进行抓包，发现没有要找的信息</p>
+<p>右击-发送到repeater-go 成功找到flag</p>
+<p>小结：<br>Burp Repeater 是一个手动修改并补发个别 HTTP 请求，并分析他们的响应的工具。</p>
+<h3 id="X00"><a href="#X00" class="headerlink" title="/X00"></a>/X00</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/oOySLQP.png" alt></p>
+<p>点开后</p>
+<pre><code>view-source:
+
+    if (isset ($_GET[&apos;nctf&apos;])) {
+        if (@ereg (&quot;^[1-9]+$&quot;, $_GET[&apos;nctf&apos;]) === FALSE)
+            echo &apos;必须输入数字才行&apos;;
+        else if (strpos ($_GET[&apos;nctf&apos;], &apos;#biubiubiu&apos;) !== FALSE)   
+            die(&apos;Flag: &apos;.$flag);
+        else
+            echo &apos;骚年，继续努力吧啊~&apos;;
+    }</code></pre><p>发现这是php语言，nctf为参数名，而且其值要满足：</p>
+<pre><code>为1-9的数字
+包含&apos;#biubiubiu&apos;</code></pre><h4 id="方法一：00截断"><a href="#方法一：00截断" class="headerlink" title="方法一：00截断"></a>方法一：00截断</h4><p>但既然是数字，那应该怎样添加字符串’#biubiubiu’呢？ </p>
+<p>由于题目是/X00,则试一下00截断  </p>
+<p>PHP的00截断是一个漏洞，当用户输入的url参数包含%00经过浏览器自动转码后截断后面字符。</p>
+<p>ereg()无法将%00后的字符串读进去进行比较 </p>
+<p>URL中，从’？’开始到’#’为止之间的部分为参数部分，又称搜索部分、查询部分<br>‘#’代表网页中的一个位置。其右面的字符，就是该位置的标识符  </p>
+<p>则要将’#’转换成十六进制形式</p>
+<p>在网址后加上</p>
+<pre><code>/?nctf=1%00%23biubiubiu</code></pre><p>即成为</p>
+<pre><code>http://teamxlc.sinaapp.com/web4/f5a14f5e6e3453b78cd73899bad98d53/index.php/?nctf=1%00%23biubiubiu</code></pre><p>再回车，成功获得flag</p>
+<p>附：URL特殊符号及编码   </p>
+<pre><code>序号     特殊字符     含义     十六进制值
+1.     +     URL 中+号表示空格     %2B
+2.     空格     URL中的空格可以用+号或者编码     %20
+3.     /     分隔目录和子目录     %2F
+4.     ?     分隔实际的 URL 和参数     %3F
+5.     %     指定特殊字符     %25
+6.     #     表示书签     %23
+7.     &amp;     URL 中指定的参数间的分隔符     %26
+8.     =     URL 中指定参数的值     %3D</code></pre><h4 id="方法二-数组截断"><a href="#方法二-数组截断" class="headerlink" title="方法二: 数组截断"></a>方法二: 数组截断</h4><p>利用ereg()函数与strpos()函数的共同漏洞：   </p>
+<p>ereg()比较一个数组和字符串时会返回-1，即变为-1===FALSE;<br>传入一个数组给strpos()时，会出错返回null,即变为null!==FALSE</p>
+<p>在网址后加上</p>
+<pre><code>/?nctf[]=       #任意值均可</code></pre><p>成功获得flag</p>
+<h3 id="web4"><a href="#web4" class="headerlink" title="web4"></a>web4</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/VXqdMvO.png" alt></p>
+<p>点击后</p>
+<p><img src="https://i.imgur.com/CckXOvf.png" alt></p>
+<p>点进去后发现有几行“乱码”</p>
+<p><img src="https://i.imgur.com/LLi9cVQ.png" alt></p>
+<p>URL编码</p>
+<p>url编码又叫百分号编码，是统一资源定位(URL)编码方式。URL地址（常说网址）规定了常用地数字，字母可以直接使用，另外一批作为特殊用户字符也可以直接用（/,:@等），剩下的其它所有字符必须通过%xx编码处理。</p>
+<p>则将var p1、%35%34%61%32、var p2拼接到一起进行编码，得到</p>
+<pre><code>function checkSubmit(){var a=document.getElementById(&quot;password&quot;);if(&quot;undefined&quot;!=typeof a){if(&quot;67d709b2b54aa2aa648cf6e87a7114f1&quot;==a.value)return!0;alert(&quot;Error&quot;);a.focus();return!1}}document.getElementById(&quot;levelQuest&quot;).onsubmit=checkSubmit;</code></pre><p>将”67d709b2b54aa2aa648cf6e87a7114f1”这串字符串submit，成功获得flag</p>
+<h3 id="web5"><a href="#web5" class="headerlink" title="web5"></a>web5</h3><p><img src="https://i.imgur.com/LxbUKOf.png" alt></p>
+<p>打开后</p>
+<p><img src="https://i.imgur.com/9zWZVCz.png" alt></p>
+<p>查看源代码</p>
+<p><img src="https://i.imgur.com/M3omCNY.png" alt></p>
+<p>JSFuck编码：</p>
+<p>可以让你只用 6 个字符 ‘[ ]’ ‘( )’ ‘!’ ‘+’ 来编写 JavaScript 程序</p>
+<p>进行解码</p>
+<p>用火狐浏览器web开发者-web控制台进行转码，成功获得flag</p>
+<h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/1ElYhVI.png" alt></p>
+<p>点开后</p>
+<p><img src="https://i.imgur.com/CWjxk3R.png" alt></p>
+<p>查看源代码发现什么信息都没有，则进行抓包</p>
+<p><img src="https://i.imgur.com/pcnmj0C.png" alt></p>
+<p>发现cookie中：Login=0 </p>
+<p>则将0改为1 然后Forward 成功获得flag</p>
+<h3 id="矛盾"><a href="#矛盾" class="headerlink" title="矛盾"></a>矛盾</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/YHBZur3.png" alt></p>
+<p>点开后是几行php代码</p>
+<pre><code>$num=$_GET[&apos;num&apos;];
+if(!is_numeric($num))
+{
+echo $num;
+if($num==1)
+echo &apos;flag{**********}&apos;;
+}</code></pre><p>参数num得满足：</p>
+<p>num不是数字<br>num的值为1</p>
+<p>仔细观察 $num == 1 ,发现其实值是“若等于”1</p>
+<p>则可用一个以1为开头的字符串作为num的参数，添加参数到网址，回车即可获得flag</p>
+<p>小结：</p>
+<p>php中的“==”与“===”：     </p>
+<p>=== 在进行比较的时候，会先判断两种字符串的类型是否相等，再比较</p>
+<p>== 在进行比较的时候，会先将字符串类型转化成相同，再比较</p>
+<p>如果比较一个数字和字符串或者比较涉及到数字内容的字符串，则字符串会被转换成数值并且比较按照数值来进行</p>
+<h3 id="头有点大"><a href="#头有点大" class="headerlink" title="头有点大"></a>头有点大</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/m2W2Tp0.png" alt></p>
+<p>点开后是一个提示页面</p>
+<p><img src="https://i.imgur.com/1EWWZml.png" alt></p>
+<p>提示说需要修改.net framework,在England，而且使用Internet Explorer浏览器</p>
+<p>进行抓包</p>
+<p><img src="https://i.imgur.com/2AqcJon.png" alt></p>
+<p>在 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:61.0)括号末尾加上.NET CLR9.9 (安装.Net Framework后，MSI会将“.NET CLR”添加到User Agent字符串中)</p>
+<p>将Accpt-Language后面修改为 en-gb</p>
+<p>在Mozilla/5.0后添加 compatible IE 6.0 使得服务器认为我们使用的是IE6.0的浏览器</p>
+<p>修改后，右键发送到repeater，go即可获得flag</p>
+<h3 id="没有人的密码会这么简单"><a href="#没有人的密码会这么简单" class="headerlink" title="没有人的密码会这么简单"></a>没有人的密码会这么简单</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/fovKwhA.png" alt></p>
+<p>打开后</p>
+<p><img src="https://i.imgur.com/Q5mYtLG.png" alt></p>
+<p>进行抓包，然后右键-send to intruder</p>
+<p>在Intruder-Position中设置，将自动设置的position【Clear】掉，然后在请求中user_pw的地方点击【Add】添加position</p>
+<p>选择所需要的字典，打开Intruder-Payloads，在Payload Type中选择Numbers</p>
+<p>选择数字起点、终点和步长，在Payload Option中设置；由于第一位不是0，则从1000开始到9999结束，步长设置为1</p>
+<p>点击左上角intruder-attack开始破解</p>
+<p>跑完后，找出与众不同的lenth，选中后点response，即可查看能否登录</p>
+<p><img src="https://i.imgur.com/OSRpPU4.png" alt></p>
+<p>成功破解，得到flag</p>
+<h3 id="我说的是真的"><a href="#我说的是真的" class="headerlink" title="我说的是真的"></a>我说的是真的</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/t3VtYGA.png" alt></p>
+<p>点开后</p>
+<p><img src="https://i.imgur.com/hBC6Rpp.png" alt></p>
+<p>进去发现</p>
+<p><img src="https://i.imgur.com/WLUxXgF.png" alt></p>
+<p>由于题目是“我说的是真的”，则返回到“到这里找key”的页面，查看源代码</p>
+<pre><code>&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=utf-8&quot;&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;a href=&quot;./search_key.php&quot;&gt;_到这里找key__&lt;/a&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre><p>点击search_key.php，成功得到flag</p>
+<h3 id="你会改后缀吗"><a href="#你会改后缀吗" class="headerlink" title="你会改后缀吗"></a>你会改后缀吗</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/ndj1woM.png" alt></p>
+<p>点开后</p>
+<p><img src="https://i.imgur.com/abgQfty.png" alt></p>
+<p>有一张动态小猫图片</p>
+<p>查看源代码</p>
+<pre><code>&lt;html&gt;
+    &lt;title&gt;你是在坑我？&lt;/title&gt;
+    &lt;body&gt;
+    答案又是啥。。
+    &lt;img src=&quot;2.gif&quot; width=&quot;100&quot; height=&quot;100&quot; /&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre><p>由于此题与后缀有关，则先将图片保存下来<br>那么要将后缀改成什么格式呢？</p>
+<p>将后缀改为.html，打开后，成功找到flag</p>
+<h3 id="文件上传比想象的难一点"><a href="#文件上传比想象的难一点" class="headerlink" title="文件上传比想象的难一点"></a>文件上传比想象的难一点</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/s8NouNx.png" alt></p>
+<p>点开后</p>
+<p><img src="https://i.imgur.com/Xb8OAug.png" alt></p>
+<p>查看源代码</p>
+<pre><code>&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;/head&gt;&lt;body&gt;
+Array
+(
+)
+不被允许的文件类型,仅支持上传jpg,gif,png后缀的文件</code></pre><p>则将一个jpg格式的文件上传，发现</p>
+<p><img src="https://i.imgur.com/pjJY69t.png" alt></p>
+<p>那就上传一个php文件，发现</p>
+<p><img src="https://i.imgur.com/0LtkfZG.png" alt></p>
+<p>发现叙述很矛盾</p>
+<p>这里就需要用00截断的方法</p>
+<p>什么是00截断呢？</p>
+<p>网站上传函数处理xxx.php%00.jpg时，首先后缀名是合法的jpg格式，可以上传，在保存文件时，遇到%00字符，丢弃后面的jpg，文件后缀最终保存的后缀名为xxx.php</p>
+<p>在上传时使用拦截，得到上传信息</p>
+<p><img src="https://i.imgur.com/kwh1GPG.png" alt></p>
+<p>在uploads后，自己手动构造一个上传的文件’1.php.jpg’,然后转到Hex页面，找到 . 对应的16进制2e,修改为00</p>
+<p>再回到Raw，发现空格已经变成一个框框，框框表示一个空字节</p>
+<p>然后forward，成功获得flag</p>
+<h3 id="一道简单的ctf题目"><a href="#一道简单的ctf题目" class="headerlink" title="一道简单的ctf题目"></a>一道简单的ctf题目</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/EKNPgcT.png" alt></p>
+<p>点开后</p>
+<p><img src="https://i.imgur.com/H91loKW.png" alt></p>
+<p>提交一个php文件，显示</p>
+<pre><code>非图片文件</code></pre><p>则说明文件类型要为图片类型</p>
+<p>进行抓包，找到content-type</p>
+<p><img src="https://i.imgur.com/e4wIQAG.png" alt></p>
+<p>将后面修改为image/jpeg   或image/png</p>
+<p>forward，即可成功获得flag</p>
+<h3 id="比较大小"><a href="#比较大小" class="headerlink" title="比较大小"></a>比较大小</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/kaiMcMv.png" alt></p>
+<p>点开后</p>
+<p><img src="https://i.imgur.com/hSQsdsB.png" alt></p>
+<p>随便输入数字，提交页面显示</p>
+<pre><code>数字太小了！</code></pre><p>查看源代码</p>
+<pre><code>&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta http-equiv=Content-Type content=&quot;text/html;charset=utf-8&quot;&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+                &lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+            &lt;input type=&quot;text&quot; maxlength=&quot;3&quot; name=&quot;v&quot;/&gt;
+            &lt;input type=&quot;submit&quot; value=&quot;提交&quot;/&gt;
+        &lt;/form&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+数字太小了！</code></pre><p>发现有一行’input type … maxlenth’，而且题目提示用F12，则此题需要修改网页源代码</p>
+<p>则右键选择-查看元素</p>
+<p><img src="https://i.imgur.com/Asz4pNI.png" alt></p>
+<p>找到input maxlenth，将‘3’改为‘4’（比三大就行） 再输入9999提交，成功获得flag</p>
+<h3 id="nmap我用过"><a href="#nmap我用过" class="headerlink" title="nmap我用过"></a>nmap我用过</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/rTcumNz.png" alt></p>
+<p>点题目链接，发现链接是学校官网</p>
+<p>根据题目提示，在cmd输入</p>
+<pre><code>nmap -F -sT -v 202.196.32.7</code></pre><p>扫完后</p>
+<p><img src="https://i.imgur.com/7WHuv20.png" alt></p>
+<p>则 22808080 即为flag   </p>
+<p>附：<br>F：扫描100个最有可能开放的端口<br>v 获取扫描的信息<br>sT：采用的是TCP扫描 不写也是可以的，默认采用的就是TCP扫描      </p>
+<h3 id="111"><a href="#111" class="headerlink" title="111"></a>111</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/NYmqVw3.png" alt></p>
+<p>点开后，发现进入了一个动态页面</p>
+<p><img src="https://i.imgur.com/sxledj1.jpg" alt></p>
+<p>右键-查看源码</p>
+<p><img src="https://i.imgur.com/l3aA9of.png" alt></p>
+<p>找到flag</p>
+<h3 id="仔细看看源代码"><a href="#仔细看看源代码" class="headerlink" title="仔细看看源代码"></a>仔细看看源代码</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/MWX2xKT.png" alt></p>
+<p>点进链接，到达一个网页，然后查看源代码</p>
+<p><img src="https://i.imgur.com/HAByEIX.png" alt></p>
+<p>发现有个后缀为.html的链接</p>
+<p>点击去，发现下一个页面还有这个链接，继续点下去</p>
+<p><img src="https://i.imgur.com/k5wKH4x.png" alt></p>
+<p>发现这么多行代码隐藏着flag信息！</p>
+<p>附：   </p>
+<p>什么是HTML   </p>
+<p>超文本标记语言，标准通用标记语言下的一个应用。<br>“超文本”就是指页面内可以包含图片、链接，甚至音乐、程序等非文字元素。<br>超文本标记语言的结构包括“头”部分（英语：Head）、和“主体”部分（英语：Body），其中“头”部提供关于网页的信息，“主体”部分提供网页的具体内容。</p>
+<h3 id="md5加密-代码分析"><a href="#md5加密-代码分析" class="headerlink" title="md5加密 代码分析"></a>md5加密 代码分析</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/apd9urx.png" alt></p>
+<p>点击链接</p>
+<pre><code>please input a</code></pre><p>则分析PHP代码</p>
+<p>首先要在网址后添加一个参数a，a的值要满足</p>
+<p>不能为’QNKCDZO’<br>a的md5的值要与’QNKCDZO’的md5值若相等</p>
+<p>由于是md5加密，则搜索md5加密工具，搜索’QNKCDZO’ 加密后为  </p>
+<pre><code>0e830400451993494058024219903391
+
+#md5（）函数默认转换为32字符十六进制数</code></pre><p>由于比较是‘若等于’，则加密后的字符串转化为数字为0(以0e开头，即认为是0的…次方)</p>
+<p>则只要a的参数加密后以0e开头即可</p>
+<p>百度‘以0e开头的MD5’即可找到</p>
+<p>在地址栏后面加上？a=s878926199a（或者其他符合的）回车即可获得flag</p>
+<h3 id="你知道base加密吗"><a href="#你知道base加密吗" class="headerlink" title="你知道base加密吗"></a>你知道base加密吗</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/RuFpfFH.png" alt></p>
+<p>点开后</p>
+<p><img src="https://i.imgur.com/7RGfMZY.png" alt></p>
+<p>输入任意值提交不对，查看源代码什么也没有</p>
+<p>则进行抓包，右键发送到repeater，go</p>
+<p>发现response中的content-row后有一行‘代码’<br><img src="https://i.imgur.com/CILcCaA.png" alt></p>
+<p>进行base转码，得到一串数字</p>
+<p>提交，成功获得flag</p>
+<h3 id="php代码审计"><a href="#php代码审计" class="headerlink" title="php代码审计"></a>php代码审计</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/vlKgV8V.png" alt></p>
+<p>点开后</p>
+<p><img src="https://i.imgur.com/vGKm2V7.png" alt></p>
+<p>则要先分析PHP代码</p>
+<p>要有两个参数名，name和password<br>name不能等于password<br>name的shal要和password的shal相等</p>
+<p>利用sha1无法处理数组类型，即可利用数组绕过</p>
+<p>在地址栏后添加？name[]=1&amp;password[]=12，回车即可获得flag</p>
+<h3 id="密码爆破"><a href="#密码爆破" class="headerlink" title="密码爆破"></a>密码爆破</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/Wuxyza3.png" alt></p>
+<p>点开后</p>
+<p><img src="https://i.imgur.com/YXCsTh1.png" alt></p>
+<p>进行抓包</p>
+<p><img src="https://i.imgur.com/NFlqgJm.png" alt></p>
+<p>由于每次登陆验证码都会刷新，则将验证码设为空，只有pwd这一个变量</p>
+<p>进行instuder，破解得到正确密码，提交得到flag</p>
+<h3 id="上传成功也不一定得到flag哦！！"><a href="#上传成功也不一定得到flag哦！！" class="headerlink" title="上传成功也不一定得到flag哦！！"></a>上传成功也不一定得到flag哦！！</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/LUkl35T.png" alt></p>
+<p>点开后</p>
+<p><img src="https://i.imgur.com/lZVE4Lt.png" alt></p>
+<p>查看源代码</p>
+<p><img src="https://i.imgur.com/5jZc0yS.png" alt></p>
+<p>分析源代码</p>
+<p>split返回文件名以’.’分割后的数组，str[1]即为此文件的第一个后缀为jpg格式的   </p>
+<p>使用’1.jpg’上传，出现</p>
+<pre><code>真乖，您上传了一张jpeg的图片，上传成功！</code></pre><p>扩展后缀名为’1.jpg.txt’，成功获得flag</p>
+<h3 id="robots了解一下"><a href="#robots了解一下" class="headerlink" title="robots了解一下"></a>robots了解一下</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/6brsc2P.png" alt></p>
+<p>点击链接，进到了一个网站</p>
+<pre><code>http://www.wechall.net/challenge/training/www/robots/index.php</code></pre><p>搜索关于robots的知识</p>
+<p>robots.txt是搜索引擎中访问网站的时候要查看的第一个文件。当一个搜索蜘蛛访问一个站点时，它会首先检查该站点根目录下是否存在robots.txt，如果存在，搜索机器人就会按照该文件中的内容来确定访问的范围；如果该文件不存在，所有的搜索蜘蛛将能够访问网站上所有没有被口令保护的页面。</p>
+<p>robots.txt文件必须驻留在域的根目录，并且必须命名为“robots.txt”</p>
+<p>则将网址改为</p>
+<pre><code>http://www.wechall.net/robots.txt</code></pre><p>回车，进到了一个页面</p>
+<p><img src="https://i.imgur.com/Z53Cfoz.png" alt></p>
+<p>则TOPS3CR3T即为flag</p>
+<h3 id="本机登陆"><a href="#本机登陆" class="headerlink" title="本机登陆"></a>本机登陆</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/7j97Egw.png" alt></p>
+<p>点开链接</p>
+<p><img src="https://i.imgur.com/jmN2gqc.png" alt></p>
+<p>进行抓包</p>
+<p><img src="https://i.imgur.com/XxtnixI.png" alt></p>
+<p>将isadmin值修改为1，认为我是管理员</p>
+<p>添加IP信息</p>
+<p><img src="https://i.imgur.com/k5QN27V.png" alt></p>
+<p>X-Forwarded-For位于HTTP协议的请求头， 是一个 HTTP 扩展头部。HTTP/1.1（RFC 2616）协议并没有对它的定义，它最开始是由 Squid 这个缓存代理软件引入，用来表示 HTTP 请求端真实 IP。</p>
+<p>forward即可获得flag</p>
+<h3 id="根据提示来，密码已经告诉你"><a href="#根据提示来，密码已经告诉你" class="headerlink" title="根据提示来，密码已经告诉你"></a>根据提示来，密码已经告诉你</h3><p>题目描述</p>
+<p><img src="https://i.imgur.com/PDUEc2u.png" alt></p>
+<p>点开后</p>
+<p><img src="https://i.imgur.com/GcZN2g4.png" alt></p>
+<p>查看页面源代码，发现页面代码部分没有需要的信息，但下面有很多空白</p>
+<p>将页面拉到最底部，发现</p>
+<p><img src="https://i.imgur.com/CFGzHhZ.png" alt></p>
+<p>于是将原网址</p>
+<pre><code>http://39.107.92.230/web/web5/index.php</code></pre><p>修改为</p>
+<p>   <a href="http://39.107.92.230/web/web5/password.txt" target="_blank" rel="noopener">http://39.107.92.230/web/web5/password.txt</a></p>
+<p>回车，出来一个页面，里面有很多密码项</p>
+<p><img src="https://i.imgur.com/r2qWcz3.png" alt></p>
+<p>将其保存为.txt格式的文件（字典），然后抓包，使用intruder进行破解</p>
+<p>在intruder-payloads-payload option中选择load，载入字典<br><img src="https://i.imgur.com/68n8nmK.png" alt></p>
+<p>破解得到密码</p>
+<p>发现密码有六位，但输入框只能输入五位密码</p>
+<p>审查元素-将输入位数改为6，提交依然错误</p>
+<p>返回burpsuit，查看此密码的response</p>
+<p><img src="https://i.imgur.com/rhhEeQi.png" alt></p>
+<p>发现newpage后面的数据为base加密的</p>
+<p>进行解码，得到</p>
+<pre><code>290bca70c7dae93db6644fa00b9d83b9.php</code></pre><p>将网址改为</p>
+<pre><code>http://39.107.92.230/web/web5/290bca70c7dae93db6644fa00b9d83b9.php</code></pre><p>来到一个新界面</p>
+<p><img src="https://i.imgur.com/OAGzIsj.png" alt></p>
+<p>随意提交内容，提示</p>
+<pre><code>你还没有登录，不能留言！</code></pre><p>则进行抓包</p>
+<p><img src="https://i.imgur.com/aVJdU3T.png" alt></p>
+<p>首先要将islogin的值改为1</p>
+<p>接着要把userlevel的值改为root（“管理员”是一个很重要的提示，一般管理员默认用户名，linux下比如admin，root。windows下是administrator，我们可以合理猜解）</p>
+<p>然后repeater-go</p>
+<p>在response中发现flag</p>
+<p><img src="https://i.imgur.com/7xU4jpD.png" alt></p>
+<p>再对flag进行URL转码，最终得到flag</p>
+
+      
+    </div>
+    
+    
+    
+
+  <div>
+    
+      ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+  </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="gtfly 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/aipay.jpg" alt="gtfly 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    gtfly
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2018/07/20/Sum-of-Web/" title="Practice of Web">http://yoursite.com/2018/07/20/Sum-of-Web/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/19/nmap端口扫描/" rel="next" title="nmap端口扫描">
+                <i class="fa fa-chevron-left"></i> nmap端口扫描
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/22/Sixth-day/" rel="prev" title="使用010editor修复文件">
+                使用010editor修复文件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">gtfly</p>
+              <p class="site-description motion-element" itemprop="description">轻描时光漫长低唱语焉不详.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">148</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.bugku.com/login?next=challenges" title="Bugku" target="_blank">Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://new.bugku.com/" title="new Bugku" target="_blank">new Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.linkedbyx.com/home" title="X计划平台" target="_blank">X计划平台</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.shiyanbar.com/ctf/practice" title="实验吧" target="_blank">实验吧</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ctf.jasec.cn/index.php?page=login" title="Jactf" target="_blank">Jactf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jarvisoj.com/login" title="Javis" target="_blank">Javis</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cgctf.nuptsast.com/challenges#Web" title="CGctf" target="_blank">CGctf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com/" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.ssleye.com/" title="ctf在线工具" target="_blank">ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.194nb.com/" title="aman ctf在线工具" target="_blank">aman ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.ctfwp.com/" title="ctfwp" target="_blank">ctfwp</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://skysec.top/" title="一叶飘零" target="_blank">一叶飘零</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#签到题"><span class="nav-number">1.</span> <span class="nav-text">签到题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#怎么做都好做，没flag就抓包"><span class="nav-number">2.</span> <span class="nav-text">怎么做都好做，没flag就抓包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#X00"><span class="nav-number">3.</span> <span class="nav-text">/X00</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法一：00截断"><span class="nav-number">3.1.</span> <span class="nav-text">方法一：00截断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法二-数组截断"><span class="nav-number">3.2.</span> <span class="nav-text">方法二: 数组截断</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web4"><span class="nav-number">4.</span> <span class="nav-text">web4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web5"><span class="nav-number">5.</span> <span class="nav-text">web5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie"><span class="nav-number">6.</span> <span class="nav-text">cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矛盾"><span class="nav-number">7.</span> <span class="nav-text">矛盾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#头有点大"><span class="nav-number">8.</span> <span class="nav-text">头有点大</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#没有人的密码会这么简单"><span class="nav-number">9.</span> <span class="nav-text">没有人的密码会这么简单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#我说的是真的"><span class="nav-number">10.</span> <span class="nav-text">我说的是真的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#你会改后缀吗"><span class="nav-number">11.</span> <span class="nav-text">你会改后缀吗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件上传比想象的难一点"><span class="nav-number">12.</span> <span class="nav-text">文件上传比想象的难一点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一道简单的ctf题目"><span class="nav-number">13.</span> <span class="nav-text">一道简单的ctf题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#比较大小"><span class="nav-number">14.</span> <span class="nav-text">比较大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nmap我用过"><span class="nav-number">15.</span> <span class="nav-text">nmap我用过</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#111"><span class="nav-number">16.</span> <span class="nav-text">111</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#仔细看看源代码"><span class="nav-number">17.</span> <span class="nav-text">仔细看看源代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#md5加密-代码分析"><span class="nav-number">18.</span> <span class="nav-text">md5加密 代码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#你知道base加密吗"><span class="nav-number">19.</span> <span class="nav-text">你知道base加密吗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php代码审计"><span class="nav-number">20.</span> <span class="nav-text">php代码审计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#密码爆破"><span class="nav-number">21.</span> <span class="nav-text">密码爆破</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上传成功也不一定得到flag哦！！"><span class="nav-number">22.</span> <span class="nav-text">上传成功也不一定得到flag哦！！</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#robots了解一下"><span class="nav-number">23.</span> <span class="nav-text">robots了解一下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本机登陆"><span class="nav-number">24.</span> <span class="nav-text">本机登陆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根据提示来，密码已经告诉你"><span class="nav-number">25.</span> <span class="nav-text">根据提示来，密码已经告诉你</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gtfly</span>
+
+ <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+ <script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("07/16/2018 12:49:00");//此处修改你的建站时间或者网站上线时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已存在 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+ setInterval("createtime()",250);
+ </script>
+
+<!--
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </div></footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9Pgz8ir0b40IXQ5V3bjRc8m0-gzGzoHsz',
+        appKey: 'VCCuCSQHpPqX3hmOh0PlmfXu',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+ <!-- ҳ����С���� -->
+ <script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+  
+  <!--������ƭ-->
+ <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+  <script>
+  $("body").backstretch("https://myqinshimoon.github.io/background.jpg");
+  </script>
+
+
+</body>
+</html>

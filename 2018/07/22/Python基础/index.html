@@ -1,0 +1,2328 @@
+<!DOCTYPE html>
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="大一结束，把这学期做的python笔记整到博客上 python2与3区别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python基础知识">
+<meta property="og:url" content="http://yoursite.com/2018/07/22/Python基础/index.html">
+<meta property="og:site_name" content="gtfly">
+<meta property="og:description" content="大一结束，把这学期做的python笔记整到博客上 python2与3区别">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-06T18:49:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python基础知识">
+<meta name="twitter:description" content="大一结束，把这学期做的python笔记整到博客上 python2与3区别">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/22/Python基础/">
+
+
+
+
+
+  <title>Python基础知识 | gtfly</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script> 
+ function GetRandomNum(Min,Max) 
+ { 
+    var Range = Max - Min; 
+    var Rand = Math.random(); 
+    return(Min + Math.round(Rand * Range)); 
+ } 
+ function setSidebarMarginTop (headerOffset) { 
+    return $('#sidebar').css({ 'margin-top': headerOffset }); 
+ } 
+ function getHeaderOffset () { 
+    return $('.header-inner').height() + CONFIG.sidebar.offset; 
+ }
+    window.onload=function() { 
+    var subtitle = "人生如逆旅，我亦是行人。"; 
+    var mytitle = subtitle.split("W"); 
+    var max = mytitle.length-1;
+    var index = GetRandomNum(0,max); 
+    var text = mytitle[index]; 
+    $("#helloTitle").html(text); 
+    var headOffset = getHeaderOffset(); 
+    setSidebarMarginTop(headOffset); 
+// alert(getHeaderOffset()); 
+ }  
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gtfly</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人生如逆旅，我亦是行人。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="https://github.com/gtfly?tab=stars" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/22/Python基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gtfly">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gtfly">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python基础知识</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-22T17:52:46+08:00">
+                2018-07-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-03-07T02:49:22+08:00">
+                2019-03-07
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/22/Python基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/07/22/Python基础/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>大一结束，把这学期做的python笔记整到博客上</p>
+<h3 id="python2与3区别"><a href="#python2与3区别" class="headerlink" title="python2与3区别"></a>python2与3区别</h3><a id="more"></a>
+
+<h4 id="print语句"><a href="#print语句" class="headerlink" title="print语句"></a>print语句</h4><pre><code>在Python 2里，print是一个语句。无论你想输出什么，只要将它们放在print关键字后边就可以。
+在Python 3里，print()是一个函数。就像其他的函数一样，print()需要你将想要输出的东西作为参数传给它。</code></pre><table>
+<thead>
+<tr>
+<th>notes</th>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>print</td>
+<td>print()</td>
+</tr>
+<tr>
+<td>2</td>
+<td>print 1</td>
+<td>print(1)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>print 1, 2</td>
+<td>print(1, 2)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>print 1, 2,</td>
+<td>print(1, 2, end=’ ‘)</td>
+</tr>
+</tbody></table>
+<ol>
+<li>为输出一个空白行，需要调用不带参数的print()。</li>
+<li>为输出一个单独的值，需要将这这个值作为print()的一个参数就可以了。</li>
+<li>为输出使用一个空格分隔的两个值，用两个参数调用print()即可。</li>
+<li>在Python 2里，如果使用一个逗号(,)作为print语句的结尾，它将会用空格分隔输出的结果，然后在输出一个尾随的空格，而不输出回车。在Python 3里，通过把end=’ ‘作为一个关键字参数传给print()可以实现同样的效果。参数end的默认值为’\n’，所以通过重新指定end参数的值，可以取消在末尾输出回车符。</li>
+</ol>
+<h4 id="一行输入多个数"><a href="#一行输入多个数" class="headerlink" title="一行输入多个数"></a>一行输入多个数</h4><p>用name.split()的方法，将空格隔开的字符串分成单一的部分，再进行转换数据类型</p>
+<pre><code>sum = raw_input(&apos;&apos;)    
+x,y,a = sum.split()    
+x = float(x)   
+y = float(y)   
+a = int(a)    </code></pre><h4 id="除"><a href="#除" class="headerlink" title="除"></a>除</h4><p>Python2.x 里，整数除整数，只能得出整数。如果要得到小数部分，把其中一个数改成浮点数即可。</p>
+<pre><code>&gt;&gt;&gt; 5/2
+2
+&gt;&gt;&gt; 5/2.0
+2.5
+&gt;&gt;&gt; 5//2
+2
+&gt;&gt;&gt; 5//2.0
+2.0</code></pre><h4 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h4><p>Python 2支持&lt;&gt;作为!=的同义词。Python 3只支持!=，不再支持&lt;&gt;了。</p>
+<table>
+<thead>
+<tr>
+<th>Python 2</th>
+<th>Python 3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>if x &lt;&gt; y:</td>
+<td>if x != y:</td>
+</tr>
+<tr>
+<td>if x != y:</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h3><p>1.注释</p>
+<pre><code>以＃进行单行注释;使用三重引号 &apos;&apos;&apos;  &apos;&apos;&apos;进行多行注释</code></pre><p>2.语句换行</p>
+<pre><code>在末尾加\</code></pre><p>3.缩进</p>
+<pre><code>缩进的空格数是可变的，但同一个代码块的语句必须包含相同的缩进空格数。</code></pre><p>4.变量的数据类型</p>
+<pre><code>数字类型：包括整型，浮点型，复数类型。
+布尔类型：布尔类型是特殊的整型，它的值只有两个，分别是True和False。如果将布尔值进行数值运算，True会被当做整型1，False会被当做整型0。
+字符串类型：python中字符串被定义为一个字符集合，它被引号所包含，引号可以是单引号、双引号、或者三引号。字符串具有索引规则，第一个字符的索引是0。
+列表和元祖类型
+字典类型：映射数据类型</code></pre><p>5.科学计数法</p>
+<pre><code>实数E（e）整数。如：1.34E3 表示1.34*10^3</code></pre><p>6.运算符</p>
+<ul>
+<li><p>算术运算符</p>
+<ul>
+<li>*：两数相乘或返回一个被重复若干次的字符串  </li>
+<li>/ ：  除   </li>
+<li>// ： 整除  </li>
+<li>** ： 次幂</li>
+<li>求绝对值：abs(),   fabs()<br>(abs()是一个内置函数，而fabs()在math模块中定义的)</li>
+</ul>
+</li>
+<li><p>赋值运算符   </p>
+<ul>
+<li>a,b = b,a  两数值交换   </li>
+<li>不支持自增自减操作符    </li>
+<li>+= 加赋值运算，除此还有-=、<em>=、/=、%=、*</em>=、//=</li>
+</ul>
+</li>
+<li><p>比较运算符   </p>
+<ul>
+<li>== 相等   </li>
+<li>!= 不相等   </li>
+<li><blockquote>
+<p>、&lt;、&gt;=、&lt;=    </p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>逻辑运算符    </p>
+<ul>
+<li>and 布尔“与”</li>
+<li>or  布尔“或”   </li>
+<li>not 布尔“非”   </li>
+</ul>
+</li>
+<li><p>成员运算符    </p>
+<ul>
+<li>in ：如果在指定的序列中找到值返回True，否则返回False    </li>
+<li>not in ：如果在指定的序列中没找到值返回True，否则返回False   </li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>位运算符<ul>
+<li>&lt;&lt; 按位左移：二进制位全部左移n位，高位丢弃，低位补0</li>
+<li><blockquote>
+<blockquote>
+<p>按位右移：二进制位全部右移n位，移出的位丢弃，移进的位补0</p>
+</blockquote>
+</blockquote>
+</li>
+<li>&amp;  按位与：两个数的二进制按位运算，都为1时结果为1,否则为0</li>
+<li>|  按位或：两个数的二进制按位运算，有一个为1时结果为1，都为0时结果才为0</li>
+<li>^  按位异或：两个数的二进制按位运算，相同时结果为0，否则为1</li>
+<li>~  按位取反：将二进制的每一位取反，0转换成1,1转换成0</li>
+</ul>
+</li>
+</ul>
+<h3 id="常用语句"><a href="#常用语句" class="headerlink" title="常用语句"></a>常用语句</h3><h4 id="判断语句"><a href="#判断语句" class="headerlink" title="判断语句"></a>判断语句</h4><ol>
+<li><p>if语句</p>
+<pre><code>if  判断语句 ：
+      执行1
+elif  判断语句:
+      执行2
+else ：
+      执行n</code></pre></li>
+</ol>
+<ol start="2">
+<li><p>if-elif语句</p>
+<pre><code>if 判断条件1:
+    doing
+elif 判断条件2：
+    doing</code></pre></li>
+</ol>
+<h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>当满足判断条件1时，执行满足条件1时要做的事情，然后整个if结束。   </p>
+<p>elif必须和if一起使用，否则程序会出错。</p>
+<h4 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h4><ol>
+<li><p>while循环</p>
+<pre><code>while 判断式 :
+       表达式</code></pre></li>
+</ol>
+<ol start="2">
+<li><p>for循环</p>
+<pre><code>for 变量 in 序列:
+    循环语句</code></pre></li>
+</ol>
+<h5 id="判断语句和循环语句需注意"><a href="#判断语句和循环语句需注意" class="headerlink" title="判断语句和循环语句需注意"></a>判断语句和循环语句需注意</h5><p>(1)每个条件后要使用冒号： ，表示接下来是满足条件后要执行的语句。</p>
+<p>(2)使用缩进来划分语句块，相同缩进数的语句在一起组成一个语句块。</p>
+<h4 id="其他语句"><a href="#其他语句" class="headerlink" title="其他语句"></a>其他语句</h4><p>1.break  </p>
+<pre><code>结束整个循环（当前循环体）</code></pre><p>2.continue </p>
+<pre><code>结束本次循环，紧接着执行下一次的循环   </code></pre><p>注意：</p>
+<p> （1） break/continue 只能用在循环中，除此以外不能单独使用<br> （2）break/continue 在嵌套循环中，只对最近的一层循环起作用   </p>
+<p>3.pass </p>
+<pre><code>空语句，保持程序结构的完整性 </code></pre><p>4.else</p>
+<pre><code>python中的while和for循环中也可以使用else语句，在循环中使用时，else语句只在循环完成后执行</code></pre><h3 id="数据类型相关函数"><a href="#数据类型相关函数" class="headerlink" title="数据类型相关函数"></a>数据类型相关函数</h3><h4 id="转换函数"><a href="#转换函数" class="headerlink" title="转换函数"></a>转换函数</h4><pre><code>ord() 返回字符的ASCII编码   
+chr() 返回指定编码的字符   
+bin() 十进制数转换成二进制数   
+oct() 十进制数转换成八进制数   
+hex() 十进制数转换成十六进制数   
+int() 转换成整数   
+float() 转换成浮点数    
+str() 转换成字符串   
+complex() 创建复数   </code></pre><h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h4><ol>
+<li><p>获取数据类型 </p>
+<pre><code>type()</code></pre></li>
+<li><p>比较数据类型是否一致 </p>
+<pre><code>isinstance(a,b)</code></pre></li>
+</ol>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><h4 id="什么是字符串"><a href="#什么是字符串" class="headerlink" title="什么是字符串"></a>什么是字符串</h4><pre><code>字符串是一种表示文本的数据类型，字符串中的字符可以是ASCLL字符、各种符号以及各种Unicode字符。   </code></pre><p>表现方式</p>
+<pre><code>使用单引号包含字符，注意：单引号表示的字符串里不能包含单引号   
+使用双引号包含字符，注意：双引号表示的字符串里不能包含双引号，并且只能有一行   
+使用三引号包含字符，注意：三个引号能包含多行字符串，并常常用来注释</code></pre><h5 id="注意-1"><a href="#注意-1" class="headerlink" title="注意"></a>注意</h5><p>与c语言不同的是，python字符串不能被改变，例如，word[0]=’m’会导致错误    </p>
+<p>转义字符   </p>
+<pre><code>1. 三种引号混合使用   
+2. 反斜杠转义其后的特殊字符   
+3. 在字符串前添加r，表示原始字符串 </code></pre><h4 id="字符串操作"><a href="#字符串操作" class="headerlink" title="字符串操作"></a>字符串操作</h4><pre><code>&gt;&gt;&gt; print(&apos;*&apos;*10)
+**********
+
+&gt;&gt;&gt; print(&apos;i&apos;+&apos;love&apos;+&apos;you&apos;)
+iloveyou
+
+#字符串可以与数字n相乘，得到n个重复字符串
+#字符串之间可以相加进行拼接，但不可以相减</code></pre><h4 id="字符串的输入和输出"><a href="#字符串的输入和输出" class="headerlink" title="字符串的输入和输出"></a>字符串的输入和输出</h4><p>字符串输入   </p>
+<pre><code>a = input(&apos;&apos;) </code></pre><p>input 函数接收的输入会直接赋值给等号左边的变量a。input 函数获取的数据，即使是数字，也是以字符串的方式进行保存的。则进行整数输入：a = int(input(‘’))     </p>
+<p>字符串输出</p>
+<pre><code>print(&apos;&apos;)</code></pre><p>格式化符号   </p>
+<pre><code>%s 通过str()字符串转换来格式化
+%d 十进制正数   
+%f 浮点实数 </code></pre><p>例  </p>
+<pre><code>name = &apos;xiaoming&apos;
+print(&apos;我叫%s&apos;%name)</code></pre><p>输出不换行   </p>
+<pre><code>print(&apos;hello&apos;, end=&apos;&apos;)     </code></pre><h4 id="访问字符串中的值"><a href="#访问字符串中的值" class="headerlink" title="访问字符串中的值"></a>访问字符串中的值</h4><p>字符串的储存方式</p>
+<pre><code>python不支持单字符类型，单字符在python也是作为一个字符串使用。每个字符都对应着一个编号，并且编号是从0开始的，如果要从字符串中取出字符，可以通过下标获取，例如，a = &apos;abcde&apos;,取出c：print(a[2])</code></pre><p>使用切片截取字符串</p>
+<pre><code>name = &apos;abcdef&apos;
+print(name[0:3])  #取下标为0~2的字符， 即print(name[:3]) 
+print(name[3:5])  #取下标为3~4的字符，即   
+print(name[3:]) </code></pre><p>注意：从0开始或末尾结束，可省略不写</p>
+<pre><code>print(name[1:-1])  #取下标为1开始到倒数第2个字符之间的字符   
+print(name[:-1])  #取倒数第一位字符   
+print(name[::-1])  #字符串逆序    </code></pre><h4 id="字符串内建函数"><a href="#字符串内建函数" class="headerlink" title="字符串内建函数"></a>字符串内建函数</h4><p>find ：检测字符串中是否包含子字符串，如果包含子字符串则返回开始的索引值，否则返回-1(可选开始与结束位置)      </p>
+<pre><code>str = &apos;hello it is it&apos;       
+&gt;&gt;&gt; print(str.find(&apos;it&apos;))   
+6</code></pre><p>rfind：检测字符串中是否包含子字符串，如果包含子字符串则返回最后的索引值，否则返回-1(可选开始与结束位置)      </p>
+<pre><code>str = &apos;hello it is it&apos;       
+&gt;&gt;&gt; print(str.rfind(&apos;it&apos;))  
+12</code></pre><p>index ：检测字符串中是否包含子字符串，如果包含子字符串则返回开始的索引值，否则抛出异常  (可选开始与结束位置)       </p>
+<pre><code>str = &apos;hello it is it&apos;       
+&gt;&gt;&gt; print(str.index(&apos;he&apos;))  
+ValueError</code></pre><p>count : 统计字符串里某字符出现的次数  (可选开始与结束位置)      </p>
+<pre><code>str = &apos;hello it is it&apos;       
+&gt;&gt;&gt; print(str.count(&apos;it&apos;))   
+2</code></pre><p>replace ：旧字符串替换成新字符串，如果指定第三个参数，则替换次数不会超过这个参数指定的次数.<br>替换后原字符串并未发生改变</p>
+<pre><code>str = &apos;hello it is it&apos;       
+&gt;&gt;&gt; print(str.replace(&apos;it&apos;,&apos;he&apos;,1)) 
+hello he is it</code></pre><p>split ：通过指定分隔符对字符串进行切片，分隔符默认为所有空字符;若有指定值，则分割相应的次数.<br>分割后原字符串并未发生改变（返回列表） </p>
+<pre><code>str = &apos;hello it is it&apos;
+&gt;&gt;&gt; print(str.split())
+[&apos;hello&apos;, &apos;it&apos;, &apos;is&apos;, &apos;it&apos;]
+&gt;&gt;&gt; print(str.split(&apos;i&apos;))
+[&apos;hello &apos;, &apos;t &apos;, &apos;s &apos;, &apos;t&apos;]
+&gt;&gt;&gt; print(str.split(&apos;i&apos;,1))
+[&apos;hello &apos;, &apos;t is it&apos;]</code></pre><p>capitalize ：将字符串第一个字母变成大写，其他字母变小写<br>改变后原字符串并未发生改变   </p>
+<pre><code>str = &apos;hello it is it&apos;
+&gt;&gt;&gt; print(str.capitalize())
+Hello it is it</code></pre><p>title ：所有单词均以大写开始，其余字母均为小写</p>
+<pre><code>str = &apos;hello it is it&apos;
+&gt;&gt;&gt; print(str.title())
+Hello It Is It</code></pre><p>startswith ：检查字符串是否以指定字符串开头(可选开始与结束位置)      </p>
+<pre><code>str = &apos;hello it is it&apos;
+&gt;&gt;&gt; print(str.startswith(&apos;he&apos;))
+True</code></pre><p>endswith ：检查字符串是否以指定字符串结尾<br>(可选开始与结束位置)        </p>
+<pre><code>str = &apos;hello it is it&apos;
+&gt;&gt;&gt; print(str.endswith(&apos;it&apos;))
+True</code></pre><p>upper ：将小写字母转化为大写字母   </p>
+<pre><code>str = &apos;hello it is it&apos;
+&gt;&gt;&gt; print(str.upper())
+HELLO IT IS IT</code></pre><p>ljust : 原字符串左对齐，并使用空格填充至指定长度；如果指定的长度小于原字符串的长度，则返回原字符串</p>
+<pre><code>str = &apos;hello it is me&apos;
+&gt;&gt;&gt; print(str.ljust(30,&apos;*&apos;))
+hello it is me****************</code></pre><p>rjust : 原字符串右对齐，并使用空格填充至指定长度；如果指定的长度小于原字符串的长度，则返回原字符串</p>
+<pre><code>str = &apos;hello it is me&apos;
+&gt;&gt;&gt; print(str.rjust(30,&apos;*&apos;))
+****************hello it is me</code></pre><h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><p>列表是python中的一种数据结构，它可以储存不同类型的数据</p>
+<h4 id="列表内元素的操作"><a href="#列表内元素的操作" class="headerlink" title="列表内元素的操作"></a>列表内元素的操作</h4><p>1、添加 </p>
+<pre><code>append( )  # 在列表的末尾新增元素
+extend( )  # 将一个列表中的元素全部添加到另一个列表
+insert(index,object)   # 在列表的指定位置添加元素   </code></pre><p>2、查找   </p>
+<pre><code>in  存在   
+not in 不存在</code></pre><p>例</p>
+<pre><code>a = [&apos;hi&apos;,&apos;hello&apos;]
+&gt;&gt;&gt; &apos;hi&apos;in a
+True</code></pre><p>3、修改<br>通过修改下标来修改列表中的元素</p>
+<pre><code>&gt;&gt;&gt; a[0] = &apos;haha&apos;
+&gt;&gt;&gt; a
+[&apos;haha&apos;, &apos;hello&apos;]</code></pre><p>4、 删除   </p>
+<pre><code>del name[index] 根据下标进行删除
+pop（）删除最后一个元素
+remove（）根据元素的值进行删除   </code></pre><p>5 、删除列表</p>
+<pre><code>del name</code></pre><p>6、重复操作符‘*’</p>
+<pre><code>&gt;&gt;&gt; a = [0]
+&gt;&gt;&gt; s2 = a*19
+&gt;&gt;&gt; s2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]</code></pre><h4 id="元素排序"><a href="#元素排序" class="headerlink" title="元素排序"></a>元素排序</h4><p>排序默认为：数字从小到大，字母按首位顺序</p>
+<ol>
+<li><p>反序：reverse()      </p>
+<pre><code>a = [1,2,3]
+a.reverse()
+a
+[3, 2, 1]
+
+# or
+for i in reversed(range(1,4)):
+      print(i,end=&apos;&apos;)
+# 321</code></pre></li>
+</ol>
+<ol start="2">
+<li><p>sort（）对列表永久排序</p>
+<pre><code>a = [2,4,1,3]
+a.sort()
+a
+[1, 2, 3, 4]</code></pre></li>
+</ol>
+<ol start="3">
+<li><p>sorted（）对列表临时排序  </p>
+<pre><code>a = [2,4,1,3]   
+print(sorted(a))   
+[1, 2, 3, 4]   
+a   
+[2, 4, 1, 3]   </code></pre></li>
+</ol>
+<h4 id="列表遍历"><a href="#列表遍历" class="headerlink" title="列表遍历"></a>列表遍历</h4><p>for与while遍历</p>
+<h5 id="for遍历：常与range搭配使用"><a href="#for遍历：常与range搭配使用" class="headerlink" title="for遍历：常与range搭配使用"></a>for遍历：常与range搭配使用</h5><p>range()特点：左闭右开,可以生成一个数字序列  </p>
+<p>for循环然后遍历这个范围，for i in range(1,5)相当于 for i in [1, 2, 3, 4]，这就像把序列中的每一个数(或对象)分配给i，一次一个,然后为每个i值执行该语句块。</p>
+<p>提供两个数字，range返回一个从第一个数字到第二个数字的一个数字序列。例如，range(1,5)给出序列[1, 2, 3, 4]。默认情况下，range 步距取为1。如果我们提供第三个数字，range那么它变成了步距。例如range(1,5,2)得到[1,3]。请记住，范围扩展到第二号码，即它不包括第二个数字。</p>
+<p>注意</p>
+<p>range()生成一个数字序列，当for循环请求下一个项目时，它一次只生成一个数字。如果你想立刻看到完整的数字序列,使用list(range())。</p>
+<pre><code>&gt;&gt;&gt; for each in range(1,10):
+    print(each,end = &apos;&apos;)
+
+123456789</code></pre><h5 id="while遍历，常与len搭配使用"><a href="#while遍历，常与len搭配使用" class="headerlink" title="while遍历，常与len搭配使用"></a>while遍历，常与len搭配使用</h5><p>len(列表名)：获取列表的长度</p>
+<p>2.利用zip函数，同时遍历多个列表   </p>
+<pre><code>a = [&apos;n1&apos;,&apos;n2&apos;,&apos;n3&apos;,&apos;n4&apos;]
+for m,n in zip(range(1,5),a):
+    print(m,&apos;:&apos;,n)
+
+1 : n1
+2 : n2
+3 : n3
+4 : n4</code></pre><h4 id="列表解析式"><a href="#列表解析式" class="headerlink" title="列表解析式"></a>列表解析式</h4><ol>
+<li><p>用append方法向列表添加元素</p>
+<pre><code>a = []
+for i in range(11):
+    a.append(i)
+print(a)
+
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</code></pre></li>
+<li><p>列表解析式（在执行效率上远远超过append）</p>
+<pre><code>a = [i for i in range(11)]
+print(a)
+
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</code></pre></li>
+</ol>
+<pre><code>a = [i**3 for i in range(11)]
+print(a)
+
+[0, 1, 8, 27, 64, 125, 216, 343, 512, 729, 1000]
+
+
+a = [i for i in range(11) if i%2 == 0]
+print(a)
+[0, 2, 4, 6, 8, 10]</code></pre><h4 id="列表切片"><a href="#列表切片" class="headerlink" title="列表切片"></a>列表切片</h4><pre><code>切片并不改变原列表，相当于拷贝后的操作   
+左闭右开</code></pre><ol>
+<li><p>从0开始或末尾结束，可省略不写   </p>
+<pre><code>a = [1,2,3,4]
+print(a[:2])
+print(a[1:])
+
+[1, 2]
+[2, 3, 4]</code></pre></li>
+</ol>
+<ol start="2">
+<li><p>拷贝   </p>
+<pre><code>a = [1,2,3,4]
+b = a[:]
+print(b)
+
+[1, 2, 3, 4]</code></pre></li>
+<li><p>实现字符串的逆序 </p>
+<pre><code>a = [1,2,3,4]
+b = a[::-1]
+print(b)
+
+[4, 3, 2, 1]</code></pre></li>
+<li><p>取字符串末位   </p>
+<pre><code>a = [1,2,3,4]
+b = a[-1]
+print(b)
+
+4</code></pre></li>
+</ol>
+<h3 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h3><pre><code>元组与列表类似，不同之处在于，元组的元素不能修改，元组使用圆括号包含元素，而列表使用方括号包含元素</code></pre><h4 id="访问元祖"><a href="#访问元祖" class="headerlink" title="访问元祖"></a>访问元祖</h4><pre><code>可以使用下表索引来访问元祖中的值</code></pre><h4 id="修改元组"><a href="#修改元组" class="headerlink" title="修改元组"></a>修改元组</h4><p>1.元组中的元素值是不允许修改的，但我们可以对元组进行连接组合   </p>
+<pre><code>a = (1,2)
+b = (3,4)
+print(a+b)
+
+(1, 2, 3, 4)</code></pre><p>2.python不允许修改元组的数据，包括不能删除其中的元素</p>
+<p>3.带括号的不一定是元组，不带括号的不一定不是元组</p>
+<pre><code>&gt;&gt;&gt; a = (1)
+&gt;&gt;&gt; print(type(a))
+&lt;class &apos;int&apos;&gt;
+&gt;&gt;&gt; b = 1,2,3
+&gt;&gt;&gt; print(type(b))
+&lt;class &apos;tuple&apos;&gt;</code></pre><p>逗号才是关键！</p>
+<p>可以这样创建一个空元祖</p>
+<pre><code>a = ()</code></pre><p>怎样创建一个只有一个元素的元组呢？</p>
+<pre><code>a = (1,)
+a = 1,</code></pre><p>4.通过拼接的方法修改元组里的值（实际上是创建一个新的元组）</p>
+<pre><code> &gt;&gt;&gt; a = (&apos;1&apos;,&apos;2&apos;,&apos;3&apos;)
+&gt;&gt;&gt; a = (&apos;6&apos;,) + a[1:] #注意要加括号和逗号！
+&gt;&gt;&gt; a
+(&apos;6&apos;, &apos;2&apos;, &apos;3&apos;)</code></pre><h4 id="遍历元组"><a href="#遍历元组" class="headerlink" title="遍历元组"></a>遍历元组</h4><pre><code>while
+for   </code></pre><h3 id="序列"><a href="#序列" class="headerlink" title="序列"></a>序列</h3><p>列表、字符串、元组的共同点</p>
+<pre><code>1.都可以通过索引得到每一个元素
+2.默认索引值都是从0开始
+3.可以通过分片的方法得到一个范围内的元素的集合
+4.有很多共同的操作符</code></pre><p>方法</p>
+<pre><code>len() ： 计算元素个数
+max() ： 返回最大值（数字返回最大值，字母返回其对应ascll值最大值所对应的字母）
+min() ： 返回最小值
+#max和min中元素的类型要为同一种类型
+tuple() ： 转为元祖
+list() ： 转为列表   
+sum() : 返回数据类型序列的和</code></pre><h3 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h3><pre><code>定义：字典的每个元素都是由两部分组成的，分别是键和值。
+例，a = {&apos;name&apos;:&apos;boy&apos;,&apos;score&apos;:&apos;80&apos;}  
+其中，&apos;name&apos;为键，&apos;boy&apos;为值。键必须是唯一的，但值可以是任何类型的   </code></pre><h4 id="根据键访问值"><a href="#根据键访问值" class="headerlink" title="根据键访问值"></a>根据键访问值</h4><pre><code>info = {&apos;name&apos;:&apos;xiaoming&apos;}   
+print(info[&apos;name&apos;])      # xiaoming</code></pre><p>如果不确定字典中是否存在某个值而又想获取其值时，可以使用get，如果访问的键不在字典中，会返回默认值   </p>
+<pre><code>info = {&apos;name&apos;:&apos;xiaoming&apos;}  
+
+print(info.get(&apos;age&apos;))    # None   
+print(info.get(&apos;age&apos;,18)) # 18</code></pre><h4 id="修改字典元素"><a href="#修改字典元素" class="headerlink" title="修改字典元素"></a>修改字典元素</h4><p> 如果要添加的键已经存在，那么字典中该键对应的值会被新值替代</p>
+<pre><code>info{&apos;id&apos; : 16}   
+info[&apos;id&apos;] = 2   
+print(info[&apos;id&apos;])    # 2</code></pre><h4 id="添加字典元素"><a href="#添加字典元素" class="headerlink" title="添加字典元素"></a>添加字典元素</h4><p>使用变量名[‘键’] = ’数据‘ 时，如果字典不存在这个键，则会在字典中新增一个元素 </p>
+<pre><code>info{&apos;id&apos; : 16}    
+info[&apos;name&apos;]  = &apos;xiaoming&apos;   
+print(info)    </code></pre><h4 id="删除字典元素"><a href="#删除字典元素" class="headerlink" title="删除字典元素"></a>删除字典元素</h4><p>del  删除字典 </p>
+<pre><code>del  name   </code></pre><p>clear  清空字典元素</p>
+<pre><code>name.clear()</code></pre><h4 id="计算字典的键值对的个数"><a href="#计算字典的键值对的个数" class="headerlink" title="计算字典的键值对的个数"></a>计算字典的键值对的个数</h4><pre><code>print( len(name) )   </code></pre><h4 id="字典的遍历"><a href="#字典的遍历" class="headerlink" title="字典的遍历"></a>字典的遍历</h4><p>1.遍历字典的键 </p>
+<p>获取字典的键视图   </p>
+<p>  name.keys()  #可用此方法遍历键    </p>
+<pre><code>dict = {&apos;name&apos;:&apos;xiaoming&apos;,&apos;age&apos;:12}    
+for key in dict.keys():   
+    print(key)   </code></pre><p>2.遍历字典的值   </p>
+<p>获取字典的值视图  </p>
+<p>   name.values()  #可用此方法遍历值   </p>
+<pre><code>dict = {&apos;name&apos;:&apos;xiaoming&apos;,&apos;age&apos;:12}    
+for values in dict.values():   
+    print(key)   </code></pre><p>3.遍历字典中的元素  </p>
+<p>-获取字典的元素视图</p>
+<p>   name.items()  #可用此方法遍历元素</p>
+<pre><code>dict = {&apos;name&apos;:&apos;xiaoming&apos;,&apos;age&apos;:12}    
+for key,values in dict.items():   
+    print(key)   </code></pre><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><h4 id="函数的定义和使用"><a href="#函数的定义和使用" class="headerlink" title="函数的定义和使用"></a>函数的定义和使用</h4><p>1.定义函数   </p>
+<pre><code>def 函数名(参数列表)：   
+    &quot;函数_文档字符串&quot;   
+    函数体   
+return 表达式</code></pre><p> 函数内容以冒号起始，并且缩进<br> return表达式结束函数   </p>
+<p>2.调用函数<br> 定义完函数后，函数是不会自动执行的，需要调用它   </p>
+<pre><code>def hanshu()
+    print(&apos;hi&apos;)
+hanshu()  # 调用</code></pre><h4 id="函数的参数"><a href="#函数的参数" class="headerlink" title="函数的参数"></a>函数的参数</h4><p>1.函数参数的传递<br> 可以在定义函数的时候添加参数，让参数来接收传递给函数的值   </p>
+<pre><code>def add(num1,num2)   
+    print(num1 + num2)
+add(1,3)   # 打印出4</code></pre><p> 在调用函数的时候，传递的数据要和定义的参数一一对应   </p>
+<p>2.默认参数<br> 定义函数时，可以给函数的参数设置默认值，这个参数就被称为默认参数。调用函数时，默认参数可直接忽略，而其它参数是必须要传入值的。如果默认参数没有传入值，则直接使用默认的值；如果默认参数传入了值，则使用传入的新值替代。   </p>
+<pre><code>def hanshu(name,age = 35)
+    print(name)
+    print(age)
+hanshu(&apos;xiaoming&apos;)     #xiaoming 35
+hanshu(&apos;xiaoming&apos;,15)  #xiaoming 15</code></pre><p> 带有默认值的参数一定要位于参数列表的最后面   </p>
+<p>3.不定长参数<br> args参数没有接受到数据，为一个空元祖  </p>
+<pre><code>def test(a,b,*args):
+    print(a)
+    print(b)
+    print(args)
+test(1,2)  #1  2  ()
+
+
+
+def test(a,b,*args):
+    print(a)
+    print(b)
+    print(args)
+test(1,2,3,4,5)  # 1,2,(3,4,5)</code></pre><p> 如果传入的参数没有名字，那么传入的值会给args变量；如果传入的参数有名字，那么传入的值会给kwargs变量</p>
+<pre><code>def test(a,b,*args,**kwargs):
+    print(a)
+    print(b)
+    print(*args)
+    print(**kwargs)
+test(1,2,3,4,5)  # 1,2,(3,4,5) {}
+test(1,2,3,m=4,n=5) # 1,2,(3) {&apos;m&apos;:4,&apos;n&apos;:5}</code></pre><h4 id="函数的返回值"><a href="#函数的返回值" class="headerlink" title="函数的返回值"></a>函数的返回值</h4><p> 程序中的函数完成一件事后，最后给调用者的结果。       </p>
+<p>根据函数的参数和返回值，函数可分为四种类型：<br>1.函数无参数，无返回值   </p>
+<pre><code>def hanshu():
+    print(&apos;hi&apos;)
+hanshu()</code></pre><p>2.函数无参数，有返回值   </p>
+<pre><code>def hanshu():
+    return 30
+temperature = hanshu()
+print(temperature)</code></pre><p>3.函数有参数，无返回值   </p>
+<pre><code>def hanshu(num1,num2):
+    result = num1 + num2
+    print(result)
+hanshu(1,2)   </code></pre><p>4.函数有参数，有返回值   </p>
+<pre><code>def hanshu(num):
+    if num == 1:
+        result = 1
+    else:
+        result = hanshu(num - 1) * num
+    return result
+print(&apos;5!=&apos;,hanshu(5))</code></pre><h4 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h4><p>1.全局变量和局部变量<br>局部变量，指的是定义在函数内的变量，即定义在def函数内的变量名，只能在def函数内使用，它与函数外具有相同名称的其它变量没有任何关系</p>
+<pre><code>def hanshu():
+    num = 1
+    print(num)
+def hanshu1():
+    num = 2
+    print(num)
+hanshu()
+hanshu1()
+
+1
+2</code></pre><p>全局变量是定义在函数外的变量，它拥有全局作用域     </p>
+<pre><code>num = 5
+def hanshu():
+    num = 1
+    print(num)
+hanshu()
+print(num)
+
+1
+5</code></pre><p>2.global和nonlocal关键字<br>global关键字用来在函数或其他局部作用域中使用全局变量(修改全局变量)</p>
+<pre><code>num = 5
+def hanshu():
+    global num
+    num += 1
+    print(num)
+hanshu()
+print(num)
+
+6
+6</code></pre><p>nonlocal关键字可以在一个嵌套的函数中修改嵌套作用域中的变量  </p>
+<pre><code>#不加 nonlocal
+def hanshu():
+    num = 1
+    def hh():
+        num = 2
+    hh()
+    print(num)
+hanshu()
+
+1
+
+#加 nonlocal
+def hanshu():
+    num = 1
+    def hh():
+        nonlocal num
+        num = 2
+    hh()
+    print(num)
+hanshu()
+
+2</code></pre><p>使用global关键字修饰的变量之前可以不存在，而使用nonlocal关键字修饰的变量在嵌套作用域中必须已经存在</p>
+<h4 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h4><p>匿名函数是没有名称的函数，不再使用def定义，能接收任何数量的参数，但只能返回一个表达式的值   </p>
+<pre><code>sum = lambda a,b:a+b
+print(sum(1,2))
+
+3
+
+
+# 声明的函数支持所有运算
+def hanshu(a,b,opt):
+    print(opt(a,b))
+hanshu(11,22,lambda x,y:x+y)
+hanshu(11,22,lambda x,y:x-y)
+
+33
+-11</code></pre><p>匿名函数与一般函数的区别、优缺点   </p>
+<pre><code>def创建的函数是有名称的，  而lambda没有函数名称，这是最明显的区别之一    
+lambda 返回的结果通常是一个对象或者一个表达式，它不会将结果赋给一个变量，def则可以   
+lambda只是一个表达式，函数体比def简单很多，而def是一个语句   
+lambda表达式的冒号后面只能有一个表达式，def则可以有多个   
+像if或for等语句不能用于lambda中，def则可以   
+lambda一般用来定义简单的函数，而def可以定义复杂的函数    
+lambda函数不能共享给别的程序调用，def可以   </code></pre><h4 id="时间日期函数"><a href="#时间日期函数" class="headerlink" title="时间日期函数"></a>时间日期函数</h4><p>1.时间函数 </p>
+<p>time模块</p>
+<pre><code># 推迟调用线程的运行，括号内为秒数
+import time
+time.sleep(1)
+
+print(time.ctime())
+#Thu Jan 31 14:44:49 2019</code></pre><p>datatime</p>
+<pre><code># 获取时间
+import datetime
+nowTime=datetime.datetime.now().strftime(&apos;%Y-%m-%d %H:%M:%S&apos;)#现在
+pastTime = (datetime.datetime.now()-datetime.timedelta(hours=1)).strftime(&apos;%Y-%m-%d %H:%M:%S&apos;)#过去一小时时间
+afterTomorrowTime = (datetime.datetime.now()+datetime.timedelta(days=2)).strftime(&apos;%Y-%m-%d %H:%M:%S&apos;)#后天
+tomorrowTime = (datetime.datetime.now()+datetime.timedelta(days=1)).strftime(&apos;%Y-%m-%d %H:%M:%S&apos;)#明天
+print(&apos;\n&apos;,nowTime,&apos;\n&apos;,pastTime,&apos;\n&apos;,afterTomorrowTime,&apos;\n&apos;,tomorrowTime)</code></pre><p>2.日历函数<br>import calendar</p>
+<pre><code>import calendar
+data = calendar.month(2018,6)
+print(data)
+
+June 2018
+Mo Tu We Th Fr Sa Su
+             1  2  3
+ 4  5  6  7  8  9 10
+11 12 13 14 15 16 17
+18 19 20 21 22 23 24
+25 26 27 28 29 30</code></pre><h4 id="随机函数"><a href="#随机函数" class="headerlink" title="随机函数"></a>随机函数</h4><pre><code>import random
+random.random():用于生成一个0~1之间的随机浮点数
+random.uniform(a,b):返回a与b之间的随机浮点数，a，b大小可随机.返回范围范围左闭右闭
+random.randint(a,b):返回a与b之间的随机整数，a的值一定要小于b的值.返回范围左闭右闭
+random.randrang(a,b,step):返回某个区间内的整数，可以设置step.只能传入整数
+random.choice(sequence):从列表、元组或字符串中返回一个随机的元素
+random.shuffle():将列表中的元素打乱顺序
+random.sample(sequence,k):从指定序列中随机获取k个元素作为一个片段返回，不会改变原有序列</code></pre><h3 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h3><h4 id="文件打开及读写"><a href="#文件打开及读写" class="headerlink" title="文件打开及读写"></a>文件打开及读写</h4><p>1.文件打开    </p>
+<pre><code>f = open（‘文件名’，‘访问模式’）   </code></pre><p>2.访问模式    </p>
+<pre><code>r ：只读    
+w ：只写 如已存在则覆盖，不存在则重新创建    
+a ：只写 追加内容    
+w+ ：打开后，清空原有内容，成为一个新的空文件，对这个空文件具有读写权限     
+r+ ：打开后，保存原有内容，可以读取文件内容，追加写内容</code></pre><p>3.关闭文件<br>在每次使用完文件后，都要使用close关闭文件</p>
+<pre><code>f.close()    </code></pre><p>4.写入数据<br>用write方法写入数据 </p>
+<pre><code>f.write(&apos; &apos;) </code></pre><p>5.读取文件<br>read</p>
+<pre><code>b = f.read()    #可加入数字表示读取数据的长度   
+print(b)</code></pre><p>redlines</p>
+<pre><code>#返回一个列表，可循环打印出每行的数据     
+a = open(&apos;gtf.txt&apos;,&apos;r&apos;)
+b = a.readlines()
+for i in b:
+        print(i)</code></pre><p>readline</p>
+<pre><code>#一行一行读取数据
+a = open(&apos;gtf.txt&apos;,&apos;r&apos;)
+b = a.readline()
+print(b)</code></pre><p>6.修改数据<br>可以先读取文件内容，然后修改后重新写入该文件</p>
+<h4 id="文件的定位读写"><a href="#文件的定位读写" class="headerlink" title="文件的定位读写"></a>文件的定位读写</h4><p>1.使用tell方法来获取文件当前的读写位置，返回文件的当前位置，即文件指针当前位置</p>
+<pre><code>&apos;gtf.txt&apos; :hello it is me
+
+
+a = open(&apos;gtf.txt&apos;,&apos;r&apos;)
+b = a.read(5)
+print(b)
+position = a.tell()
+print(position)
+c = a.read(3)
+print(c)
+position1 = a.tell()
+print(position1)
+
+hello
+5
+ it
+8</code></pre><p>2.用seek定位到文件的指定读写位置 </p>
+<pre><code>seek（a，b）     
+
+a：表示偏移量，即需要移动的字节数     
+b：
+ 0：从文件的起始位置开始偏移      
+ 1：从文件的当前位置开始偏移     
+ 2：从文件末尾开始偏移     </code></pre><h4 id="文件的重命名和删除"><a href="#文件的重命名和删除" class="headerlink" title="文件的重命名和删除"></a>文件的重命名和删除</h4><pre><code>import os  </code></pre><p>1.重命名    </p>
+<pre><code>os.rename(oldname,newname)</code></pre><p>描述路径时，原文件和新文件都应描述清楚，否则文件可能丢失<br>2.删除</p>
+<pre><code>os.remove(name)</code></pre><h4 id="文件夹"><a href="#文件夹" class="headerlink" title="文件夹"></a>文件夹</h4><pre><code>import os  </code></pre><p>1.创建</p>
+<pre><code>os.mkdir(name)</code></pre><p>2.删除</p>
+<pre><code>os.rmdir(name)</code></pre><p>3.获取当前目录</p>
+<pre><code>os.getcwd()</code></pre><p>4.改变默认目录</p>
+<pre><code>os.chdir(&apos;..\&apos;)    将目录改变为上一级的目录</code></pre><p>5.获取目录列表</p>
+<pre><code>os.listdir(&apos;./&apos;)</code></pre><h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><h4 id="异常类"><a href="#异常类" class="headerlink" title="异常类"></a>异常类</h4><p>NameError<br>尝试访问一个未声明的变量，会引发NameError   </p>
+<p>ZeroDivisionError<br>当除数为零的时候，会引发ZeroDivisionError </p>
+<p>SyntaxError<br>当解释器发现语法错误时，会引发SyntaxError错误<br>SyntaxError异常是唯一不在运行时发生的异常  </p>
+<p>IndexError<br>当使用序列中不存在的索引时，会引发IndexError异常</p>
+<p>KeyError<br>当时用映射中不存在的键时，会引发KeyError异常 </p>
+<p>FileNotFoundError<br>试图打开不存在的文件时，会引发FileNotFoundError异常 </p>
+<p>AttributeError<br>当尝试访问未知的对象属性时，会引发AttributeError异常      </p>
+<h4 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h4><p>1.捕获简单异常  </p>
+<pre><code>try:
+    ......
+except nameError：
+......</code></pre><p>只要监控到错误，程序就会执行except里面的语句，并且不再执行try里面未执行的语句<br>2.捕获多个异常   </p>
+<pre><code>try:
+    ......
+except nameError1:
+    ......
+except nameError2:
+    ......
+......</code></pre><p>要使一个except子句捕获多个异常，可以使用元组来表示 </p>
+<pre><code>except (nameError1,nameError2): </code></pre><p>3.捕获异常的描述信息<br>使用一个except子句捕获多个异常时，为了区分不同的错误信息，可以使用as获取系统反馈的错误信息</p>
+<pre><code>try:
+    ......
+except (nameError1,nameError2) as result:
+    print(result)
+# 捕获到异常中的任意一个时，就会把描述信息保存到result变量中</code></pre><p>4.捕获所有的异常</p>
+<pre><code>try:
+    ......
+except：
+    ......
+# 捕获所有的异常
+
+
+try:
+    ......
+except Exception as result：
+    print(result)
+# 捕获所有的异常以及描述信息</code></pre><p>5.异常处理的完整语句</p>
+<pre><code>try:
+...
+except NameError:
+...
+except:
+...
+else: #若果无异常，则执行
+...
+finally: # 无论是否异常，总会执行(通常情况下，用于释放资源)
+...</code></pre><h4 id="抛出异常"><a href="#抛出异常" class="headerlink" title="抛出异常"></a>抛出异常</h4><p>1.使用类名引发异常  </p>
+<pre><code>raise 异常的类名    </code></pre><p>2.使用异常类的实例引发异常  </p>
+<pre><code>a = Indexerror()    
+raise a     </code></pre><p>3.传递异常 </p>
+<p>不带任何参数的raise语句，可以再次引发刚刚发生过的异常     </p>
+<p>4.指定异常的描述信息    </p>
+<pre><code>raise IndexError(&apos;下标超出范围&apos;)</code></pre><p>5在异常中抛出另外一个异常     </p>
+<pre><code>try:
+    num
+excpt Exception as except:
+    raise IndexError(&apos;下标超出范围&apos;) from exception
+# 会产生NameError和IndexError</code></pre><h4 id="assert（断言）语句"><a href="#assert（断言）语句" class="headerlink" title="assert（断言）语句:"></a>assert（断言）语句:</h4><p>1.当用户定义的约束条件不满足的时候，会触发AssertionError异常<br>格式:assert  逻辑表达式，data<br>逻辑表达式相当于条件，data通常是一个字符串，当表达式false时，作为异常类型的描述信息使用<br>逻辑上等于    </p>
+<pre><code>if not 逻辑表达式：    
+    raise AssertionError(data)     </code></pre><h4 id="预定义清理"><a href="#预定义清理" class="headerlink" title="预定义清理"></a>预定义清理</h4><p>使用with语句，无论资源在使用过程中是否发生异常，都会执行释放资源的操作</p>
+<pre><code>with 上下文表达式[as 资源对象]:   
+    对象的操作
+
+
+with open(&apos;gtf.txt&apos;) as file:
+    data = file.read()
+
+# 如果能顺利打开文件，则将文件对象赋值给file，然后调用read方法读取了file对象的数据；当对象操作结束后，with语句会关闭文件，即使这段代码在运行过程中产生了异常，with语句也会关闭文件</code></pre><h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><h4 id="模块的基本使用"><a href="#模块的基本使用" class="headerlink" title="模块的基本使用"></a>模块的基本使用</h4><p>1.引入模块</p>
+<pre><code>import ...</code></pre><p>调用模块中的函数时，必须：模块名.函数名<br>2.只引入函数   </p>
+<pre><code>from 模块名 import 函数名1,2...   </code></pre><p>调用函数时，只能给出函数名<br>3.引入模块的所有函数   </p>
+<pre><code>from 模块名 import *</code></pre><h4 id="模块的制作"><a href="#模块的制作" class="headerlink" title="模块的制作"></a>模块的制作</h4><p>1.制作函数</p>
+<p>test.py:</p>
+<pre><code>def sum(a,b):
+    print(a+b)</code></pre><p>则在主程序中可以引入这个函数</p>
+<pre><code>from test import sum   
+sum(1,3)</code></pre><p>或</p>
+<pre><code>import test   
+test.sum(1,3)</code></pre><p>但test.py中可能有测试代码,为了不使主程序运行测试代码，可在测试代码前加上 </p>
+<pre><code>if __name__ == &apos;__main__&apos;:</code></pre><p>每个模块都有一个<strong>name</strong>属性，当其值为’<strong>main</strong>‘时，表明该模块自身在运行，否则是被引用</p>
+<p>2.制作类<br>lei.py:</p>
+<pre><code>class first():
+    def move(self):
+        print(&apos;biu&apos;)</code></pre><p>在主程序可以引入这个类   </p>
+<pre><code>from lei import first    
+duixiang = first()  #创建对象   </code></pre><p>或</p>
+<pre><code>import lei   
+duixiang = lei.first() #创建对象</code></pre><h3 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h3><h4 id="类"><a href="#类" class="headerlink" title="类"></a>类</h4><p>类是有一些系列有共同特征和行为事物的抽象概念的总和</p>
+<pre><code>类名：首字母必须大写
+属性：描述特征
+方法：描述行为</code></pre><p>类的定义</p>
+<pre><code>class 类名：
+#属性
+#方法
+    def move（self）：
+        print（‘move’）
+#方法必须显示地声明一个self函数，第一个参数永远都是self，表示的是对象自身</code></pre><h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><p>1.根据类创建对象</p>
+<pre><code>创建对象
+对象名 = 类名（）   
+
+添加属性
+对象名.属性名 = 值
+
+调用方法   
+对象名.方法函数名（）</code></pre><p>2.构造方法<br>在创建对象的时候设置好属性,当创建类实例的时候，系统会自动调用构造方法，从而实现对类进行初始化的操作</p>
+<pre><code>def __init__(self):   
+    self.other = 值
+#在init中返回 None</code></pre><p>带参构造</p>
+<pre><code>def __init__(self,other):
+    self.others = other</code></pre><p>3.析构方法<br>当删除一个对象来释放类所占用资源的时候，python解释器默认会调用另外一个方法：<strong>del</strong> 方法</p>
+<p>使用del语句可以删除一个对象，释放它所占用的空间</p>
+<pre><code>&gt;&gt;&gt; class lei:
+        def __init__(self):
+            print(&apos;我是init方法，我被调用了&apos;)
+        def __del__(self):
+            print(&apos;我是del方法，我被调用了&apos;)
+
+
+&gt;&gt;&gt; a1 = lei()
+我是init方法，我被调用了
+&gt;&gt;&gt; a2 = a1 #增加标签
+&gt;&gt;&gt; del a1  
+&gt;&gt;&gt; del a2 #完全删除才会调用
+我是del方法，我被调用了</code></pre><p>python有自动回收垃圾的机制，当python程序结束的时候，python解释器会检测当前是否有需要释放的内存空间，如果有就自动调用del语句删掉，如果已经手动调用了del语句，就不再自动删除</p>
+<h4 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h4><p>通常把隐藏属性、方法与方法实现细节的过程称为封装。为了保护类里面的属性，避免外界随意赋值，可采用如下方式解决：</p>
+<pre><code>把属性定义为私有属性，即在属性名的前面加上两个下划线
+添加可以供外界调用的两个方法，分别用于设置或者获取属性值</code></pre><p>下列代码中，将age设为了私有属性，类的外面无法知道类里面的私有属性，更无法访问类的私有属性</p>
+<pre><code>&gt;&gt;&gt; class lei:
+        def __init__(self,name,age):
+            self.name = name
+            self.__age = age
+
+
+&gt;&gt;&gt; a1 = lei(&apos;xiaoming&apos;,12)
+&gt;&gt;&gt; a1.name
+&apos;xiaoming&apos;
+&gt;&gt;&gt; a1.__age
+Traceback (most recent call last):
+  File &quot;&lt;pyshell#16&gt;&quot;, line 1, in &lt;module&gt;
+    a1.__age
+AttributeError: &apos;lei&apos; object has no attribute &apos;__age&apos;</code></pre><p>添加可以供外界调用的两个方法,分别设置和获取私有属性__age的值：</p>
+<pre><code>&gt;&gt;&gt; class lei:
+        def __init__(self,name,age):
+            self.name = name
+            self.__age = age
+        def set(self,newage):
+            if newage &gt; 0 and newage &lt; 100:
+                self.__age = newage
+        def get(self):
+            return self.__age
+
+
+&gt;&gt;&gt; a = lei(&apos;xiaoming&apos;,12)
+&gt;&gt;&gt; a.name
+&apos;xiaoming&apos;
+&gt;&gt;&gt; a.set(13)
+&gt;&gt;&gt; a.get()
+13</code></pre><h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><p>类的继承是指在一个现有类的基础上构建一个新的类，构建出来的新类被称作子类，现有类被称作父类，子类会自动拥有父类的属性和方法<br>1.单继承<br>格式如下：</p>
+<pre><code>class 子类名（父类名）：</code></pre><p>假设有两个类A、B，B类是A类的子类</p>
+<pre><code>class A(object):
+class B(A):</code></pre><p>如果在类的定义中没有标注出父类，这个类默认是继承自object的：class lei 与 class lei(object)是等价的</p>
+<p>父类的私有属性和私有方法是不会被子类继承的，更不能被子类访问</p>
+<p>如果子类没有初始化，则默认同父类初始化相同</p>
+<pre><code>&gt;&gt;&gt; class lei(object):
+        def __init__(self,color):
+            self.color = color
+        def print(self):
+            print(&apos;我在父类里面创建&apos;)
+
+&gt;&gt;&gt; class zilei(lei):
+        pass
+
+&gt;&gt;&gt; a = zilei(&apos;black&apos;)
+
+&gt;&gt;&gt; a.color
+&apos;black&apos;
+
+&gt;&gt;&gt; a.print()
+我在父类里面创建</code></pre><p>2.多继承<br>多继承就是子类拥有多个父类，并且具有他们共同的特征<br>格式如下：</p>
+<pre><code>class 子类(父类1，父类2...)</code></pre><p>如果子类继承的多个父类间是平行关系，子类先继承哪个类就会调用哪个类的方法</p>
+<pre><code>&gt;&gt;&gt; class fish:
+        def move(self):
+            print(&apos;im fish&apos;)
+
+
+&gt;&gt;&gt; class bird:
+        def move(self):
+            print(&apos;im bird&apos;)
+
+
+&gt;&gt;&gt; class sum(fish,bird):
+        pass
+
+&gt;&gt;&gt; a = sum()
+&gt;&gt;&gt; a.move()
+im fish</code></pre><p>3.重写父类方法与调用父类方法</p>
+<p>在子类中重写的方法要和父类被重写的方法具有相同的方法名和参数列表</p>
+<pre><code>&gt;&gt;&gt; class foreigner:
+        def say(self):
+            print(&apos;hello&apos;)
+
+
+&gt;&gt;&gt; class chinese(foreigner):
+        def say(self):
+            print(&apos;你好&apos;)
+
+
+&gt;&gt;&gt; one = chinese()
+&gt;&gt;&gt; one.say()
+你好</code></pre><p>4.子类和父类都定义了初始化函数，则父类的属性不会被初始化</p>
+<pre><code>class parent(object):
+
+    def __init__(self, name):
+        self.name = name
+
+
+class child(parent):
+
+    def __init__(self):
+        print(&apos;Im a child&apos;)
+
+
+a = child()
+#a = child(&apos;xiaoming&apos;)会报错</code></pre><p>5.可以使用super方法调用父类，子类和父类的属性均可被初始化</p>
+<pre><code>class parent(object):
+
+    def __init__(self, name):
+        self.name = name
+
+
+class child(parent):
+
+    def __init__(self):
+        print(&apos;Im a child&apos;)
+        super(child,self).__init__(&quot;xiaoming&quot;) 
+
+
+a = child()
+print(a.name)</code></pre><p>运行结果为：</p>
+<pre><code>Im a child
+xiaoming</code></pre><p>参考：</p>
+<pre><code>https://blog.csdn.net/brucewong0516/article/details/79121179</code></pre><h4 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h4><p>调用同一个方法，出现多种表现形式。不关注对象的类型，而是关注对象具有的行为</p>
+<pre><code>&gt;&gt;&gt; class dog:
+        def shout(self):
+            print(&apos;旺旺!&apos;)
+
+&gt;&gt;&gt; class cat:
+        def shout(self):
+            print(&apos;喵喵！&apos;)
+
+&gt;&gt;&gt; def hanshu(obj):
+        obj.shout()
+
+&gt;&gt;&gt; dog = dog()
+&gt;&gt;&gt; cat = cat()
+
+&gt;&gt;&gt; hanshu(dog)
+旺旺!
+&gt;&gt;&gt; hanshu(cat)
+喵喵！</code></pre><h4 id="类属性和实例属性"><a href="#类属性和实例属性" class="headerlink" title="类属性和实例属性"></a>类属性和实例属性</h4><p>1.实例属性：通过 ‘实例.属性’ 的方式添加属性和访问属性值</p>
+<pre><code>class cat:
+    def __init__(self):
+        self.age = 12 #实例属性</code></pre><p>2.类属性：类拥有的属性，位于类内部，方法外面，它被所有类的实例对象所共有，在内存中只存在一个副本</p>
+<pre><code>class cat:
+    num = 0 #类属性</code></pre><p>类属性可以通过类或者类的实例访问到</p>
+<pre><code>&gt;&gt;&gt; class cat:
+    num = 0
+    def __init__(self):
+        self.age = 11
+
+
+&gt;&gt;&gt; a = cat()
+&gt;&gt;&gt; a.num
+0
+&gt;&gt;&gt; cat.num
+0</code></pre><p>当类属性和实例属性的名字相同时，通过对象访问属性时会获取实例属性对应的值，通过类获取到的一定是类属性的值</p>
+<pre><code>&gt;&gt;&gt; class cat:
+    num = 0
+    def __init__(self):
+        self.num = 11
+
+&gt;&gt;&gt; a = cat()
+&gt;&gt;&gt; a.num
+11
+&gt;&gt;&gt; cat.num
+0</code></pre><h3 id="其他知识"><a href="#其他知识" class="headerlink" title="其他知识"></a>其他知识</h3><h4 id="内置函数"><a href="#内置函数" class="headerlink" title="内置函数"></a>内置函数</h4><p>eval() : 将字符串str当成有效的表达式来求值并返回计算结果</p>
+<p>round() : 返回浮点数的四舍五入值</p>
+<p>id() : 返回对象的内存地址</p>
+<h4 id="pyinstaller"><a href="#pyinstaller" class="headerlink" title="pyinstaller"></a>pyinstaller</h4><pre><code>pyinstaller -F -w -i C:\\a.ico C:\\main.py</code></pre><p>-i : 设置图标；先图标路径，再程序路径</p>
+<h4 id="图像缩放操作"><a href="#图像缩放操作" class="headerlink" title="图像缩放操作"></a>图像缩放操作</h4><pre><code>from PIL import Image
+
+# 打开一个jpg图像文件，注意是当前路径:
+im = Image.open(&apos;test.jpg&apos;)
+# 获得图像尺寸:
+w, h = im.size
+print(&apos;Original image size: %sx%s&apos; % (w, h))
+# 缩放到50%:
+im.thumbnail((w//2, h//2))
+print(&apos;Resize image to: %sx%s&apos; % (w//2, h//2))
+# 把缩放后的图像用jpeg格式保存:
+im.save(&apos;thumbnail.jpg&apos;, &apos;jpeg&apos;)</code></pre>
+      
+    </div>
+    
+    
+    
+
+  <div>
+    
+      ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+  </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="gtfly 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/aipay.jpg" alt="gtfly 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    gtfly
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2018/07/22/Python基础/" title="Python基础知识">http://yoursite.com/2018/07/22/Python基础/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/22/Sixth-day/" rel="next" title="使用010editor修复文件">
+                <i class="fa fa-chevron-left"></i> 使用010editor修复文件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/24/Seven-day/" rel="prev" title="逆向基础">
+                逆向基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">gtfly</p>
+              <p class="site-description motion-element" itemprop="description">轻描时光漫长低唱语焉不详.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">148</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.bugku.com/login?next=challenges" title="Bugku" target="_blank">Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://new.bugku.com/" title="new Bugku" target="_blank">new Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.linkedbyx.com/home" title="X计划平台" target="_blank">X计划平台</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.shiyanbar.com/ctf/practice" title="实验吧" target="_blank">实验吧</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ctf.jasec.cn/index.php?page=login" title="Jactf" target="_blank">Jactf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jarvisoj.com/login" title="Javis" target="_blank">Javis</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cgctf.nuptsast.com/challenges#Web" title="CGctf" target="_blank">CGctf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com/" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.ssleye.com/" title="ctf在线工具" target="_blank">ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.194nb.com/" title="aman ctf在线工具" target="_blank">aman ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.ctfwp.com/" title="ctfwp" target="_blank">ctfwp</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://skysec.top/" title="一叶飘零" target="_blank">一叶飘零</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#python2与3区别"><span class="nav-number">1.</span> <span class="nav-text">python2与3区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#print语句"><span class="nav-number">1.1.</span> <span class="nav-text">print语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一行输入多个数"><span class="nav-number">1.2.</span> <span class="nav-text">一行输入多个数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#除"><span class="nav-number">1.3.</span> <span class="nav-text">除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比较运算符"><span class="nav-number">1.4.</span> <span class="nav-text">比较运算符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础语法"><span class="nav-number">2.</span> <span class="nav-text">基础语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用语句"><span class="nav-number">3.</span> <span class="nav-text">常用语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#判断语句"><span class="nav-number">3.1.</span> <span class="nav-text">判断语句</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#注意"><span class="nav-number">3.1.1.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#循环语句"><span class="nav-number">3.2.</span> <span class="nav-text">循环语句</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#判断语句和循环语句需注意"><span class="nav-number">3.2.1.</span> <span class="nav-text">判断语句和循环语句需注意</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他语句"><span class="nav-number">3.3.</span> <span class="nav-text">其他语句</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据类型相关函数"><span class="nav-number">4.</span> <span class="nav-text">数据类型相关函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#转换函数"><span class="nav-number">4.1.</span> <span class="nav-text">转换函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据类型"><span class="nav-number">4.2.</span> <span class="nav-text">数据类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串"><span class="nav-number">5.</span> <span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是字符串"><span class="nav-number">5.1.</span> <span class="nav-text">什么是字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#注意-1"><span class="nav-number">5.1.1.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串操作"><span class="nav-number">5.2.</span> <span class="nav-text">字符串操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串的输入和输出"><span class="nav-number">5.3.</span> <span class="nav-text">字符串的输入和输出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访问字符串中的值"><span class="nav-number">5.4.</span> <span class="nav-text">访问字符串中的值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串内建函数"><span class="nav-number">5.5.</span> <span class="nav-text">字符串内建函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列表"><span class="nav-number">6.</span> <span class="nav-text">列表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#列表内元素的操作"><span class="nav-number">6.1.</span> <span class="nav-text">列表内元素的操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#元素排序"><span class="nav-number">6.2.</span> <span class="nav-text">元素排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#列表遍历"><span class="nav-number">6.3.</span> <span class="nav-text">列表遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#for遍历：常与range搭配使用"><span class="nav-number">6.3.1.</span> <span class="nav-text">for遍历：常与range搭配使用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#while遍历，常与len搭配使用"><span class="nav-number">6.3.2.</span> <span class="nav-text">while遍历，常与len搭配使用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#列表解析式"><span class="nav-number">6.4.</span> <span class="nav-text">列表解析式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#列表切片"><span class="nav-number">6.5.</span> <span class="nav-text">列表切片</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元组"><span class="nav-number">7.</span> <span class="nav-text">元组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#访问元祖"><span class="nav-number">7.1.</span> <span class="nav-text">访问元祖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改元组"><span class="nav-number">7.2.</span> <span class="nav-text">修改元组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#遍历元组"><span class="nav-number">7.3.</span> <span class="nav-text">遍历元组</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#序列"><span class="nav-number">8.</span> <span class="nav-text">序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字典"><span class="nav-number">9.</span> <span class="nav-text">字典</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#根据键访问值"><span class="nav-number">9.1.</span> <span class="nav-text">根据键访问值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改字典元素"><span class="nav-number">9.2.</span> <span class="nav-text">修改字典元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加字典元素"><span class="nav-number">9.3.</span> <span class="nav-text">添加字典元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除字典元素"><span class="nav-number">9.4.</span> <span class="nav-text">删除字典元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#计算字典的键值对的个数"><span class="nav-number">9.5.</span> <span class="nav-text">计算字典的键值对的个数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字典的遍历"><span class="nav-number">9.6.</span> <span class="nav-text">字典的遍历</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-number">10.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#函数的定义和使用"><span class="nav-number">10.1.</span> <span class="nav-text">函数的定义和使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数的参数"><span class="nav-number">10.2.</span> <span class="nav-text">函数的参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数的返回值"><span class="nav-number">10.3.</span> <span class="nav-text">函数的返回值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量作用域"><span class="nav-number">10.4.</span> <span class="nav-text">变量作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#匿名函数"><span class="nav-number">10.5.</span> <span class="nav-text">匿名函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#时间日期函数"><span class="nav-number">10.6.</span> <span class="nav-text">时间日期函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#随机函数"><span class="nav-number">10.7.</span> <span class="nav-text">随机函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件"><span class="nav-number">11.</span> <span class="nav-text">文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文件打开及读写"><span class="nav-number">11.1.</span> <span class="nav-text">文件打开及读写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件的定位读写"><span class="nav-number">11.2.</span> <span class="nav-text">文件的定位读写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件的重命名和删除"><span class="nav-number">11.3.</span> <span class="nav-text">文件的重命名和删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件夹"><span class="nav-number">11.4.</span> <span class="nav-text">文件夹</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常"><span class="nav-number">12.</span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#异常类"><span class="nav-number">12.1.</span> <span class="nav-text">异常类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#异常处理"><span class="nav-number">12.2.</span> <span class="nav-text">异常处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#抛出异常"><span class="nav-number">12.3.</span> <span class="nav-text">抛出异常</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#assert（断言）语句"><span class="nav-number">12.4.</span> <span class="nav-text">assert（断言）语句:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#预定义清理"><span class="nav-number">12.5.</span> <span class="nav-text">预定义清理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块"><span class="nav-number">13.</span> <span class="nav-text">模块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模块的基本使用"><span class="nav-number">13.1.</span> <span class="nav-text">模块的基本使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模块的制作"><span class="nav-number">13.2.</span> <span class="nav-text">模块的制作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类和对象"><span class="nav-number">14.</span> <span class="nav-text">类和对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类"><span class="nav-number">14.1.</span> <span class="nav-text">类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对象"><span class="nav-number">14.2.</span> <span class="nav-text">对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#封装"><span class="nav-number">14.3.</span> <span class="nav-text">封装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#继承"><span class="nav-number">14.4.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多态"><span class="nav-number">14.5.</span> <span class="nav-text">多态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类属性和实例属性"><span class="nav-number">14.6.</span> <span class="nav-text">类属性和实例属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他知识"><span class="nav-number">15.</span> <span class="nav-text">其他知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内置函数"><span class="nav-number">15.1.</span> <span class="nav-text">内置函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pyinstaller"><span class="nav-number">15.2.</span> <span class="nav-text">pyinstaller</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图像缩放操作"><span class="nav-number">15.3.</span> <span class="nav-text">图像缩放操作</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gtfly</span>
+
+ <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+ <script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("07/16/2018 12:49:00");//此处修改你的建站时间或者网站上线时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已存在 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+ setInterval("createtime()",250);
+ </script>
+
+<!--
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </div></footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9Pgz8ir0b40IXQ5V3bjRc8m0-gzGzoHsz',
+        appKey: 'VCCuCSQHpPqX3hmOh0PlmfXu',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+ <!-- ҳ����С���� -->
+ <script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+  
+  <!--������ƭ-->
+ <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+  <script>
+  $("body").backstretch("https://myqinshimoon.github.io/background.jpg");
+  </script>
+
+
+</body>
+</html>

