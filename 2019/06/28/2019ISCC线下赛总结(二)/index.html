@@ -126,7 +126,7 @@
 <meta property="og:site_name" content="gtfly">
 <meta property="og:description" content="参加了一周的网络工程实训，也没带自己的电脑，但该学还是得学滴(学html实在是太无聊了)！系统的把ISCC比赛不足的地方总结反思弥补下">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-30T16:40:16.000Z">
+<meta property="og:updated_time" content="2019-07-23T01:36:55.475Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2019ISCC线下赛总结(二)">
 <meta name="twitter:description" content="参加了一周的网络工程实训，也没带自己的电脑，但该学还是得学滴(学html实在是太无聊了)！系统的把ISCC比赛不足的地方总结反思弥补下">
@@ -395,8 +395,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-07-01T00:40:16+08:00">
-                2019-07-01
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-23T09:36:55+08:00">
+                2019-07-23
               </time>
             
           </span>
@@ -501,11 +501,11 @@
 <h4 id="安装GD库扩展"><a href="#安装GD库扩展" class="headerlink" title="安装GD库扩展"></a>安装GD库扩展</h4><p>下载：</p>
 <pre><code>apt-get install php7.0-gd</code></pre><p>找到<code>/etc/php/php7.0/fpm/php.ini</code>，命令模式下输入<code>/extension</code>，按<code>n</code>向下搜索，设置(去掉前面的分号)：</p>
 <pre><code>extension_dir = &quot;/usr/lib/php/20151012
-extension=php_gd2.dll</code></pre><p>重启php-fpm：</p>
+extension=php_gd2.so</code></pre><p>重启php-fpm：</p>
 <pre><code>systemctl restart php7.0-fpm.service</code></pre><p>新建一个php文件，写入<code>phpinfo()</code>，之后查看php信息，可以找到gd配置项，说明安装成功</p>
 <h4 id="安装mysqli扩展"><a href="#安装mysqli扩展" class="headerlink" title="安装mysqli扩展"></a>安装mysqli扩展</h4><p>下载：</p>
 <pre><code>apt-get install php7.0-mysqli</code></pre><p>找到<code>/etc/php/php7.0/fpm/php.ini</code>，命令模式下输入<code>/mysqli</code>，按<code>n</code>向下搜索，设置：</p>
-<pre><code>extension=php_mysqli.dll</code></pre><p>重启php-fpm：</p>
+<pre><code>extension=php_mysqli.so</code></pre><p>重启php-fpm：</p>
 <pre><code>systemctl restart php7.0-fpm.service</code></pre><p>新建一个php文件，写入<code>phpinfo()</code>，之后查看php信息，可以找到mysqli配置项，说明安装成功</p>
 <h4 id="开启报错"><a href="#开启报错" class="headerlink" title="开启报错"></a>开启报错</h4><p>由于输入单引号时需要报错，因此需要开启php的报错</p>
 <p>找到<code>/etc/php/php7.0/fpm/php.ini</code>，命令模式下输入<code>/display_errorr</code>，按<code>n</code>向下搜索，设置：</p>
@@ -766,7 +766,7 @@ var_dump($a=print_r([666]));</code></pre><p>运行结果：</p>
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">152</span>
+                  <span class="site-state-item-count">154</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

