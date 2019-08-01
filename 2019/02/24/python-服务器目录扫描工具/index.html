@@ -119,17 +119,17 @@
 
 
 
-<meta name="description" content="工具地址： https://github.com/gtfly/Web-Server-Files-Scan">
+<meta name="description" content="学习使用python的argparse库；argparse库是python标准库中用来处理命令行参数的库 以下代码均保存在a.py文件中">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python-服务器目录扫描工具">
 <meta property="og:url" content="http://yoursite.com/2019/02/24/python-服务器目录扫描工具/index.html">
 <meta property="og:site_name" content="gtfly">
-<meta property="og:description" content="工具地址： https://github.com/gtfly/Web-Server-Files-Scan">
+<meta property="og:description" content="学习使用python的argparse库；argparse库是python标准库中用来处理命令行参数的库 以下代码均保存在a.py文件中">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-07T23:30:44.000Z">
+<meta property="og:updated_time" content="2019-08-01T09:07:42.367Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python-服务器目录扫描工具">
-<meta name="twitter:description" content="工具地址： https://github.com/gtfly/Web-Server-Files-Scan">
+<meta name="twitter:description" content="学习使用python的argparse库；argparse库是python标准库中用来处理命令行参数的库 以下代码均保存在a.py文件中">
 
 
 
@@ -406,8 +406,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-03-08T07:30:44+08:00">
-                2019-03-08
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-01T17:07:42+08:00">
+                2019-08-01
               </time>
             
           </span>
@@ -503,13 +503,10 @@
       
 
       
-        <p>工具地址：</p>
-<p><a href="https://github.com/gtfly/Web-Server-Files-Scan" target="_blank" rel="noopener">https://github.com/gtfly/Web-Server-Files-Scan</a></p>
+        <p>学习使用python的argparse库；argparse库是python标准库中用来处理命令行参数的库</p>
+<p>以下代码均保存在a.py文件中</p>
 <a id="more"></a>
 
-<p>首先，学习了一下python的argparse库</p>
-<p>argparse库是python标准库中用来处理命令行参数的库</p>
-<p>以下代码均保存在a.py文件中</p>
 <hr>
 <h3 id="创建解析器"><a href="#创建解析器" class="headerlink" title="创建解析器"></a>创建解析器</h3><p>第一个程序</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建ArgumentParser对象</span></span><br><span class="line"><span class="comment"># 该对象将包含将命令行解析为python数据类型所需的所有信息</span></span><br><span class="line">parser = argparse.ArgumentParser(description=<span class="string">'This is a test'</span>, epilog=<span class="string">'It is end'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解析参数</span></span><br><span class="line">parser.parse_args()</span><br></pre></td></tr></table></figure>
@@ -585,20 +582,20 @@ a.py: error: unrecognized arguments: 2333</code></pre><p>原因是没有添加�
 <li>append: 存为列表</li>
 <li>append_const: 存为列表，会根据const关键参数进行添加</li>
 <li>count: 统计参数出现的次数</li>
-<li>help: help信息</li>
-<li>version: 版本信息</li>
 </ul>
 </li>
+<li>help: help信息</li>
 <li>nargs: 参数的数量<ul>
 <li>*: 任意多个</li>
 <li>+: 一个或更多</li>
-<li>?: 首先从命令行获得参数，若没有从const获得，然后从default获得</li>
+<li>?: 首先从命令行获得参数(0或1)，若没有从const获得，然后从default获得</li>
+<li>num：指定参数的数量</li>
 </ul>
 </li>
 <li>const: 保存一个常量</li>
 <li>default: 如果命令行中没有出现这个参数，则使用的默认值</li>
 <li>type: 参数类型；默认的参数类型为str</li>
-<li>required: 是否必选</li>
+<li>required: 参数是否必选</li>
 <li>dest: 自定义属性名称</li>
 <li>metavar: 参数的名字，在显示帮助信息时显示</li>
 <li>choices: 可供选择的值；值为列表或迭代器</li>
@@ -615,12 +612,11 @@ a.py: error: argument -square/--square: invalid choice: 1 (choose from 2, 3)</co
 <pre><code>python a.py -square 3</code></pre><p>输出</p>
 <pre><code>9</code></pre><hr>
 <p>功能： 默认将数字从大到小排序；使用参数可以求数字列最大值、最小值</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(<span class="string">'sorts'</span>, type=int, nargs=<span class="string">'+'</span>, help=<span class="string">'sort the number from big to small'</span>)</span><br><span class="line">parser.add_argument(<span class="string">'-max'</span>, <span class="string">'--max'</span>, action=<span class="string">'store_true'</span>, default=sorted,</span><br><span class="line">                    help=<span class="string">'calculate the max number'</span>)</span><br><span class="line">parser.add_argument(<span class="string">'-min'</span>, <span class="string">'--min'</span>, action=<span class="string">'store_true'</span>,</span><br><span class="line">                    help=<span class="string">'calculate the minimal number'</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> args.max == <span class="number">1</span>:</span><br><span class="line">    print(max(args.sorts))</span><br><span class="line"><span class="keyword">elif</span> args.min == <span class="number">1</span>:</span><br><span class="line">    print(min(args.sorts))</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(sorted(args.sorts, reverse=<span class="literal">True</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(<span class="string">'sorts'</span>, type=int, nargs=<span class="string">'+'</span>, help=<span class="string">'sort the number from big to small'</span>)</span><br><span class="line">parser.add_argument(<span class="string">'-max'</span>, <span class="string">'--max'</span>, action=<span class="string">'store_true'</span>, help=<span class="string">'calculate the max number'</span>)</span><br><span class="line">parser.add_argument(<span class="string">'-min'</span>, <span class="string">'--min'</span>, action=<span class="string">'store_true'</span>,</span><br><span class="line">                    help=<span class="string">'calculate the minimal number'</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> args.max == <span class="number">1</span>:</span><br><span class="line">    print(max(args.sorts))</span><br><span class="line"><span class="keyword">elif</span> args.min == <span class="number">1</span>:</span><br><span class="line">    print(min(args.sorts))</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(sorted(args.sorts, reverse=<span class="literal">True</span>))</span><br></pre></td></tr></table></figure>
 
-<p>参考文章：</p>
-<pre><code>https://www.jianshu.com/p/fef2d215b91d
-https://docs.python.org/3/library/argparse.html#nargs
-https://www.cnblogs.com/linxiyue/p/3908623.html</code></pre>
+<hr>
+<p>参考文章：<br><a href="https://www.jianshu.com/p/fef2d215b91d" target="_blank" rel="noopener">https://www.jianshu.com/p/fef2d215b91d</a><br><a href="https://docs.python.org/3/library/argparse.html#nargs" target="_blank" rel="noopener">https://docs.python.org/3/library/argparse.html#nargs</a><br><a href="https://www.cnblogs.com/linxiyue/p/3908623.html" target="_blank" rel="noopener">https://www.cnblogs.com/linxiyue/p/3908623.html</a></p>
+
       
     </div>
     
