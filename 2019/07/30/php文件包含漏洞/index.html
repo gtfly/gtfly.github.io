@@ -126,7 +126,7 @@
 <meta property="og:site_name" content="gtfly">
 <meta property="og:description" content="系统学习学习文件包含漏洞">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-30T02:56:56.322Z">
+<meta property="og:updated_time" content="2019-08-05T02:37:45.703Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="php文件包含漏洞">
 <meta name="twitter:description" content="系统学习学习文件包含漏洞">
@@ -406,8 +406,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-07-30T10:56:56+08:00">
-                2019-07-30
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-05T10:37:45+08:00">
+                2019-08-05
               </time>
             
           </span>
@@ -514,20 +514,20 @@ require()：未找到文件会发出一个致命错误</code></pre><p>下面两�
 <pre><code>include_once()
 require_once()</code></pre><h3 id="支持的协议和封装协议"><a href="#支持的协议和封装协议" class="headerlink" title="支持的协议和封装协议"></a>支持的协议和封装协议</h3><p><a href="https://www.php.net/manual/zh/wrappers.php" target="_blank" rel="noopener">官方文档</a>描述：</p>
 <blockquote>PHP 带有很多内置 URL 风格的封装协议，可用于类似 fopen()、 copy()、 file_exists() 和 filesize() 的文件系统函数。 除了这些封装协议，还能通过 stream_wrapper_register() 来注册自定义的封装协议。 </blockquote>
-    file:// — 访问本地文件系统
-    http:// — 访问 HTTP(s) 网址
-    ftp:// — 访问 FTP(s) URLs
-    php:// — 访问各个输入/输出流（I/O streams）
-    zlib:// — 压缩流
-    data:// — 数据（RFC 2397）
-    glob:// — 查找匹配的文件路径模式
-    phar:// — PHP 归档
-    ssh2:// — Secure Shell 2
-    rar:// — RAR
-    ogg:// — 音频流
-    expect:// — 处理交互式的流
 
-<p>可以在phpinfo中的<code>Registered PHP Streams</code>中找到可使用的协议</p>
+
+<pre><code>file:// — 访问本地文件系统
+http:// — 访问 HTTP(s) 网址
+ftp:// — 访问 FTP(s) URLs
+php:// — 访问各个输入/输出流（I/O streams）
+zlib:// — 压缩流
+data:// — 数据（RFC 2397）
+glob:// — 查找匹配的文件路径模式
+phar:// — PHP 归档
+ssh2:// — Secure Shell 2
+rar:// — RAR
+ogg:// — 音频流
+expect:// — 处理交互式的流</code></pre><p>可以在phpinfo中的<code>Registered PHP Streams</code>中找到可使用的协议</p>
 <p>测试代码：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$file = $_GET[<span class="string">'file'</span>];</span><br><span class="line"><span class="keyword">include</span>($file);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -678,8 +678,8 @@ Shuttin&apos; down...</code></pre><p>即可利用<code>/tmp/g</code>文件执行
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/29/PHP Bypass disable-functions-二/" rel="next" title="PHP Bypass disable_functions(二)">
-                <i class="fa fa-chevron-left"></i> PHP Bypass disable_functions(二)
+              <a href="/2019/07/29/php bypass disable-functions-二/" rel="next" title="php bypass disable_functions(二)">
+                <i class="fa fa-chevron-left"></i> php bypass disable_functions(二)
               </a>
             
           </div>
@@ -687,6 +687,10 @@ Shuttin&apos; down...</code></pre><p>即可利用<code>/tmp/g</code>文件执行
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/01/php-bypass-open-basedir/" rel="prev" title="php bypass open_basedir">
+                php bypass open_basedir <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -768,7 +772,7 @@ Shuttin&apos; down...</code></pre><p>即可利用<code>/tmp/g</code>文件执行
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">159</span>
+                  <span class="site-state-item-count">161</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

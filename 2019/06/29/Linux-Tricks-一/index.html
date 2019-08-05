@@ -130,7 +130,7 @@
 <meta property="og:image" content="https://i.imgur.com/Tie0E13.png">
 <meta property="og:image" content="https://i.imgur.com/dA9MHVV.png">
 <meta property="og:image" content="https://i.imgur.com/VmilyuN.png">
-<meta property="og:updated_time" content="2019-07-07T11:30:14.348Z">
+<meta property="og:updated_time" content="2019-08-02T09:22:36.617Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux Tricks(一)">
 <meta name="twitter:description" content="CTF中经常需要运用Linux下的一些知识，在此记录总结">
@@ -411,8 +411,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-07-07T19:30:14+08:00">
-                2019-07-07
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-02T17:22:36+08:00">
+                2019-08-02
               </time>
             
           </span>
@@ -585,6 +585,14 @@
 <li>tail    只显示最后几行</li>
 <li>nl      类似于cat -n，显示时输出行号</li>
 </ul>
+<h3 id="etc-passwd与-etc-shadow"><a href="#etc-passwd与-etc-shadow" class="headerlink" title="/etc/passwd与/etc/shadow"></a>/etc/passwd与/etc/shadow</h3><h4 id="etc-passwd"><a href="#etc-passwd" class="headerlink" title="/etc/passwd"></a>/etc/passwd</h4><p>该文件内每行数据格式：</p>
+<pre><code>注册名：口令：用户标识号：组标识号：用户名：用户主目录：命令解释程序 </code></pre><p>例如：</p>
+<pre><code>gtfly:x:1000:1000:gtf,,,:/home/gtfly:/usr/bin/zsh</code></pre><p>现在的Unix/Linux系统中，口令不再直接保存在passwd文件中，通常将passwd文件中的口令字段使用一个<code>x</code>来代替，将<code>/etc /shadow</code>作为真正的口令文件，用于保存包括个人口令在内的数据。当然shadow文件是不能被普通用户读取的，只有超级用户才有权读取。 </p>
+<p>如果passwd字段中的第一个字符是<code>*</code>的话，那么，就表示该账号被查封了，系统不允许持有该账号的用户登录。 </p>
+<h4 id="etc-shadow"><a href="#etc-shadow" class="headerlink" title="/etc/shadow"></a>/etc/shadow</h4><p><code>/etc/shadow</code>是在安装了影子口令软件的系统上的影子口令文件；影子口令文件将<code>/etc/passwd</code>文件中的加密口令移动到<code>/etc/shadow</code>中</p>
+<p>该文件内每行数据格式：</p>
+<pre><code>登录名:加密口令:最后一次修改时间:最小时间间隔:最大时间间隔:警告时间:不活动时间:失效时间:标志</code></pre><p>例如：</p>
+<pre><code>gtfly:$6$bGq.hmhU$rRxRJ8q4loIdef0ZJlmSbXBmqp13atLIumEQv19IQ2J/8Mw25taUntpDgcFeCZHnkVynwlmByJPSQq1/0PzBA0:18079:0:99999:7:::</code></pre><p>1）“登录名”是与/etc/passwd文件中的登录名相一致的用户账号<br>2）“口令”字段存放的是加密(SHA512散列加密算法)后的用户口令字，长度为13个字符。如果为空，则对应用户没有口令，登录时不需要口令；如果含有不属于集合{./0-9A-Za-z}中的字符，则对应的用户不能登录。<br>3）“最后一次修改时间”表示的是从某个时刻起，到用户最后一次修改口令时的天数。时间起点对不同的系统可能不一样。例如在SCOLinux中，这个时间起点是1970年1月1日。<br>4）“最小时间间隔”指的是两次修改口令之间所需的最小天数。<br>5）“最大时间间隔”指的是口令保持有效的最大天数。<br>6）“警告时间”字段表示的是从系统开始警告用户到用户密码正式失效之间的天数。<br>7）“不活动时间”表示的是用户没有登录活动但账号仍能保持有效的最大天数。<br>8）“失效时间”字段给出的是一个绝对的天数，如果使用了这个字段，那么就给出相应账号的生存期。期满后，该账号就不再是一个合法的账号，也就不能再用来登录了。</p>
 
       
     </div>
@@ -760,7 +768,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">159</span>
+                  <span class="site-state-item-count">161</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -875,7 +883,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#find"><span class="nav-number">1.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#grep"><span class="nav-number">2.</span> <span class="nav-text">grep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#proc"><span class="nav-number">3.</span> <span class="nav-text">proc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作记录文件"><span class="nav-number">4.</span> <span class="nav-text">操作记录文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令注入"><span class="nav-number">5.</span> <span class="nav-text">常用命令注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取文件内容"><span class="nav-number">6.</span> <span class="nav-text">获取文件内容</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#find"><span class="nav-number">1.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#grep"><span class="nav-number">2.</span> <span class="nav-text">grep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#proc"><span class="nav-number">3.</span> <span class="nav-text">proc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作记录文件"><span class="nav-number">4.</span> <span class="nav-text">操作记录文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令注入"><span class="nav-number">5.</span> <span class="nav-text">常用命令注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取文件内容"><span class="nav-number">6.</span> <span class="nav-text">获取文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#etc-passwd与-etc-shadow"><span class="nav-number">7.</span> <span class="nav-text">/etc/passwd与/etc/shadow</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#etc-passwd"><span class="nav-number">7.1.</span> <span class="nav-text">/etc/passwd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#etc-shadow"><span class="nav-number">7.2.</span> <span class="nav-text">/etc/shadow</span></a></li></ol></li></ol></div>
             
 
           </div>
