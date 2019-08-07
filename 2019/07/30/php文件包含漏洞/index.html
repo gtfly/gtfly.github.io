@@ -129,7 +129,7 @@
 <meta name="description" content="系统学习学习文件包含漏洞">
 <meta property="og:type" content="article">
 <meta property="og:title" content="php文件包含漏洞">
-<meta property="og:url" content="http://yoursite.com/2019/07/30/php文件包含漏洞/index.html">
+<meta property="og:url" content="www.gtfly.top/2019/07/30/php文件包含漏洞/index.html">
 <meta property="og:site_name" content="gtfly">
 <meta property="og:description" content="系统学习学习文件包含漏洞">
 <meta property="og:locale" content="zh-Hans">
@@ -166,7 +166,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/07/30/php文件包含漏洞/">
+  <link rel="canonical" href="www.gtfly.top/2019/07/30/php文件包含漏洞/">
 
 
 
@@ -368,7 +368,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/30/php文件包含漏洞/">
+    <link itemprop="mainEntityOfPage" href="www.gtfly.top/2019/07/30/php文件包含漏洞/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gtfly">
@@ -572,7 +572,7 @@ expect:// — 处理交互式的流</code></pre><p>可以在phpinfo中的<code>R
 
 <h4 id="zip"><a href="#zip" class="headerlink" title="zip://"></a>zip://</h4><p><code>zip://</code>与<code>phar://</code>作用类似，不过<code>zip://</code>需要绝对路径：</p>
 <pre><code>?file=zip:///var/www/html/phpinfo.zip#phpinfo.txt</code></pre><p><code>#</code>需要url编码：</p>
-<pre><code>?file=zip:///var/www/html/phpinfo.zip%23phpinfo.txt</code></pre><h3 id="session包含"><a href="#session包含" class="headerlink" title="session包含"></a>session包含</h3><p><a href="http://www.gtfly.top/2019/05/11/PHP-session%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E/#more" target="_blank" rel="noopener">http://www.gtfly.top/2019/05/11/PHP-session文件包含</a></p>
+<pre><code>?file=zip:///var/www/html/phpinfo.zip%23phpinfo.txt</code></pre><h3 id="session包含"><a href="#session包含" class="headerlink" title="session包含"></a>session包含</h3><p><a href="http://www.gtfly.top/2019/05/11/PHP-session%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E/#more">http://www.gtfly.top/2019/05/11/PHP-session文件包含</a></p>
 <h3 id="phpinfo-文件包含"><a href="#phpinfo-文件包含" class="headerlink" title="phpinfo+文件包含"></a>phpinfo+文件包含</h3><p>如果给了phpinfo路径和存在文件包含漏洞，那么通过phpinfo可以知道session、日志等相关信息，可以尝试进行session或日志文件包含；除此之外，可以利用phpinfo页面特性来getshell</p>
 <p>原理(转自<a href="https://github.com/vulhub/vulhub/tree/master/php/inclusion" target="_blank" rel="noopener">ph师傅</a>)：</p>
 <p>在给PHP发送POST数据包时，如果数据包里包含文件区块，无论你访问的代码中有没有处理文件上传的逻辑，PHP都会将这个文件保存成一个临时文件（通常是<code>/tmp/php[6个随机字符]</code>），文件名可以在<code>$_FILES</code>变量中找到。这个临时文件，在请求结束后就会被删除。</p>
@@ -663,7 +663,7 @@ Shuttin&apos; down...</code></pre><p>即可利用<code>/tmp/g</code>文件执行
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://yoursite.com/2019/07/30/php文件包含漏洞/" title="php文件包含漏洞">http://yoursite.com/2019/07/30/php文件包含漏洞/</a>
+    <a href="www.gtfly.top/2019/07/30/php文件包含漏洞/" title="php文件包含漏洞">www.gtfly.top/2019/07/30/php文件包含漏洞/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
