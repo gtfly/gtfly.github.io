@@ -133,7 +133,7 @@
 <meta property="og:site_name" content="gtfly">
 <meta property="og:description" content="不得不说，现在的初高中生太强了。。。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-23T01:31:28.029Z">
+<meta property="og:updated_time" content="2019-08-06T06:31:49.148Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="peaCTF wp">
 <meta name="twitter:description" content="不得不说，现在的初高中生太强了。。。">
@@ -413,8 +413,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-07-23T09:31:28+08:00">
-                2019-07-23
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-06T14:31:49+08:00">
+                2019-08-06
               </time>
             
           </span>
@@ -516,42 +516,33 @@
 <p>部分wp如下</p>
 <h3 id="Breakfast-Points-50"><a href="#Breakfast-Points-50" class="headerlink" title="Breakfast(Points:50)"></a>Breakfast(Points:50)</h3><p>题目描述：</p>
 <blockquote>Mmm I ate some nice bacon and eggs this morning. Find out what else I had for
-an easy flag. Don’t forget to capitalize CTF! Ciphertext</blockquote>
+an easy flag. Don’t forget to capitalize CTF! Ciphertext</blockquote><br>
 
 <p>附加内容：</p>
-<pre><code>011100010000000000101001000101{00100001100011010100000000010100101010100010010001}</code></pre><p>题目提到了bacon，则猜测培根加密，将0转换为A，1转换为B，在<a href="http://rumkin.com/tools/cipher/baconian.php" target="_blank" rel="noopener">http://rumkin.com/tools/cipher/baconian.php</a>进行转换，注意要选择选项<code>I=J and U=V</code>，不正确可以交换A和B<code>Swap A and B</code>，还有就是注意flag格式，flag：<code>peaCTF{eggwaffles}</code></p>
-<pre><code>str1 = &apos;011100010000000000101001000101{00100001100011010100000000010100101010100010010001}&apos;
+<pre><code>011100010000000000101001000101{00100001100011010100000000010100101010100010010001}</code></pre><p>题目提到了bacon，则猜测培根加密，将0转换为A，1转换为B，在<a href="http://rumkin.com/tools/cipher/baconian.php" target="_blank" rel="noopener">http://rumkin.com/tools/cipher/baconian.php</a><br>进行转换，注意要选择选项<code>I=J and U=V</code>，不正确可以交换A和B<code>Swap A and B</code>，还有就是注意flag格式，flag：<code>peaCTF{eggwaffles}</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">str1 = <span class="string">'011100010000000000101001000101&#123;00100001100011010100000000010100101010100010010001&#125;'</span></span><br><span class="line"></span><br><span class="line">decode1 = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> str1:</span><br><span class="line">	<span class="keyword">if</span> i == <span class="string">'0'</span>:</span><br><span class="line">		decode1 += <span class="string">'B'</span></span><br><span class="line">	<span class="keyword">elif</span> i == <span class="string">'1'</span>:</span><br><span class="line">		decode1 += <span class="string">'A'</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		decode1 += <span class="string">' '</span></span><br><span class="line">print(decode1)</span><br></pre></td></tr></table></figure>
 
-decode1 = &apos;&apos;
-for i in str1:
-        if i == &apos;0&apos;:
-                decode1 += &apos;B&apos;
-        elif i == &apos;1&apos;:
-                decode1 += &apos;A&apos;
-        else:
-                decode1 += &apos; &apos;
+<h3 id="Broken-Keyboard-Points-50"><a href="#Broken-Keyboard-Points-50" class="headerlink" title="Broken Keyboard(Points:50)"></a>Broken Keyboard(Points:50)</h3><p>题目描述：</p>
+<blockquote>Help! My keyboard only types numbers! Ciphertext</blockquote><br>
 
-print(decode1)</code></pre><h3 id="Broken-Keyboard-Points-50"><a href="#Broken-Keyboard-Points-50" class="headerlink" title="Broken Keyboard(Points:50)"></a>Broken Keyboard(Points:50)</h3><p>题目描述：</p>
-<blockquote>Help! My keyboard only types numbers! Ciphertext</blockquote>
-附加内容：
-
+<p>附加内容：</p>
 <pre><code>112 101 97 67 84 70 123 52 115 99 49 49 105 115 99 48 48 108 125</code></pre><p>ascii to str，flag：<code>peaCTF{4sc11isc00l}</code></p>
 <h3 id="Choose-your-Pokemon-Points-150"><a href="#Choose-your-Pokemon-Points-150" class="headerlink" title="Choose your Pokemon(Points:150)"></a>Choose your Pokemon(Points:150)</h3><p>题目描述：</p>
-<blockquote>Just a simple type of recursive function. master-ball</blockquote>
-附加文件无后缀，用010editor打开，看到了头部有`Rar`，则直接formost，得到一个zip文件，解压后又是一个无后缀文件，再formost，得到一个pdf文件，打开后有一个网址[https://pastebin.com/AWTDEb9j](https://pastebin.com/AWTDEb9j)，访问，看到有一堆代码(太多了，粘一小部分)：
+<blockquote>Just a simple type of recursive function. master-ball</blockquote><br>
 
+<p>附加文件无后缀，用010editor打开，看到了头部有<code>Rar</code>，则直接formost，得到一个zip文件，解压后又是一个无后缀文件，再formost，得到一个pdf文件，打开后有一个网址<a href="https://pastebin.com/AWTDEb9j" target="_blank" rel="noopener">https://pastebin.com/AWTDEb9j</a>，访问，看到有一堆代码(太多了，粘一小部分)：</p>
 <pre><code>{\rtf1\adeflang1025\ansi\ansicpg1252\uc1\adeff31507\deff0\stshfdbch31505\stshfloch31506\stshfhich31506\stshfbi31507\deflang1033\deflangfe1041\themelang1033\themelangfe0\themelangcs0{\fonttbl{\f0\fbidi \froman\fcharset0\fprq2{\*\panose 02020603050405020304}Times New Roman;}{\f34\fbidi \froman\fcharset0\fprq2{\*\panose 02040503050406030204}Cambria Math;}
 {\f37\fbidi \fswiss\fcharset0\fprq2{\*\panose 020f0502020204030204}Calibri;}{\f43\fbidi \froman\fcharset128\fprq2{\*\panose 02020400000000000000}Yu Mincho{\*\falt \&apos;9f\&apos;e0\&apos;96\&apos;be\&apos;92\&apos;a9};}{\f45\fbidi \froman\fcharset128\fprq2 @Yu Mincho;}</code></pre><p>复制前两行搜索，了解到这是rtf格式的内容：</p>
-<blockquote>RTF是Rich Text Format的缩写，意即多文本格式。这是一种类似DOC格式（Word文档）的文件，有很好的兼容性，使用Windows“附件”中的“写字板”就能打开并进行编辑。使用“写字板”打开一个RTF格式文件时，将看到文件的内容；如果要查看RTF格式文件的源代码，只要使用“记事本”将它打开就行了。这就是说，你完全可以像编辑HTML文件一样，使用“记事本”来编辑RTF格式文件。</blockquote>
-则将所有内容clone下来，后缀改为`.rtf`，用word打开得到flag：`flag{wild_type}`
+<blockquote>RTF是Rich Text Format的缩写，意即多文本格式。这是一种类似DOC格式（Word文档）的文件，有很好的兼容性，使用Windows“附件”中的“写字板”就能打开并进行编辑。使用“写字板”打开一个RTF格式文件时，将看到文件的内容；如果要查看RTF格式文件的源代码，只要使用“记事本”将它打开就行了。这就是说，你完全可以像编辑HTML文件一样，使用“记事本”来编辑RTF格式文件。</blockquote><br>
 
-
+<p>则将所有内容clone下来，后缀改为<code>.rtf</code>，用word打开得到flag：<code>flag{wild_type}</code></p>
 <h3 id="Educated-Guess-Points-600"><a href="#Educated-Guess-Points-600" class="headerlink" title="Educated Guess(Points:600)"></a>Educated Guess(Points:600)</h3><p>题目描述：</p>
-<blockquote>There is a secured system running at http://shell1.2019.peactf.com:55567/query.php. You have obtained the source code.</blockquote>
-Hints:
-<blockquote>Good programmers follow naming conventions.</blockquote>
-直接访问网址，显示`Not logged in.`，把source code下载下来：
+<blockquote>There is a secured system running at http://shell1.2019.peactf.com:55567/query.php. You have obtained the source code</blockquote><br>
 
+<p>Hints:</p>
+<blockquote>Good programmers follow naming conventions.</blockquote><br>
+
+<p>直接访问网址，显示<code>Not logged in.</code>，把source code下载下来：</p>
 <pre><code>&lt;!doctype html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -611,18 +602,18 @@ $a-&gt;admin = 1;
 echo serialize($a);</code></pre><p>payload：</p>
 <pre><code>user=O:4:&quot;User&quot;:1:{s:5:&quot;admin&quot;%3bi:1%3b};</code></pre><p>放到Cookie中，发包即可看到flag：<code>flag{peactf_follow_conventions_9b778fab2e0ed7d6590c51e799589392}</code></p>
 <h3 id="School-Points-100"><a href="#School-Points-100" class="headerlink" title="School(Points:100)"></a>School(Points:100)</h3><p>题目描述：</p>
-<blockquote>My regular teacher was out sick so we had a substitute today. Ciphertext</blockquote>
-附加内容：
+<blockquote>My regular teacher was out sick so we had a substitute today. Ciphertext</blockquote><br>
 
+<p>附加内容：</p>
 <pre><code>Alphabet: ​WCGPSUHRAQYKFDLZOJNXMVEBTIzswGXU{ljwdhsqmags}</code></pre><p>看到<code>substitude</code>和<code>Alphabet</code>，就想到了单表代替密码，数了一下字母，发现正好前面有26个大写字母，那么后面的应该为密文，替换表为：</p>
 <pre><code>A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z
 W  C  G  P  S  U  H  R  A  Q  Y  K  F  D  L  Z  O  J  N  X  M  V  E  B  T  I</code></pre><p>得到密文对应的明文为：</p>
 <pre><code>zswGXU{ljwdhsqmags}
 
 peaCTF{orangejuice}</code></pre><h3 id="Coffee-Time-Points-250"><a href="#Coffee-Time-Points-250" class="headerlink" title="Coffee Time(Points:250)"></a>Coffee Time(Points:250)</h3><p>题目描述：</p>
-<blockquote>Run this jar executable in a virtual machine and see what happens. coffeetime.jar</blockquote>
-下载附件后打不开，重新配了java环境也不行，那么就查看程序源码，先用formost分离，之后反编译CoffeeTime.class这个文件，直接看到了flag：
+<blockquote>Run this jar executable in a virtual machine and see what happens. coffeetime.jar</blockquote><br>
 
+<p>下载附件后打不开，重新配了java环境也不行，那么就查看程序源码，先用formost分离，之后反编译CoffeeTime.class这个文件，直接看到了flag：</p>
 <pre><code>if(line.equals(result.toString()))
 {
     if(System.currentTimeMillis() &gt; timeend + (long)secs)
@@ -985,14 +976,6 @@ peaCTF{orangejuice}</code></pre><h3 id="Coffee-Time-Points-250"><a href="#Coffee
 
 -->
         
-<div class="busuanzi-count">
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-
-  
-</div>
-
 
 
 
