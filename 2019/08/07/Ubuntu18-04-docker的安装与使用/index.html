@@ -126,20 +126,17 @@
 
 
 
-<meta name="description" content="题目如下：">
+<meta name="description" content="学习学习docker以备搭建题目环境">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Bugku-变量1">
-<meta property="og:url" content="www.gtfly.top/2018/09/16/Bugku-变量1/index.html">
+<meta property="og:title" content="Ubuntu18.04 docker的安装与使用">
+<meta property="og:url" content="www.gtfly.top/2019/08/07/Ubuntu18-04-docker的安装与使用/index.html">
 <meta property="og:site_name" content="gtfly">
-<meta property="og:description" content="题目如下：">
+<meta property="og:description" content="学习学习docker以备搭建题目环境">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/eBvX2zJ.png">
-<meta property="og:image" content="https://i.imgur.com/DVm4ezP.png">
-<meta property="og:updated_time" content="2018-09-16T13:50:28.000Z">
+<meta property="og:updated_time" content="2019-08-08T03:16:55.651Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Bugku-变量1">
-<meta name="twitter:description" content="题目如下：">
-<meta name="twitter:image" content="https://i.imgur.com/eBvX2zJ.png">
+<meta name="twitter:title" content="Ubuntu18.04 docker的安装与使用">
+<meta name="twitter:description" content="学习学习docker以备搭建题目环境">
 
 
 
@@ -169,7 +166,7 @@
 
 
 
-  <link rel="canonical" href="www.gtfly.top/2018/09/16/Bugku-变量1/">
+  <link rel="canonical" href="www.gtfly.top/2019/08/07/Ubuntu18-04-docker的安装与使用/">
 
 
 
@@ -186,7 +183,7 @@
     })();
 </script>
 
-  <title>Bugku-变量1 | gtfly</title>
+  <title>Ubuntu18.04 docker的安装与使用 | gtfly</title>
   
 
 
@@ -371,7 +368,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="www.gtfly.top/2018/09/16/Bugku-变量1/">
+    <link itemprop="mainEntityOfPage" href="www.gtfly.top/2019/08/07/Ubuntu18-04-docker的安装与使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gtfly">
@@ -388,7 +385,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Bugku-变量1</h1>
+          <h1 class="post-title" itemprop="name headline">Ubuntu18.04 docker的安装与使用</h1>
         
 
         <div class="post-meta">
@@ -400,8 +397,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-16T13:31:06+08:00">
-                2018-09-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-07T14:20:34+08:00">
+                2019-08-07
               </time>
             
 
@@ -416,8 +413,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-09-16T21:50:28+08:00">
-                2018-09-16
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-08T11:16:55+08:00">
+                2019-08-08
               </time>
             
           </span>
@@ -453,8 +450,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/09/16/Bugku-变量1/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/09/16/Bugku-变量1/" itemprop="commentCount"></span>
+                <a href="/2019/08/07/Ubuntu18-04-docker的安装与使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/08/07/Ubuntu18-04-docker的安装与使用/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -476,7 +473,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  206 字
+                  1.6k 字
                 </span>
               
 
@@ -492,7 +489,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  6 分钟
                 </span>
               
             </div>
@@ -513,38 +510,107 @@
       
 
       
-        <p>题目如下：</p>
+        <p>学习学习docker以备搭建题目环境</p>
 <a id="more"></a>
+<h3 id="docker的一些基本概念"><a href="#docker的一些基本概念" class="headerlink" title="docker的一些基本概念"></a>docker的一些基本概念</h3><p>1.镜像：可认为是超轻量级的虚拟机的快照</p>
+<p>2.容器：可认为是超轻量级的虚拟机，是镜像运行起来所处的可读写的状态；容器里面可安装、运行程序，还可以把安装好的程序存储起来获得新的镜像；一个容器通常只运行一个程序</p>
+<h3 id="docker的相关命令"><a href="#docker的相关命令" class="headerlink" title="docker的相关命令"></a>docker的相关命令</h3><p>1.安装：</p>
+<pre><code>sudo apt install docker.io</code></pre><p>2.查看docker的信息：</p>
+<pre><code>sudo docker info</code></pre><p>3.启动：</p>
+<pre><code>sudo systemctl start docker</code></pre><p>4.重启：</p>
+<pre><code>sudo systemctl restart docker</code></pre><p>5.停止：</p>
+<pre><code>sudo systemctl top docker</code></pre><p>6.查看运行状态：</p>
+<pre><code>sudo systemctl status docker</code></pre><h3 id="docker镜像相关命令"><a href="#docker镜像相关命令" class="headerlink" title="docker镜像相关命令"></a>docker镜像相关命令</h3><p>1.查看所有下载的镜像：</p>
+<pre><code>sudo docker images</code></pre><p>2.搜索镜像：</p>
+<pre><code>sudo docker search 镜像名称</code></pre><p>3.获取镜像：</p>
+<pre><code>sudo docker pull 镜像名称</code></pre><p>4.运行镜像：</p>
+<pre><code>sudo docker run -d --name 容器名称 -p 80:80 镜像名称</code></pre><p>其中：</p>
+<ul>
+<li>-d：后台运行</li>
+<li>-name：容器名称(自己命名)</li>
+<li>-p：指定docker运行此镜像所使用的端口，第一个是外网端口，第二个是内网端口</li>
+</ul>
+<p>5.删除镜像：</p>
+<pre><code>sudo docker rmi IMAGE-ID/name</code></pre><p>其中，<code>IMAGE-ID</code>可在镜像列表中查看；只需使用IMAGE ID前四位即可；也可以使用镜像的名字</p>
+<h3 id="docker容器相关命令"><a href="#docker容器相关命令" class="headerlink" title="docker容器相关命令"></a>docker容器相关命令</h3><p>1.查看容器列表：</p>
+<pre><code>sudo docker ps -a</code></pre><p>2.停止容器：</p>
+<pre><code>sudo docker stop CONTAINER-ID/name</code></pre><p>其中，<code>CONTAINER ID</code>可在容器列表中查看；只需使用CONTAINER ID前四位即可；也可以使用运行镜像时所命名的容器名字</p>
+<p>3.运行容器：</p>
+<pre><code>sudo docker start CONTAINER-ID/name</code></pre><p>4.删除容器(容器需已停止运行)：</p>
+<pre><code>sudo docker rm CONTAINER-ID/name</code></pre><p>5.当自定义的容器名存在时，不能用重复的名字，如<code>docker-nginx</code>去运行一个镜像，否则会报错：</p>
+<pre><code>└─(14:51:56)──&gt; sudo docker run --name docker-nginx -p 100:100 nginx
+docker: Error response from daemon: Conflict. The container name &quot;/docker-nginx&quot; is already in use by container &quot;55d6d83d8db6072ea8c57d03acdd6780259a695d14a5d4fc4d986fed79b39d17&quot;. You have to remove (or rename) that container to be able to reuse that name.
+See &apos;docker run --help&apos;.</code></pre><p>可使用<code>stop</code>命令来停止运行：</p>
+<pre><code>sudo docker stop 55d6/docker-nginx</code></pre><p>停止运行后，删除此容器：</p>
+<pre><code>sudo rm stop 55d6/docker-nginx</code></pre><p>之后便可使用<code>docker-nginx</code>容器名去运行一个镜像</p>
+<p>6.进入容器(不知道什么原因，使用<code>docker attach</code>命令无法进入到容器中～)</p>
+<pre><code>sudo docker exec -it CONTAINER-ID/name /bin/bash</code></pre><p>退出：<code>exit</code>或<code>Ctrl+D</code></p>
+<p>在容器中的修改不会影响原有镜像</p>
+<h3 id="添加docker权限给当前用户"><a href="#添加docker权限给当前用户" class="headerlink" title="添加docker权限给当前用户"></a>添加docker权限给当前用户</h3><p>上述命令都需要sudo，有些麻烦，直接使用下面这条命令：</p>
+<pre><code>sudo usermod -aG docker 当前用户名</code></pre><p>之后重新登录该用户即可直接使用<code>docker</code>命令</p>
+<h3 id="自定义镜像"><a href="#自定义镜像" class="headerlink" title="自定义镜像"></a>自定义镜像</h3><p>1.将容器提交成一个镜像：</p>
+<pre><code>docker commit CONTAINER-ID/name 镜像名称</code></pre><p>2.使用dockerfile</p>
+<p>dockerfile相当于镜像的配置文件；可以通过写一个dockerfile，之后编译这个文件来创建一个自定义镜像，编译命令(在dockerfile目录下执行)：</p>
+<pre><code>docker build -t 镜像名称 .</code></pre><p>dockerfile中的一些指令：</p>
+<ul>
+<li>FROM：<code>FROM debian:stretch</code>表示以<code>debian:stretch</code>作为基础镜像进行构建</li>
+<li>RUN：RUN后面跟着待执行的shell命令</li>
+<li>ARG：可以进行一些宏定义，比如<code>ENV JAVA_HOME=/opt/jdk</code>，之后RUN后面的shell命令中的<code>${JAVA_HOME}</code>都会被<code>/opt/jdk</code>代替</li>
+<li>ENV：在shell中设置一些环境变量</li>
+<li>FROM…AS…：给这个阶段的镜像起个别名：FROM …(基础镜像) AS …(别名)，在后面引用这个阶段的镜像时直接使用别名就可以了</li>
+<li>COPY：复制文件，COPY <code>. /root/workspace/agent</code>表示将当前文件夹的所有文件拷贝到容器的<code>/root/workspace/agent</code>文件夹中。通过<code>--from</code>参数也可以从前面阶段的镜像中拷贝文件过来，比如<code>--from=builder</code>表示文件来源不是本地文件系统，而是之前的别名为builder的容器</li>
+<li>WORKDIR：在执行RUN后面的shell命令前会先cd进WORKDIR后面的目录</li>
+<li>ENTRYPOINT：这个参数表示镜像的“入口”，镜像打包完成之后，使用docker run命令运行这个镜像时，其实就是执行这个ENTRYPOINT后面的可执行文件（一般是一个shell脚本文件），也可以通过[“可执行文件”, “参数1”, “参数2”]这种方式来赋予可执行文件的执行参数，这个“入口”执行的工作目录也是WORKDIR后面的那个目录</li>
+</ul>
+<h3 id="使用dockerfile部署题目"><a href="#使用dockerfile部署题目" class="headerlink" title="使用dockerfile部署题目"></a>使用dockerfile部署题目</h3><p>以De1CTF的SSRF Me这道题的dockerfile为例：(<a href="https://github.com/De1ta-team/De1CTF2019/blob/master/writeup/web/SSRF%20Me/docker.zip" target="_blank" rel="noopener">https://github.com/De1ta-team/De1CTF2019/blob/master/writeup/web/SSRF%20Me/docker.zip</a>)</p>
+<p>1.将dockerr.zip下载下来，解压打开，里面有一个dockerfile文件和一些源码文件<br>2.查看dockerfile文件：</p>
+<pre><code>FROM tiangolo/uwsgi-nginx-flask:python2.7
 
-<p><img src="https://i.imgur.com/eBvX2zJ.png" alt></p>
-<p>提取信息：</p>
-<pre><code>1.关闭了1报错提示
-2.包含flag1.php文件
-3.get方法传入args参数，且其值符合正则表达式‘/^\w+$/’
-4.满足后，运行eval(&quot;var_dump($$args);&quot;)</code></pre><p>相关知识：</p>
-<p>1.PHP正则表达式</p>
-<p>表达式格式： /表达式/[修正符]</p>
-<p>$ :表示行尾</p>
-<p>^ :表示行开始</p>
-<p>\w :匹配一个英文字母，数字或下划线</p>
-<p>+ :匹配一次或多次</p>
-<p>2.可变变量</p>
-<p>某变量的名称由另一个变量的值来确定   </p>
-<p>如：</p>
-<pre><code>&lt;?php
+WORKDIR /app
 
-$a =&apos;b&apos;;
-$b = 123;
-echo $$a;
+COPY ./ssrf_me /app
 
+RUN mv /app/sources.list /etc/apt/sources.list
 
-?&gt;</code></pre><p>会输出</p>
-<pre><code>123</code></pre><p>3.$GLOBALS</p>
-<p>存储了所有的全局变量的数组</p>
-<p>有了以上的知识，根据提示‘flag在变量中’，即可在浏览器url后添加参数</p>
-<pre><code>args=GLOBALS</code></pre><p>即可</p>
-<p><img src="https://i.imgur.com/DVm4ezP.png" alt></p>
-<p>原来$GLOBALS还能获得include里的文件内的变量！</p>
+RUN apt-get update &amp;&amp; apt-get install -y sudo 
+
+RUN python2 -m pip install flask
+
+RUN sudo uwsgi -d /app/uwsgi.ini </code></pre><p>根据第三步<code>COPY ./ssrf_me /app</code>，可以得出dockerfile需要在ssrf_me目录外执行，那么先新建一个文件夹ssrf，将dockerfile文件和ssrf_me文件夹移动到里面，结构如下：</p>
+<pre><code>┌─(~/桌面/ssrf)──────────────────────────────────(gtfly@ubuntu:pts/0)─┐
+└─(10:09:12)──&gt; tree                                     ──(四,8月08)─┘
+.
+├── dockerfile
+└── ssrf_me
+    ├── app.py
+    ├── code.txt
+    ├── flag.txt
+    ├── requirements.txt
+    ├── sources.list
+    └── uwsgi.ini
+
+1 directory, 7 files</code></pre><p>之后在dockerfile目录下执行：</p>
+<pre><code>docker build -t ssrf .</code></pre><p>执行成功后即可找到这个ssrf镜像：</p>
+<pre><code>docker images</code></pre><p>运行这个镜像：</p>
+<pre><code>docker run -d -name ssrfme -p 100:80 ssrf</code></pre><p>之后在本地浏览器访问<code>127.0.0.1:100</code>即可</p>
+<h3 id="docker-compose的安装与使用"><a href="#docker-compose的安装与使用" class="headerlink" title="docker-compose的安装与使用"></a>docker-compose的安装与使用</h3><p>dockerfile记录单个镜像的构建过程，docker-compose.yml记录一个项目(多个镜像)的构建过程</p>
+<p>安装：</p>
+<pre><code>sudo apt install docker-compose</code></pre><p>运行yml(在docker-compose.yml目录执行)：</p>
+<pre><code>docker-compose up -d</code></pre><p>列出所有运行容器：</p>
+<pre><code>docker-compose ps</code></pre><p>查看服务日志：</p>
+<pre><code>docker-compose logs</code></pre><p>启动指定服务已存在的容器(不加名称的话则启动所有容器，下同)：</p>
+<pre><code>docker-compose start 容器名称</code></pre><p>停止已运行的服务的容器：</p>
+<pre><code>docker-compose stop 容器名称</code></pre><p>删除指定的服务的容器：</p>
+<pre><code>docker-compose rm 容器名称</code></pre><h3 id="使用docker-compose-yml部署题目"><a href="#使用docker-compose-yml部署题目" class="headerlink" title="使用docker-compose.yml部署题目"></a>使用docker-compose.yml部署题目</h3><p>以De1CTF ShellShellShell这道题的docker-compose.yml为例：<a href="https://github.com/De1ta-team/De1CTF2019/tree/master/writeup/web/ShellShellShell/dockerfile" target="_blank" rel="noopener">https://github.com/De1ta-team/De1CTF2019/tree/master/writeup/web/ShellShellShell/dockerfile</a></p>
+<p>下载解压后，在docker-compose.yml目录下执行：</p>
+<pre><code>docker-compose up -d</code></pre><p>之后，查看容器：</p>
+<pre><code>└─(11:10:08)──&gt; docker-compose ps                                ──(四,8月08)─┘
+         Name              Command      State                Ports             
+-------------------------------------------------------------------------------
+dockerfile_getshell_1    /bin/bash      Up      80/tcp                         
+dockerfile_jaivyweb1_1   bash /run.sh   Up      0.0.0.0:11027-&gt;80/tcp, 8080/tcp</code></pre><p>那么在本地浏览器访问<code>127.0.0.1:11027</code>即可</p>
+<hr>
+<p>参考链接：<br><a href="https://blog.csdn.net/qq_33256688/article/details/80319673" target="_blank" rel="noopener">https://blog.csdn.net/qq_33256688/article/details/80319673</a><br><a href="https://www.jianshu.com/p/658911a8cff3" target="_blank" rel="noopener">https://www.jianshu.com/p/658911a8cff3</a><br><a href="https://buzheng.org/linux/how-to-install-and-use-docker-compose-on-ubuntu-18-04/#docker-compose-%E5%85%A5%E9%97%A8" target="_blank" rel="noopener">https://buzheng.org/linux/how-to-install-and-use-docker-compose-on-ubuntu-18-04/#docker-compose-%E5%85%A5%E9%97%A8</a></p>
 
       
     </div>
@@ -604,7 +670,7 @@ echo $$a;
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="www.gtfly.top/2018/09/16/Bugku-变量1/" title="Bugku-变量1">www.gtfly.top/2018/09/16/Bugku-变量1/</a>
+    <a href="www.gtfly.top/2019/08/07/Ubuntu18-04-docker的安装与使用/" title="Ubuntu18.04 docker的安装与使用">www.gtfly.top/2019/08/07/Ubuntu18-04-docker的安装与使用/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -626,8 +692,8 @@ echo $$a;
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/16/CTF常用的PHP知识/" rel="next" title="CTF常用的PHP知识">
-                <i class="fa fa-chevron-left"></i> CTF常用的PHP知识
+              <a href="/2019/08/02/php-cgi、fastcgi、fpm、cli关系/" rel="next" title="PHP CGI、FastCGI、FPM与FPM未授权访问">
+                <i class="fa fa-chevron-left"></i> PHP CGI、FastCGI、FPM与FPM未授权访问
               </a>
             
           </div>
@@ -635,10 +701,6 @@ echo $$a;
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/09/24/Bugku-域名解析/" rel="prev" title="Bugku-域名解析">
-                Bugku-域名解析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -695,8 +757,17 @@ echo $$a;
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -816,6 +887,22 @@ echo $$a;
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker的一些基本概念"><span class="nav-number">1.</span> <span class="nav-text">docker的一些基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker的相关命令"><span class="nav-number">2.</span> <span class="nav-text">docker的相关命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker镜像相关命令"><span class="nav-number">3.</span> <span class="nav-text">docker镜像相关命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker容器相关命令"><span class="nav-number">4.</span> <span class="nav-text">docker容器相关命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加docker权限给当前用户"><span class="nav-number">5.</span> <span class="nav-text">添加docker权限给当前用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义镜像"><span class="nav-number">6.</span> <span class="nav-text">自定义镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用dockerfile部署题目"><span class="nav-number">7.</span> <span class="nav-text">使用dockerfile部署题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-compose的安装与使用"><span class="nav-number">8.</span> <span class="nav-text">docker-compose的安装与使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用docker-compose-yml部署题目"><span class="nav-number">9.</span> <span class="nav-text">使用docker-compose.yml部署题目</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
