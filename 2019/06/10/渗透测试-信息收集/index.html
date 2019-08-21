@@ -126,17 +126,17 @@
 
 
 
-<meta name="description" content="渗透测试的第一步">
+<meta name="description" content="信息收集拿到webshell之前1.旁站、C段查询：http://webscan.cc/2.whois查询：http://whois.chinaz.com/3.网站架构探测：http://www.yunsee.cn/info.html4.目录扫描工具：https://github.com/H4ckForJob/dirmap5.layer子域名挖掘机 相关概念： whois：就是一个用来查询域名是否">
 <meta property="og:type" content="article">
-<meta property="og:title" content="渗透测试-信息收集">
+<meta property="og:title" content="渗透测试">
 <meta property="og:url" content="www.gtfly.top/2019/06/10/渗透测试-信息收集/index.html">
 <meta property="og:site_name" content="gtfly">
-<meta property="og:description" content="渗透测试的第一步">
+<meta property="og:description" content="信息收集拿到webshell之前1.旁站、C段查询：http://webscan.cc/2.whois查询：http://whois.chinaz.com/3.网站架构探测：http://www.yunsee.cn/info.html4.目录扫描工具：https://github.com/H4ckForJob/dirmap5.layer子域名挖掘机 相关概念： whois：就是一个用来查询域名是否">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-10T16:45:08.000Z">
+<meta property="og:updated_time" content="2019-08-21T03:25:54.856Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="渗透测试-信息收集">
-<meta name="twitter:description" content="渗透测试的第一步">
+<meta name="twitter:title" content="渗透测试">
+<meta name="twitter:description" content="信息收集拿到webshell之前1.旁站、C段查询：http://webscan.cc/2.whois查询：http://whois.chinaz.com/3.网站架构探测：http://www.yunsee.cn/info.html4.目录扫描工具：https://github.com/H4ckForJob/dirmap5.layer子域名挖掘机 相关概念： whois：就是一个用来查询域名是否">
 
 
 
@@ -183,7 +183,7 @@
     })();
 </script>
 
-  <title>渗透测试-信息收集 | gtfly</title>
+  <title>渗透测试 | gtfly</title>
   
 
 
@@ -385,7 +385,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">渗透测试-信息收集</h1>
+          <h1 class="post-title" itemprop="name headline">渗透测试</h1>
         
 
         <div class="post-meta">
@@ -413,8 +413,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-06-11T00:45:08+08:00">
-                2019-06-11
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-21T11:25:54+08:00">
+                2019-08-21
               </time>
             
           </span>
@@ -473,7 +473,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  141 字
+                  171 字
                 </span>
               
 
@@ -510,15 +510,14 @@
       
 
       
-        <p>渗透测试的第一步</p>
-<a id="more"></a>
-
-<p>使用的工具：<br>旁站、C段查询：<a href="http://webscan.cc/" target="_blank" rel="noopener">http://webscan.cc/</a><br>whois查询：<a href="http://whois.chinaz.com/" target="_blank" rel="noopener">http://whois.chinaz.com/</a><br>网站架构探测：<a href="http://www.yunsee.cn/info.html" target="_blank" rel="noopener">http://www.yunsee.cn/info.html</a><br>目录扫描工具：<a href="https://github.com/H4ckForJob/dirmap" target="_blank" rel="noopener">https://github.com/H4ckForJob/dirmap</a></p>
-<hr>
+        <h3 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h3><h4 id="拿到webshell之前"><a href="#拿到webshell之前" class="headerlink" title="拿到webshell之前"></a>拿到webshell之前</h4><p>1.旁站、C段查询：<a href="http://webscan.cc/" target="_blank" rel="noopener">http://webscan.cc/</a><br>2.whois查询：<a href="http://whois.chinaz.com/" target="_blank" rel="noopener">http://whois.chinaz.com/</a><br>3.网站架构探测：<a href="http://www.yunsee.cn/info.html" target="_blank" rel="noopener">http://www.yunsee.cn/info.html</a><br>4.目录扫描工具：<a href="https://github.com/H4ckForJob/dirmap" target="_blank" rel="noopener">https://github.com/H4ckForJob/dirmap</a><br>5.layer子域名挖掘机</p>
+<p>相关概念：</p>
 <p>whois：就是一个用来查询域名是否已经被注册，以及注册域名的详细信息的数据库（如域名所有人、域名注册商）</p>
 <p>旁站：是和目标网站在同一台服务器上的其它的网站。</p>
 <p>C段：是和目标服务器ip处在同一个网段的其它服务器。</p>
-
+<h4 id="拿到webshell之后"><a href="#拿到webshell之后" class="headerlink" title="拿到webshell之后"></a>拿到webshell之后</h4><p>查看当前权限：</p>
+<pre><code>whoami</code></pre><p>查看主机版本：</p>
+<pre><code>cat /etc/issue</code></pre>
       
     </div>
     
@@ -577,7 +576,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="www.gtfly.top/2019/06/10/渗透测试-信息收集/" title="渗透测试-信息收集">www.gtfly.top/2019/06/10/渗透测试-信息收集/</a>
+    <a href="www.gtfly.top/2019/06/10/渗透测试-信息收集/" title="渗透测试">www.gtfly.top/2019/06/10/渗透测试-信息收集/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -668,8 +667,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -684,7 +692,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">162</span>
+                  <span class="site-state-item-count">164</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -789,6 +797,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#信息收集"><span class="nav-number">1.</span> <span class="nav-text">信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#拿到webshell之前"><span class="nav-number">1.1.</span> <span class="nav-text">拿到webshell之前</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拿到webshell之后"><span class="nav-number">1.2.</span> <span class="nav-text">拿到webshell之后</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

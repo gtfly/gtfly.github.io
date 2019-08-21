@@ -133,7 +133,7 @@
 <meta property="og:site_name" content="gtfly">
 <meta property="og:description" content="curl是linux下的一款利用url规则在命令行下使用的http工具">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-04T14:38:05.328Z">
+<meta property="og:updated_time" content="2019-08-21T10:03:10.477Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux curl">
 <meta name="twitter:description" content="curl是linux下的一款利用url规则在命令行下使用的http工具">
@@ -413,8 +413,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-07-04T22:38:05+08:00">
-                2019-07-04
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-21T18:03:10+08:00">
+                2019-08-21
               </time>
             
           </span>
@@ -473,7 +473,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  171 字
+                  210 字
                 </span>
               
 
@@ -516,8 +516,10 @@
 <h3 id="获取html"><a href="#获取html" class="headerlink" title="获取html"></a>获取html</h3><h4 id="get"><a href="#get" class="headerlink" title="get"></a>get</h4><p>格式：</p>
 <pre><code>curl www.baidu.com</code></pre><p>即可显示百度的html</p>
 <p>直接将html写入到文件：</p>
-<pre><code>curl -o baidu.html www.baidu.com</code></pre><h4 id="post"><a href="#post" class="headerlink" title="post"></a>post</h4><p>格式：</p>
-<pre><code>curl -d &quot;pass=hack&quot; http://123.206.87.240:8002/webshell/shell.php</code></pre><p>使用<code>-d</code>或<code>--data</code>来指定需要post的数据</p>
+<pre><code>curl -o baidu.html www.baidu.com</code></pre><h4 id="post"><a href="#post" class="headerlink" title="post"></a>post</h4><p>1.发送数据：</p>
+<pre><code>curl -X POST -d &quot;pass=hack&quot; http://123.206.87.240:8002/webshell/shell.php</code></pre><p><code>-X POST</code>可以省略</p>
+<p>2.上传文件：</p>
+<pre><code>curl 127.0.0.1 -F &quot;file=@a.png&quot;</code></pre><p><code>-F</code>：将会以<code>multipart/form-data</code>发送POST数据；如果发送文件，则需在文件路径前加<code>@</code></p>
 <h3 id="获取cookie"><a href="#获取cookie" class="headerlink" title="获取cookie"></a>获取cookie</h3><p>格式：</p>
 <pre><code>curl -c cookie.txt www.baidu.com</code></pre><h3 id="获取response-header"><a href="#获取response-header" class="headerlink" title="获取response header"></a>获取response header</h3><p>格式：</p>
 <pre><code>curl -D header.txt www.baidu.com</code></pre><h3 id="使用cookie"><a href="#使用cookie" class="headerlink" title="使用cookie"></a>使用cookie</h3><p>格式：</p>
@@ -697,7 +699,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">162</span>
+                  <span class="site-state-item-count">164</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

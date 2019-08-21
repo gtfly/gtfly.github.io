@@ -134,7 +134,7 @@
 <meta property="og:description" content="做题时经常碰到PHP弱类型相关的知识，把以前写的重新总结整理下">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/UFiDWbK.png">
-<meta property="og:updated_time" content="2019-05-19T21:05:12.000Z">
+<meta property="og:updated_time" content="2019-08-09T08:13:22.318Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP弱类型">
 <meta name="twitter:description" content="做题时经常碰到PHP弱类型相关的知识，把以前写的重新总结整理下">
@@ -415,8 +415,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-05-20T05:05:12+08:00">
-                2019-05-20
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-09T16:13:22+08:00">
+                2019-08-09
               </time>
             
           </span>
@@ -475,7 +475,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k 字
+                  1.4k 字
                 </span>
               
 
@@ -491,7 +491,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4 分钟
+                  5 分钟
                 </span>
               
             </div>
@@ -576,6 +576,14 @@
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">switch (&apos;a&apos;) &#123;  // null、false</span><br><span class="line">    case 0:</span><br><span class="line">        echo &quot;0&quot;;</span><br><span class="line">        break;</span><br><span class="line">    case 1:</span><br><span class="line">        echo &quot;1&quot;;</span><br><span class="line">        break;</span><br><span class="line">    case 2:</span><br><span class="line">        echo &quot;2&quot;;</span><br><span class="line">        break;</span><br><span class="line">&#125;</span><br><span class="line">//输出 0</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
 
+<h3 id="浮点数的精度"><a href="#浮点数的精度" class="headerlink" title="浮点数的精度"></a>浮点数的精度</h3><p>官方文档：</p>
+<blockquote>浮点数的精度有限。尽管取决于系统，PHP 通常使用 IEEE 754 双精度格式，则由于取整而导致的最大相对误差为 1.11e-16。非基本数学运算可能会给出更大误差，并且要考虑到进行复合运算时的误差传递。
+
+<p>此外，以十进制能够精确表示的有理数如 0.1 或 0.7，无论有多少尾数都不能被内部所使用的二进制精确表示，因此不能在不丢失一点点精度的情况下转换为二进制的格式。这就会造成混乱的结果：例如，floor((0.1+0.7)*10) 通常会返回 7 而不是预期中的 8，因为该结果内部的表示其实是类似 7.9999999999999991118…。</p>
+<p>所以永远不要相信浮点数结果精确到了最后一位，也永远不要比较两个浮点数是否相等。如果确实需要更高的精度，应该使用任意精度数学函数或者 gmp 函数。 </p></blockquote><br><p></p>
+<p>例：</p>
+<pre><code>if(!(intval($a2)&lt;1024 and intval($a2+1)&gt;1024)) exit(&quot;emmmmm&quot;);</code></pre><p>此时构造：</p>
+<pre><code>a2 = 1023.9999999999999</code></pre><p>即可绕过</p>
 
       
     </div>
@@ -751,7 +759,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">162</span>
+                  <span class="site-state-item-count">164</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -866,7 +874,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#自动转换"><span class="nav-number">1.</span> <span class="nav-text">自动转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">==</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据类型比较"><span class="nav-number">3.</span> <span class="nav-text">数据类型比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strcmp"><span class="nav-number">4.</span> <span class="nav-text">strcmp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ereg"><span class="nav-number">5.</span> <span class="nav-text">ereg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strpos"><span class="nav-number">6.</span> <span class="nav-text">strpos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#md5-sha1"><span class="nav-number">7.</span> <span class="nav-text">md5,sha1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#intval"><span class="nav-number">8.</span> <span class="nav-text">intval</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#is-numeric"><span class="nav-number">9.</span> <span class="nav-text">is_numeric</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#switch"><span class="nav-number">10.</span> <span class="nav-text">switch</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#自动转换"><span class="nav-number">1.</span> <span class="nav-text">自动转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">==</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据类型比较"><span class="nav-number">3.</span> <span class="nav-text">数据类型比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strcmp"><span class="nav-number">4.</span> <span class="nav-text">strcmp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ereg"><span class="nav-number">5.</span> <span class="nav-text">ereg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strpos"><span class="nav-number">6.</span> <span class="nav-text">strpos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#md5-sha1"><span class="nav-number">7.</span> <span class="nav-text">md5,sha1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#intval"><span class="nav-number">8.</span> <span class="nav-text">intval</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#is-numeric"><span class="nav-number">9.</span> <span class="nav-text">is_numeric</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#switch"><span class="nav-number">10.</span> <span class="nav-text">switch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点数的精度"><span class="nav-number">11.</span> <span class="nav-text">浮点数的精度</span></a></li></ol></div>
             
 
           </div>
