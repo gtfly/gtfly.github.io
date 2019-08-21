@@ -1606,7 +1606,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/24/python-Crypto/" itemprop="url">python Crypto</a></h1>
+                <a class="post-title-link" href="/2019/04/24/python-Crypto/" itemprop="url">python Crypto库</a></h1>
         
 
         <div class="post-meta">
@@ -1634,12 +1634,34 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-04-25T03:22:02+08:00">
-                2019-04-25
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-21T20:59:12+08:00">
+                2019-08-21
               </time>
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/密码学/" itemprop="url" rel="index">
+                    <span itemprop="name">密码学</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1672,7 +1694,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  134 字
+                  502 字
                 </span>
               
 
@@ -1688,7 +1710,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -1712,11 +1734,52 @@
         
           
             <p>学习python的Crypto库</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>开始想在python3.6安装，直接<code>pip install pycrypto</code>，发现报错，后来在网上找了一种简单的在python2安装这个库的：</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="windows10安装"><a href="#windows10安装" class="headerlink" title="windows10安装"></a>windows10安装</h4><p>开始想在python3.6安装，直接<code>pip install pycrypto</code>，发现报错，后来在网上找了一种简单的在python2安装这个库的：</p>
 <p>到<a href="http://www.voidspace.org.uk/python/pycrypto-2.6.1/" target="_blank" rel="noopener">http://www.voidspace.org.uk/python/pycrypto-2.6.1/</a>下载对应python版本的文件，由于用的是python2.7，则这里下载的是<code>pycrypto-2.6.1.win-amd64-py2.7.exe</code>；之后直接移动到python2.7文件夹下，双击exe安装即可</p>
 <p>安装好后可以测试导入这个库，不报错则说明安装成功了：</p>
 <p><img src="https://i.imgur.com/X1istuf.png" alt></p>
-<p>待更.</p>
+<h4 id="Ubuntu安装"><a href="#Ubuntu安装" class="headerlink" title="Ubuntu安装"></a>Ubuntu安装</h4><p>在Ubuntu直接安装：</p>
+<pre><code>sudo apt-get install python3-crypto</code></pre><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>使用<code>help()</code>命令查看使用方法</p>
+<h4 id="1-Crypto-Cipher"><a href="#1-Crypto-Cipher" class="headerlink" title="1.Crypto.Cipher"></a>1.Crypto.Cipher</h4><p>Secret-key (AES, DES, ARC4) and public-key encryption (RSA PKCS#1) algorithms</p>
+<p><strong>AES</strong></p>
+<pre><code>&gt;&gt;&gt; from Crypto.Cipher import AES
+&gt;&gt;&gt; secret = &quot;12345678912345678912345678912345&quot; # AES key must be either 16, 24, or 32 bytes long
+&gt;&gt;&gt; cipher = AES.new(secret)
+&gt;&gt;&gt; cipher
+&lt;Crypto.Cipher.AES.AESCipher object at 0x7f19e939a630&gt;
+&gt;&gt;&gt; s = cipher.encrypt(&quot;1234567891234567&quot;)  
+&gt;&gt;&gt; s
+b&apos;\xbbvQ\xe4\xc1\xe1\x98\xbb[v\x87\x18k\x1f\xb9\xe9&apos;
+&gt;&gt;&gt; cipher.decrypt(s)
+b&apos;1234567891234567&apos;</code></pre><p><strong>DES</strong></p>
+<pre><code>from Crypto.Cipher import DES
+&gt;&gt;&gt; secret = &quot;11111111&quot; # Key must be 8 bytes long
+&gt;&gt;&gt; cipher = DES.new(secret)
+&gt;&gt;&gt; s = cipher.encrypt(&quot;1234567891234567&quot;)
+&gt;&gt;&gt; s
+b&apos;\x85\x8b\x17m\xa8\xb1%\x03\xc2\xa4J\xf5Dn\xf2B&apos;
+&gt;&gt;&gt; cipher.decrypt(s)
+b&apos;1234567891234567&apos;</code></pre><h4 id="2-Crypto-Hash"><a href="#2-Crypto-Hash" class="headerlink" title="2.Crypto.Hash"></a>2.Crypto.Hash</h4><p>Hashing algorithms (MD5, SHA, HMAC)</p>
+<p><strong>MD5</strong></p>
+<pre><code>&gt;&gt;&gt; from Crypto.Hash import MD5
+&gt;&gt;&gt; h = MD5.new()
+&gt;&gt;&gt; h.update(b&apos;Hello&apos;)
+&gt;&gt;&gt; s = h.hexdigest()
+&apos;8b1a9953c4611296a827abf8c47804d7&apos;</code></pre><h4 id="3-Crypto-Protocol"><a href="#3-Crypto-Protocol" class="headerlink" title="3.Crypto.Protocol"></a>3.Crypto.Protocol</h4><p>Cryptographic protocols (Chaffing, all-or-nothing transform, key derivation functions). This package does not contain any network protocols.</p>
+<h4 id="4-Crypto-PublicKey"><a href="#4-Crypto-PublicKey" class="headerlink" title="4.Crypto.PublicKey"></a>4.Crypto.PublicKey</h4><p>Public-key encryption and signature algorithms (RSA, DSA)</p>
+<h4 id="5-Crypto-Signature"><a href="#5-Crypto-Signature" class="headerlink" title="5.Crypto.Signature"></a>5.Crypto.Signature</h4><p>Public-key signature algorithms (RSA PKCS#1) </p>
+<h4 id="6-Crypto-Util"><a href="#6-Crypto-Util" class="headerlink" title="6.Crypto.Util"></a>6.Crypto.Util</h4><p>Various useful modules and functions (long-to-string conversion, random number generation, number theoretic functions)</p>
+<h5 id="1-Crypto-Util-number"><a href="#1-Crypto-Util-number" class="headerlink" title="(1)Crypto.Util.number"></a>(1)Crypto.Util.number</h5><p>Number-theoretic functions (primality testing, etc.)</p>
+<p><strong>GCD(x, y)</strong></p>
+<pre><code>GCD(x:long, y:long): long</code></pre><p>Return the GCD of x and y.</p>
+<p><strong>bytes_to_long(s)</strong></p>
+<pre><code>bytes_to_long(string) : long</code></pre><p>Convert a byte string to a long integer.</p>
+<p>This is (essentially) the inverse of long_to_bytes().</p>
+<p><strong>getPrime(N, randfunc=None)</strong></p>
+<pre><code>getPrime(N:int, randfunc:callable):long</code></pre><p>Return a random N-bit prime number.</p>
+<p>If randfunc is omitted, then Random.new().read is used.</p>
+<p><strong>inverse(u, v)</strong></p>
+<pre><code>inverse(u:long, v:long):long</code></pre><p>Return the inverse of u mod v.</p>
 
           
         
@@ -2428,7 +2491,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>

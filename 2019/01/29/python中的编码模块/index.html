@@ -133,7 +133,7 @@
 <meta property="og:site_name" content="gtfly">
 <meta property="og:description" content="学习一下如何写解码脚本">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-03T11:12:14.000Z">
+<meta property="og:updated_time" content="2019-08-21T13:00:32.429Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python中的编码模块">
 <meta name="twitter:description" content="学习一下如何写解码脚本">
@@ -413,8 +413,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-03-03T19:12:14+08:00">
-                2019-03-03
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-21T21:00:32+08:00">
+                2019-08-21
               </time>
             
           </span>
@@ -432,8 +432,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="/categories/密码学/" itemprop="url" rel="index">
+                    <span itemprop="name">密码学</span>
                   </a>
                 </span>
 
@@ -473,7 +473,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  378 字
+                  376 字
                 </span>
               
 
@@ -542,17 +542,8 @@ base64.urlsafe_b64decode()</code></pre><h3 id="hash"><a href="#hash" class="head
 <h4 id="sha1"><a href="#sha1" class="headerlink" title="sha1"></a>sha1</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line">m = hashlib.sha1()</span><br><span class="line">m.update(<span class="string">b'hell'</span>)</span><br><span class="line">m.update(<span class="string">b'o'</span>)</span><br><span class="line">print(m.hexdigest())</span><br><span class="line"></span><br><span class="line"><span class="comment">#或</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">m = hashlib.new('sha1')</span></span><br><span class="line"><span class="string">m.update(b'hello')</span></span><br><span class="line"><span class="string">m.hexdigest()</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
 
 <p>输出</p>
-<pre><code>aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d</code></pre><h3 id="crc32"><a href="#crc32" class="headerlink" title="crc32"></a>crc32</h3><pre><code class="python"><span class="keyword">import</span> zlib
+<pre><code>aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d</code></pre><h3 id="crc32"><a href="#crc32" class="headerlink" title="crc32"></a>crc32</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> zlib</span><br><span class="line"></span><br><span class="line">s = zlib.crc32(<span class="string">b'hello, world!'</span>)</span><br><span class="line">print(s)</span><br><span class="line"></span><br><span class="line"><span class="comment">#或</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">import binascii</span></span><br><span class="line"><span class="string">s = binascii.crc32(b'hello, world!')</span></span><br><span class="line"><span class="string">print(s)</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
 
-s = zlib.crc32(<span class="string">b'hello, world!'</span>)
-print(s)
-
-<span class="comment">#或</span>
-<span class="string">'''</span>
-<span class="string">import binascii</span>
-<span class="string">s = binascii.crc32(b'hello, world!')</span>
-<span class="string">print(s)</span>
-<span class="string">'''</span></code></pre>
 <p>输出</p>
 <pre><code>1486392595</code></pre>
       
@@ -740,7 +731,7 @@ print(s)
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
