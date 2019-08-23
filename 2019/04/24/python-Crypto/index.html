@@ -134,7 +134,7 @@
 <meta property="og:description" content="学习python的Crypto库 安装windows10安装开始想在python3.6安装，直接pip install pycrypto，发现报错，后来在网上找了一种简单的在python2安装这个库的： 到http://www.voidspace.org.uk/python/pycrypto-2.6.1/下载对应python版本的文件，由于用的是python2.7，则这里下载的是pycrypto-">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/X1istuf.png">
-<meta property="og:updated_time" content="2019-08-21T12:59:12.065Z">
+<meta property="og:updated_time" content="2019-08-23T13:57:55.394Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python Crypto库">
 <meta name="twitter:description" content="学习python的Crypto库 安装windows10安装开始想在python3.6安装，直接pip install pycrypto，发现报错，后来在网上找了一种简单的在python2安装这个库的： 到http://www.voidspace.org.uk/python/pycrypto-2.6.1/下载对应python版本的文件，由于用的是python2.7，则这里下载的是pycrypto-">
@@ -415,8 +415,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-21T20:59:12+08:00">
-                2019-08-21
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-23T21:57:55+08:00">
+                2019-08-23
               </time>
             
           </span>
@@ -434,8 +434,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/密码学/" itemprop="url" rel="index">
-                    <span itemprop="name">密码学</span>
+                  <a href="/categories/crypto/" itemprop="url" rel="index">
+                    <span itemprop="name">crypto</span>
                   </a>
                 </span>
 
@@ -475,7 +475,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  502 字
+                  577 字
                 </span>
               
 
@@ -491,7 +491,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2 分钟
+                  3 分钟
                 </span>
               
             </div>
@@ -546,7 +546,22 @@ b&apos;1234567891234567&apos;</code></pre><h4 id="2-Crypto-Hash"><a href="#2-Cry
 &gt;&gt;&gt; s = h.hexdigest()
 &apos;8b1a9953c4611296a827abf8c47804d7&apos;</code></pre><h4 id="3-Crypto-Protocol"><a href="#3-Crypto-Protocol" class="headerlink" title="3.Crypto.Protocol"></a>3.Crypto.Protocol</h4><p>Cryptographic protocols (Chaffing, all-or-nothing transform, key derivation functions). This package does not contain any network protocols.</p>
 <h4 id="4-Crypto-PublicKey"><a href="#4-Crypto-PublicKey" class="headerlink" title="4.Crypto.PublicKey"></a>4.Crypto.PublicKey</h4><p>Public-key encryption and signature algorithms (RSA, DSA)</p>
-<h4 id="5-Crypto-Signature"><a href="#5-Crypto-Signature" class="headerlink" title="5.Crypto.Signature"></a>5.Crypto.Signature</h4><p>Public-key signature algorithms (RSA PKCS#1) </p>
+<p>从公钥文件中提取n和e：</p>
+<pre><code>from Crypto.PublicKey import RSA
+
+public_key = RSA.importKey(open(&apos;pubkey.pem&apos;).read())
+n = public_key.n
+e = public_key.e</code></pre><p>生成私钥文件：</p>
+<pre><code>keypair = RSA.generate(1024)
+keypair.p = p
+keypair.q = q
+keypair.e = e
+keypair.n = n
+keypair.d = d
+
+private_key = keypair.exportKey().decode(&apos;utf-8&apos;)
+f = open(&apos;private.pem&apos;, &apos;w&apos;)
+f.write(private_key)</code></pre><h4 id="5-Crypto-Signature"><a href="#5-Crypto-Signature" class="headerlink" title="5.Crypto.Signature"></a>5.Crypto.Signature</h4><p>Public-key signature algorithms (RSA PKCS#1) </p>
 <h4 id="6-Crypto-Util"><a href="#6-Crypto-Util" class="headerlink" title="6.Crypto.Util"></a>6.Crypto.Util</h4><p>Various useful modules and functions (long-to-string conversion, random number generation, number theoretic functions)</p>
 <h5 id="1-Crypto-Util-number"><a href="#1-Crypto-Util-number" class="headerlink" title="(1)Crypto.Util.number"></a>(1)Crypto.Util.number</h5><p>Number-theoretic functions (primality testing, etc.)</p>
 <p><strong>GCD(x, y)</strong></p>
@@ -734,7 +749,7 @@ b&apos;1234567891234567&apos;</code></pre><h4 id="2-Crypto-Hash"><a href="#2-Cry
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">164</span>
+                  <span class="site-state-item-count">165</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -745,7 +760,7 @@ b&apos;1234567891234567&apos;</code></pre><h4 id="2-Crypto-Hash"><a href="#2-Cry
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>

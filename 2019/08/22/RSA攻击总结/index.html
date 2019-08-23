@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一个多月没学密码学方面的东西了…赶紧补补">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RSA攻击方法总结">
+<meta property="og:url" content="www.gtfly.top/2019/08/22/RSA攻击总结/index.html">
+<meta property="og:site_name" content="gtfly">
+<meta property="og:description" content="一个多月没学密码学方面的东西了…赶紧补补">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-23T14:05:43.661Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RSA攻击方法总结">
+<meta name="twitter:description" content="一个多月没学密码学方面的东西了…赶紧补补">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"fadeIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.gtfly.top/2019/08/22/RSA攻击总结/">
+
+
+
+
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入查看密码') !== ''){
+                alert('密码不正确,请询问主编大大');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+  <title>RSA攻击方法总结 | gtfly</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script> 
+ function GetRandomNum(Min,Max) 
+ { 
+    var Range = Max - Min; 
+    var Rand = Math.random(); 
+    return(Min + Math.round(Rand * Range)); 
+ } 
+ function setSidebarMarginTop (headerOffset) { 
+    return $('#sidebar').css({ 'margin-top': headerOffset }); 
+ } 
+ function getHeaderOffset () { 
+    return $('.header-inner').height() + CONFIG.sidebar.offset; 
+ }
+    window.onload=function() { 
+    var subtitle = "人生如逆旅，我亦是行人。"; 
+    var mytitle = subtitle.split("W"); 
+    var max = mytitle.length-1;
+    var index = GetRandomNum(0,max); 
+    var text = mytitle[index]; 
+    $("#helloTitle").html(text); 
+    var headOffset = getHeaderOffset(); 
+    setSidebarMarginTop(headOffset); 
+// alert(getHeaderOffset()); 
+ }  
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gtfly</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人生如逆旅，我亦是行人。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="https://github.com/gtfly?tab=stars" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.gtfly.top/2019/08/22/RSA攻击总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gtfly">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gtfly">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RSA攻击方法总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-22T10:49:53+08:00">
+                2019-08-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-23T22:05:43+08:00">
+                2019-08-23
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/crypto/" itemprop="url" rel="index">
+                    <span itemprop="name">crypto</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/22/RSA攻击总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/08/22/RSA攻击总结/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.5k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一个多月没学密码学方面的东西了…赶紧补补</p>
+<a id="more"></a>
+
+<h3 id="相关定理"><a href="#相关定理" class="headerlink" title="相关定理"></a>相关定理</h3><h4 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h4><p>设n是一个正整数，小于n且与n互素的正整数的个数称为欧拉函数，记为φ(n)。欧拉函数具有以下性质：</p>
+<p>(1) 如果n是素数，则φ(n) = n-1<br>(2) 如果m和n互素，则φ(mn) = φ(m)φ(n)<br>(3) 如果</p>
+<pre><code>n = p1^a1 x p2^a2 ... x pt^at</code></pre><p>其中，p1&lt;p2&lt;…&lt;pt都是素数，ai&gt;0(i=1, 2, …, t)，则</p>
+<pre><code>φ(n) = n(1-1/p1)(1-1/p2)...(1-1/pt)</code></pre><h4 id="欧几里得除法"><a href="#欧几里得除法" class="headerlink" title="欧几里得除法"></a>欧几里得除法</h4><p>欧几里得除法是用于计算两个整数a和b的最大公因子d = gcd(a, b)的常用方法：</p>
+<p>用较小数除较大数，再用出现的余数（第一余数）去除除数，再用出现的余数（第二余数）去除除数，如此反复，直到最后余数是0为止。如果是求两个数的最大公约数，那么最后的除数就是这两个数的最大公约数</p>
+<p>使用python表示如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span><span class="params">(m,n)</span>:</span></span><br><span class="line">    <span class="keyword">while</span> n:</span><br><span class="line">        r=m%n</span><br><span class="line">        m=n <span class="comment">#经过一次求余数，进入第二轮相除，即n的值扮演了被除数的角色</span></span><br><span class="line">        n=r <span class="comment">#r的值扮演了余数的角色</span></span><br><span class="line">    <span class="keyword">return</span> m <span class="comment">#这里return m的原因是，n作为最后一轮的除数已经赋值给了m</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="扩展欧几里得除法"><a href="#扩展欧几里得除法" class="headerlink" title="扩展欧几里得除法"></a>扩展欧几里得除法</h4><p>设a、b是两个不全为0的整数，则存在两个整数x，y，使得：gcd(a, b) = ax + by</p>
+<p>使用python求x、y表示如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">egcd</span><span class="params">(a, b)</span>:</span></span><br><span class="line">  <span class="keyword">if</span> a == <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">return</span> (b, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    g, y, x = egcd(b % a, a)</span><br><span class="line">    <span class="keyword">return</span> (g, x - (b // a) * y, y)</span><br></pre></td></tr></table></figure>
+
+<h3 id="普通RSA算法"><a href="#普通RSA算法" class="headerlink" title="普通RSA算法"></a>普通RSA算法</h3><h4 id="1-秘钥生成"><a href="#1-秘钥生成" class="headerlink" title="1.秘钥生成"></a>1.秘钥生成</h4><p>(1) 选取两个保密的大素数p和q<br>(2) 计算n = pq，φ(n) = (p-1)(q-1)<br>(3) 随机选取整数e，1&lt;e&lt;φ(n)，满足gcd(e, φ(n)) = 1<br>(4) 计算d，满足de ≡ 1 mod φ(n)<br>(5) 公钥为(e, n)，私钥为d</p>
+<h4 id="2-加密"><a href="#2-加密" class="headerlink" title="2.加密"></a>2.加密</h4><p>c ≡ m^e mod n</p>
+<h4 id="3-解密"><a href="#3-解密" class="headerlink" title="3.解密"></a>3.解密</h4><p>m ≡ c^d mod n</p>
+<h3 id="公钥加密文件"><a href="#公钥加密文件" class="headerlink" title="公钥加密文件"></a>公钥加密文件</h3><h4 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h4><p>此类题目一般会给一个公钥文件(结尾通常为.pem或.pub)和密文(如flag.enc)。公钥文件内容格式如下：</p>
+<pre><code>-----BEGIN PUBLIC KEY-----
+MDwwDQYJKoZIhvcNAQEBBQADKwAwKAIhAMJjauXD2OQ/+5erCQKPGqxsC/bNPXDr
+yigb/+l/vjDdAgMBAAE=
+-----END PUBLIC KEY-----</code></pre><p>可以使用openssl来提取e和n：</p>
+<pre><code>openssl rsa -in pubkey.pem -pubin -noout -text -modulus</code></pre><p>也可使用Crypto库：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> inverse, long_to_bytes</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> PKCS1_v1_5</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line">public_key = RSA.importKey(open(<span class="string">"pubkey.pem"</span>).read())</span><br><span class="line">n = public_key.n</span><br><span class="line">e = public_key.e</span><br></pre></td></tr></table></figure>
+
+<h4 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h4><p>pubkey.pem：</p>
+<pre><code>-----BEGIN PUBLIC KEY-----
+MDwwDQYJKoZIhvcNAQEBBQADKwAwKAIhAMJjauXD2OQ/+5erCQKPGqxsC/bNPXDr
+yigb/+l/vjDdAgMBAAE=
+-----END PUBLIC KEY-----</code></pre><p>flag.enc(hex)：</p>
+<pre><code>6D 3E B7 DF 23 EE E1 D3 87 10 BE BA 78 A0 87 8E
+0E 9C 65 BD 3D 08 49 6D DA 64 92 41 99 11 0C 79</code></pre><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4><p>首先提取n和e：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line"></span><br><span class="line">public_key = RSA.importKey(open(<span class="string">"pubkey.pem"</span>).read())</span><br><span class="line">n = public_key.n</span><br><span class="line">e = public_key.e</span><br></pre></td></tr></table></figure>
+
+<p>将n使用工具yafu分解(或在线分解质数网站：<a href="http://factordb.com" target="_blank" rel="noopener">http://factordb.com</a>)，得到p和q；之后生成私钥文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> inverse, long_to_bytes</span><br><span class="line"></span><br><span class="line">p = <span class="number">275127860351348928173285174381581152299</span></span><br><span class="line">q = <span class="number">319576316814478949870590164193048041239</span></span><br><span class="line">nn = (p<span class="number">-1</span>)*(q<span class="number">-1</span>)</span><br><span class="line">d = inverse(e, nn)</span><br><span class="line"></span><br><span class="line">keypair = RSA.generate(<span class="number">1024</span>)</span><br><span class="line">keypair.p = p</span><br><span class="line">keypair.q = q</span><br><span class="line">keypair.e = e</span><br><span class="line">keypair.n = n</span><br><span class="line">keypair.d = d</span><br><span class="line"></span><br><span class="line">private_key = keypair.exportKey().decode(<span class="string">'utf-8'</span>)</span><br><span class="line">f = open(<span class="string">'private.pem'</span>, <span class="string">'w'</span>)</span><br><span class="line">f.write(private_key)</span><br></pre></td></tr></table></figure>
+
+<p>最后使用openssl解密即可：</p>
+<pre><code>openssl rsautl -decrypt -in flag.enc -inkey private.pem -out flag.txt </code></pre><h3 id="多素数RSA算法"><a href="#多素数RSA算法" class="headerlink" title="多素数RSA算法"></a>多素数RSA算法</h3><h4 id="描述-1"><a href="#描述-1" class="headerlink" title="描述"></a>描述</h4><p>多素数RSA系统可以使用超过两个素数的乘积作为模。秘钥生成算法如下：</p>
+<p>(1) 选取k个保密的大素数p1，p2，…，pk<br>(2) 计算n = p1p2…pk，φ(n) = (p1-1)(p2-1)…(pk-1)<br>(3) 随机选取整数e，1&lt;e&lt;φ(n)，满足gcd(e, φ(n)) = 1<br>(4) 计算d，满足de ≡ 1 mod φ(n)<br>(5) 公钥为(e, n)，私钥为d</p>
+<p>多素数RSA加密和解密算法与普通RSA的相同</p>
+<h4 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h4><pre><code>n= 703739435902178622788120837062252491867056043804038443493374414926110815100242619
+e= 59159
+c= 449590107303744450592771521828486744432324538211104865947743276969382998354463377
+m=???</code></pre><h4 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h4><p>首先将n分解，得到三个素数：</p>
+<pre><code>P1 = 1108609086364627583447802163
+P2 = 810971978554706690040814093
+P3 = 782758164865345954251810941</code></pre><p>脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">n= <span class="number">703739435902178622788120837062252491867056043804038443493374414926110815100242619</span></span><br><span class="line">e= <span class="number">59159</span></span><br><span class="line">c= <span class="number">449590107303744450592771521828486744432324538211104865947743276969382998354463377</span></span><br><span class="line">p1 = <span class="number">1108609086364627583447802163</span></span><br><span class="line">p2 = <span class="number">810971978554706690040814093</span></span><br><span class="line">p3 = <span class="number">782758164865345954251810941</span></span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> inverse, long_to_bytes</span><br><span class="line">nn = (p1<span class="number">-1</span>)*(p2<span class="number">-1</span>)*(p3<span class="number">-1</span>)</span><br><span class="line">d = inverse(e, nn)</span><br><span class="line">m = pow(c, d, n)</span><br><span class="line">flag = long_to_bytes(m)</span><br><span class="line">print(flag)</span><br></pre></td></tr></table></figure>
+
+<h3 id="RSA共享素数攻击"><a href="#RSA共享素数攻击" class="headerlink" title="RSA共享素数攻击"></a>RSA共享素数攻击</h3><h4 id="描述-2"><a href="#描述-2" class="headerlink" title="描述"></a>描述</h4><p>当使用了p、q1和p、q2生成了n1和n2，就可以说p被n1和n2共享了。如果我们知道了这两个n，那么就可以很容易得到p、q1和q2，因为此时：</p>
+<pre><code>p = gcd(n1, n2)
+q1 = n1/p
+q2 = n2/p</code></pre><h4 id="例题-2"><a href="#例题-2" class="headerlink" title="例题"></a>例题</h4><pre><code>flag=open(&quot;flag&quot;,&quot;rb&quot;).read()
+
+from Crypto.Util.number import getPrime,bytes_to_long
+p=getPrime(1024)
+q=getPrime(1024)
+e=65537
+n=p*q
+m=bytes_to_long(flag)
+c=pow(m,e,n)
+print c,e,n
+
+p=getPrime(1024)
+e=65537
+n=p*q
+m=bytes_to_long(&quot;1&quot;*32)
+c=pow(m,e,n)
+print c,e,n
+
+&apos;&apos;&apos;
+output:
+2482083893746618248544426737023750400124543452082436334398504986023501710639402060949106693279462896968839029712099336235976221571564642900240827774719199533124053953157919850838214021934907480633441577316263853011232518392904983028052155862154264401108124968404098823946691811798952747194237290581323868666637357604693015079007555594974245559555518819140844020498487432684946922741232053249894575417796067090655122702306134848220257943297645461477488086804856018323986796999103385565540496534422406390355987976815450744535949785073009043007159496929187184338592859040917546122343981520508220332785862546608841127597 65537 14967030059975114950295399874185047053736587880127990542035765201425779342430662517765063258784685868107066789475747180244711352646469776732938544641583842313791872986357504462184924075227433498631423289187988351475666785190854210389587594975456064984611990461126684301086241532915267311675164190213474245311019623654865937851653532870965423474555348239858021551589650169602439423841160698793338115204238140085738680883313433574060243600028500600824624358473403059597593891412179399165813622512901263380299561019624741488779367019389775786547292065352885007224239581776975892385364446446185642939137287519945974807727
+3829060039572042737496679186881067950328956133163629908872348108160129550437697677150599483923925798224328175594483217938833520220087230303470138525970468915511111320396185482564783975435346354440035776909781158407636044986403819840648379609630039348895415045723208843631191252142600667607807479954194447237061080618370787672720344741413537975922184859333432197766580150534457001196765621678659952108010596273244230812327182786329760844037149719587269632133595149294067490955644893402708720284179715002149224068928828656515326446881791228638008572889331511945042911372915003805505412099102954073299010951896955362470 65537 14624662628725820618622370803948630854094687814338334827462870357582795291844925274690253604919535785934208081825425541536057550227048399837243392490762167733083030368221240764693694321150104306044125934201699430146970466657410999261630825931178731857267599750324918610790098952520113593130245010530961350592735239454337631927669542026935873535964487595433984902529960726655481696404006628917922241666148082741874033756970724357470539589848548704573091633917869387239324447730587545472564561496724882799495186768858324490838169123077051890332313671220385830444331578674338014080959653201802476516237464651809255679979
+&apos;&apos;&apos;</code></pre><h4 id="解题思路-2"><a href="#解题思路-2" class="headerlink" title="解题思路"></a>解题思路</h4><p>由题目可知第二次加密使用的q是相同的</p>
+<p>脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">n1 = <span class="number">14967030059975114950295399874185047053736587880127990542035765201425779342430662517765063258784685868107066789475747180244711352646469776732938544641583842313791872986357504462184924075227433498631423289187988351475666785190854210389587594975456064984611990461126684301086241532915267311675164190213474245311019623654865937851653532870965423474555348239858021551589650169602439423841160698793338115204238140085738680883313433574060243600028500600824624358473403059597593891412179399165813622512901263380299561019624741488779367019389775786547292065352885007224239581776975892385364446446185642939137287519945974807727</span></span><br><span class="line">n2 = <span class="number">14624662628725820618622370803948630854094687814338334827462870357582795291844925274690253604919535785934208081825425541536057550227048399837243392490762167733083030368221240764693694321150104306044125934201699430146970466657410999261630825931178731857267599750324918610790098952520113593130245010530961350592735239454337631927669542026935873535964487595433984902529960726655481696404006628917922241666148082741874033756970724357470539589848548704573091633917869387239324447730587545472564561496724882799495186768858324490838169123077051890332313671220385830444331578674338014080959653201802476516237464651809255679979</span></span><br><span class="line">e = <span class="number">65537</span></span><br><span class="line">c = <span class="number">2482083893746618248544426737023750400124543452082436334398504986023501710639402060949106693279462896968839029712099336235976221571564642900240827774719199533124053953157919850838214021934907480633441577316263853011232518392904983028052155862154264401108124968404098823946691811798952747194237290581323868666637357604693015079007555594974245559555518819140844020498487432684946922741232053249894575417796067090655122702306134848220257943297645461477488086804856018323986796999103385565540496534422406390355987976815450744535949785073009043007159496929187184338592859040917546122343981520508220332785862546608841127597</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> GCD, long_to_bytes, inverse</span><br><span class="line"></span><br><span class="line">q = GCD(n1, n2)</span><br><span class="line">p1 = n1//q</span><br><span class="line">nn1 = (p1<span class="number">-1</span>)*(q<span class="number">-1</span>)</span><br><span class="line">d = inverse(e, nn1)</span><br><span class="line">flag = pow(c, d, n1)</span><br><span class="line">print(long_to_bytes(flag))</span><br></pre></td></tr></table></figure>
+
+<h3 id="RSA共模攻击"><a href="#RSA共模攻击" class="headerlink" title="RSA共模攻击"></a>RSA共模攻击</h3><h4 id="描述-3"><a href="#描述-3" class="headerlink" title="描述"></a>描述</h4><p>该攻击的基本条件：</p>
+<ul>
+<li>同一份明文m使用不同的秘钥加密了两次或两次以上</li>
+<li>生成秘钥时模数n相同但加密指数e不相同，e1、e2互素</li>
+<li>我们能拿到不同的密文c1、c2和模数n、加密指数e1、e2</li>
+</ul>
+<p>此时可在不知道d1、d2的情况下解出m，原理详见<a href="https://www.cnblogs.com/gwind/p/8013154.html" target="_blank" rel="noopener">文章</a></p>
+<h4 id="例题-3"><a href="#例题-3" class="headerlink" title="例题"></a>例题</h4><pre><code>n = 116547141139745534253172934123407786743246513874292261984447028928003798881819567221547298751255790928878194794155722543477883428672342894945552668904410126460402501558930911637857436926624838677630868157884406020858164140754510239986466552869866296144106255873879659676368694043769795604582888907403261286211
+c1 = 78552378607874335972488545767374401332953345586323262531477516680347117293352843468592985447836452620945707838830990843415342047337735534418287912723395148814463617627398248738969202758950481027762126608368555442533803610260859075919831387641824493902538796161102236794716963153162784732179636344267189394853
+c2 = 98790462909782651815146615208104450165337326951856608832305081731255876886710141821823912122797166057063387122774480296375186739026132806230834774921466445172852604926204802577270611302881214045975455878277660638731607530487289267225666045742782663867519468766276566912954519691795540730313772338991769270201
+e1 = 1804229351
+e2 = 17249876309</code></pre><h4 id="解题思路-3"><a href="#解题思路-3" class="headerlink" title="解题思路"></a>解题思路</h4><p>脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> inverse, long_to_bytes</span><br><span class="line"><span class="keyword">from</span> libnum <span class="keyword">import</span> xgcd</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">common_attack</span><span class="params">(n,c1,c2,e1,e2)</span>:</span></span><br><span class="line">     s = xgcd(e1, e2)</span><br><span class="line">     s1 = s[<span class="number">0</span>]</span><br><span class="line">     s2 = s[<span class="number">1</span>]</span><br><span class="line">     <span class="comment"># 求模反元素</span></span><br><span class="line">     <span class="keyword">if</span> s1 &lt; <span class="number">0</span>:</span><br><span class="line">         s1 = - s1</span><br><span class="line">         c1 = inverse(c1, n)</span><br><span class="line">     <span class="keyword">elif</span> s2 &lt; <span class="number">0</span>:</span><br><span class="line">         s2 = - s2</span><br><span class="line">         c2 = inverse(c2, n)</span><br><span class="line">     m = pow(c1, s1, n) * pow(c2, s2, n) % n</span><br><span class="line">     <span class="keyword">return</span> m</span><br><span class="line"></span><br><span class="line">n = <span class="number">116547141139745534253172934123407786743246513874292261984447028928003798881819567221547298751255790928878194794155722543477883428672342894945552668904410126460402501558930911637857436926624838677630868157884406020858164140754510239986466552869866296144106255873879659676368694043769795604582888907403261286211</span></span><br><span class="line">c1 = <span class="number">78552378607874335972488545767374401332953345586323262531477516680347117293352843468592985447836452620945707838830990843415342047337735534418287912723395148814463617627398248738969202758950481027762126608368555442533803610260859075919831387641824493902538796161102236794716963153162784732179636344267189394853</span></span><br><span class="line">c2 = <span class="number">98790462909782651815146615208104450165337326951856608832305081731255876886710141821823912122797166057063387122774480296375186739026132806230834774921466445172852604926204802577270611302881214045975455878277660638731607530487289267225666045742782663867519468766276566912954519691795540730313772338991769270201</span></span><br><span class="line">e1 = <span class="number">1804229351</span></span><br><span class="line">e2 = <span class="number">17249876309</span></span><br><span class="line"></span><br><span class="line">result=common_attack(n,c1,c2,e1,e2)</span><br><span class="line">print(long_to_bytes(result))</span><br></pre></td></tr></table></figure>
+
+<p>如果题目给了多组(&gt;2组)c和n，那么需要通过遍历去找哪两个e是互素的，之后再使用上面的方法求解即可</p>
+<h3 id="e-1"><a href="#e-1" class="headerlink" title="e=1"></a>e=1</h3><p>当e为1时：</p>
+<pre><code>c ≡ m^e mod n = m mod n
+m = c + n*k (k=0,1,2...)</code></pre><p><strong>例题</strong></p>
+<pre><code>N=0x180be86dc898a3c3a710e52b31de460f8f350610bf63e6b2203c08fddad44601d96eb454a34dab7684589bc32b19eb27cffff8c07179e349ddb62898ae896f8c681796052ae1598bd41f35491175c9b60ae2260d0d4ebac05b4b6f2677a7609c2fe6194fe7b63841cec632e3a2f55d0cb09df08eacea34394ad473577dea5131552b0b30efac31c59087bfe603d2b13bed7d14967bfd489157aa01b14b4e1bd08d9b92ec0c319aeb8fedd535c56770aac95247d116d59cae2f99c3b51f43093fd39c10f93830c1ece75ee37e5fcdc5b174052eccadcadeda2f1b3a4a87184041d5c1a6a0b2eeaa3c3a1227bc27e130e67ac397b375ffe7c873e9b1c649812edcd
+e=0x1
+c=0x4963654354467b66616c6c735f61706172745f736f5f656173696c795f616e645f7265617373656d626c65645f736f5f63727564656c797d</code></pre><p>解题脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> long_to_bytes</span><br><span class="line"></span><br><span class="line">N=<span class="number">0x180be86dc898a3c3a710e52b31de460f8f350610bf63e6b2203c08fddad44601d96eb454a34dab7684589bc32b19eb27cffff8c07179e349ddb62898ae896f8c681796052ae1598bd41f35491175c9b60ae2260d0d4ebac05b4b6f2677a7609c2fe6194fe7b63841cec632e3a2f55d0cb09df08eacea34394ad473577dea5131552b0b30efac31c59087bfe603d2b13bed7d14967bfd489157aa01b14b4e1bd08d9b92ec0c319aeb8fedd535c56770aac95247d116d59cae2f99c3b51f43093fd39c10f93830c1ece75ee37e5fcdc5b174052eccadcadeda2f1b3a4a87184041d5c1a6a0b2eeaa3c3a1227bc27e130e67ac397b375ffe7c873e9b1c649812edcd</span></span><br><span class="line">e=<span class="number">0x1</span></span><br><span class="line">c=<span class="number">0x4963654354467b66616c6c735f61706172745f736f5f656173696c795f616e645f7265617373656d626c65645f736f5f63727564656c797d</span></span><br><span class="line">n = int(N)</span><br><span class="line">c = int(c)</span><br><span class="line">k = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">	m = c + n*k</span><br><span class="line">	s = long_to_bytes(m)</span><br><span class="line">	<span class="keyword">if</span> <span class="string">'&#123;'</span> <span class="keyword">and</span> <span class="string">'&#125;'</span> <span class="keyword">in</span> str(s):</span><br><span class="line">		print(s)</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		k += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+  <div>
+    
+      ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+  </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="gtfly 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/aipay.jpg" alt="gtfly 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    gtfly
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="www.gtfly.top/2019/08/22/RSA攻击总结/" title="RSA攻击方法总结">www.gtfly.top/2019/08/22/RSA攻击总结/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/14/CRLF && SOAP学习/" rel="next" title="CRLF && SOAP学习">
+                <i class="fa fa-chevron-left"></i> CRLF && SOAP学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">gtfly</p>
+              <p class="site-description motion-element" itemprop="description">轻描时光漫长低唱语焉不详.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">165</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.bugku.com/login?next=challenges" title="Bugku" target="_blank">Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://new.bugku.com/" title="new Bugku" target="_blank">new Bugku</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.linkedbyx.com/home" title="X计划平台" target="_blank">X计划平台</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.shiyanbar.com/ctf/practice" title="实验吧" target="_blank">实验吧</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://adworld.xctf.org.cn" title="xctf" target="_blank">xctf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jarvisoj.com/login" title="Javis" target="_blank">Javis</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cgctf.nuptsast.com/challenges#Web" title="CGctf" target="_blank">CGctf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com/" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.ssleye.com/" title="ctf在线工具" target="_blank">ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ctf.194nb.com/" title="aman ctf在线工具" target="_blank">aman ctf在线工具</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.ctfwp.com/" title="ctfwp" target="_blank">ctfwp</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wangchangze.github.io/" title="wcz" target="_blank">wcz</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://skysec.top/" title="一叶飘零" target="_blank">一叶飘零</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leavesongs.com/" title="离别歌" target="_blank">离别歌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.daokers.com/" title="金刀客" target="_blank">金刀客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#相关定理"><span class="nav-number">1.</span> <span class="nav-text">相关定理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#欧拉函数"><span class="nav-number">1.1.</span> <span class="nav-text">欧拉函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#欧几里得除法"><span class="nav-number">1.2.</span> <span class="nav-text">欧几里得除法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扩展欧几里得除法"><span class="nav-number">1.3.</span> <span class="nav-text">扩展欧几里得除法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#普通RSA算法"><span class="nav-number">2.</span> <span class="nav-text">普通RSA算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-秘钥生成"><span class="nav-number">2.1.</span> <span class="nav-text">1.秘钥生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-加密"><span class="nav-number">2.2.</span> <span class="nav-text">2.加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-解密"><span class="nav-number">2.3.</span> <span class="nav-text">3.解密</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#公钥加密文件"><span class="nav-number">3.</span> <span class="nav-text">公钥加密文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#描述"><span class="nav-number">3.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例题"><span class="nav-number">3.2.</span> <span class="nav-text">例题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解题思路"><span class="nav-number">3.3.</span> <span class="nav-text">解题思路</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多素数RSA算法"><span class="nav-number">4.</span> <span class="nav-text">多素数RSA算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#描述-1"><span class="nav-number">4.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例题-1"><span class="nav-number">4.2.</span> <span class="nav-text">例题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解题思路-1"><span class="nav-number">4.3.</span> <span class="nav-text">解题思路</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RSA共享素数攻击"><span class="nav-number">5.</span> <span class="nav-text">RSA共享素数攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#描述-2"><span class="nav-number">5.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例题-2"><span class="nav-number">5.2.</span> <span class="nav-text">例题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解题思路-2"><span class="nav-number">5.3.</span> <span class="nav-text">解题思路</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RSA共模攻击"><span class="nav-number">6.</span> <span class="nav-text">RSA共模攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#描述-3"><span class="nav-number">6.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例题-3"><span class="nav-number">6.2.</span> <span class="nav-text">例题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解题思路-3"><span class="nav-number">6.3.</span> <span class="nav-text">解题思路</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#e-1"><span class="nav-number">7.</span> <span class="nav-text">e=1</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gtfly</span>
+
+ <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+ <script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("07/16/2018 12:49:00");//此处修改你的建站时间或者网站上线时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已存在 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+ setInterval("createtime()",250);
+ </script>
+
+<!--
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </div></footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9Pgz8ir0b40IXQ5V3bjRc8m0-gzGzoHsz',
+        appKey: 'VCCuCSQHpPqX3hmOh0PlmfXu',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+
+ <!-- ҳ����С���� -->
+ <script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+  
+  <!--������ƭ-->
+ <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+  <script>
+  $("body").backstretch("https://myqinshimoon.github.io/background.jpg");
+  </script>
+
+
+</body>
+</html>
