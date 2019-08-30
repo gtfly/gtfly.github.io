@@ -128,14 +128,14 @@
 
 <meta name="description" content="最近做SQL注入的题碰到注入时过滤了一些字符、关键字的情况，总结一下">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SQL注入过滤">
+<meta property="og:title" content="SQL Bypass Tricks(一)">
 <meta property="og:url" content="www.gtfly.top/2018/11/23/SQL注入过滤/index.html">
 <meta property="og:site_name" content="gtfly">
 <meta property="og:description" content="最近做SQL注入的题碰到注入时过滤了一些字符、关键字的情况，总结一下">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-08T23:01:28.000Z">
+<meta property="og:updated_time" content="2019-08-30T07:19:24.267Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SQL注入过滤">
+<meta name="twitter:title" content="SQL Bypass Tricks(一)">
 <meta name="twitter:description" content="最近做SQL注入的题碰到注入时过滤了一些字符、关键字的情况，总结一下">
 
 
@@ -183,7 +183,7 @@
     })();
 </script>
 
-  <title>SQL注入过滤 | gtfly</title>
+  <title>SQL Bypass Tricks(一) | gtfly</title>
   
 
 
@@ -385,7 +385,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SQL注入过滤</h1>
+          <h1 class="post-title" itemprop="name headline">SQL Bypass Tricks(一)</h1>
         
 
         <div class="post-meta">
@@ -413,8 +413,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-03-09T07:01:28+08:00">
-                2019-03-09
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-30T15:19:24+08:00">
+                2019-08-30
               </time>
             
           </span>
@@ -473,7 +473,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2k 字
+                  2.1k 字
                 </span>
               
 
@@ -489,7 +489,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  8 分钟
+                  9 分钟
                 </span>
               
             </div>
@@ -516,7 +516,7 @@
 <pre><code>and    # 可用&amp;&amp;代替；get注入时需url编码为%26%26
 or       # 可用||代替
 ^       # 二进制异或运算;二者相同为0，不同为1
-|       # 二进制或运算；二者都为0为0，否则为1
+xor       # 可用|代替；二进制或运算；二者都为0为0，否则为1
 &amp;       # 二进制与运算；二者都为1为1，否则为0;get注入时需url编码为%26使用</code></pre><h3 id="常用绕过"><a href="#常用绕过" class="headerlink" title="常用绕过"></a>常用绕过</h3><h4 id="双写绕过"><a href="#双写绕过" class="headerlink" title="双写绕过"></a>双写绕过</h4><p>若只是简单的过滤一次，则可用双写的方法</p>
 <p>例，过滤了’or’</p>
 <pre><code>sth.replace(&apos;or&apos;,&apos;&apos;)</code></pre><p>则双写为’oorr’</p>
@@ -532,12 +532,14 @@ substring(字符串，开始位置，长度)
 <pre><code>(字符串 from num1 for num2)  截取字符串从位置num1开始，截取长度为num2
 (字符串 from num )   num&gt;0时，截取字符串从位置num到最后；num&lt;0时，截取字符串从最后一位开始截取num位</code></pre><p>其他的截取函数：</p>
 <pre><code>left(s,n)    返回字符串s的前n个字符
-right(s,n)    返回字符串s的后n个字符</code></pre><h5 id="2-空格"><a href="#2-空格" class="headerlink" title="2.空格"></a>2.空格</h5><p>可用()(括号中间不能为关键字)、注释符/**/、%0a代替，例：</p>
+right(s,n)    返回字符串s的后n个字符</code></pre><h5 id="2-空格"><a href="#2-空格" class="headerlink" title="2.空格"></a>2.空格</h5><p>可用()(括号中间不能为关键字)、注释符<code>/**/</code>、<code>%0a</code>、<code>%0b</code>、<code>%0c</code>、<code>%0d</code>、<code>%09</code>等代替，例：</p>
 <pre><code>select(users)from(information);
 
 select/**/users/**/from/**/information;
 
-http://127.0.0.1/labs/Less-1/?id=1%0aand%0a1=1</code></pre><h5 id="3-比较符"><a href="#3-比较符" class="headerlink" title="3.比较符"></a>3.比较符</h5><p>不等于符：</p>
+http://127.0.0.1/labs/Less-1/?id=1%0aand%0a1=1</code></pre><p>某些情况还可用浮点数绕过：</p>
+<pre><code>select *from user where id=8.0union select 1,2,3;
+select *from user where id=8e0union select 1,2,3;</code></pre><h5 id="3-比较符"><a href="#3-比较符" class="headerlink" title="3.比较符"></a>3.比较符</h5><p>不等于符：</p>
 <pre><code>!=可用&lt;&gt;代替</code></pre><p>等于符：</p>
 <pre><code>like  #模糊匹配符
 if(length(database())like(3),1,0)
@@ -746,7 +748,7 @@ http://shaobaobaoer.cn/archives/701/anheng-11yue-wp-unfinish#BETWEEN</code></pre
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="www.gtfly.top/2018/11/23/SQL注入过滤/" title="SQL注入过滤">www.gtfly.top/2018/11/23/SQL注入过滤/</a>
+    <a href="www.gtfly.top/2018/11/23/SQL注入过滤/" title="SQL Bypass Tricks(一)">www.gtfly.top/2018/11/23/SQL注入过滤/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -862,7 +864,7 @@ http://shaobaobaoer.cn/archives/701/anheng-11yue-wp-unfinish#BETWEEN</code></pre
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">165</span>
+                  <span class="site-state-item-count">167</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -873,7 +875,7 @@ http://shaobaobaoer.cn/archives/701/anheng-11yue-wp-unfinish#BETWEEN</code></pre
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>

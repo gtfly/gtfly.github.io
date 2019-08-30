@@ -133,7 +133,7 @@
 <meta property="og:site_name" content="gtfly">
 <meta property="og:description" content="学习git常用命令">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-21T12:08:27.829Z">
+<meta property="og:updated_time" content="2019-08-29T02:07:34.732Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git使用学习">
 <meta name="twitter:description" content="学习git常用命令">
@@ -413,8 +413,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-21T20:08:27+08:00">
-                2019-08-21
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-29T10:07:34+08:00">
+                2019-08-29
               </time>
             
           </span>
@@ -570,8 +570,11 @@ nothing to commit, working tree clean</code></pre><p>表明当前工作目录很
 <h3 id="git-rm"><a href="#git-rm" class="headerlink" title="git rm"></a>git rm</h3><p>如要从仓库中移除某个文件，则需从暂存区移除，再<code>commit</code></p>
 <p>从Git仓库(暂存区)中移除，且不保留文件：</p>
 <pre><code>git rm b.txt</code></pre><p>只是从Git仓库(暂存区)中移除，而将文件保留在本地工作目录：</p>
-<pre><code>git rm --cached b.txt</code></pre><h3 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h3><p>查看提交历史</p>
-<h3 id="git-reset"><a href="#git-reset" class="headerlink" title="git reset"></a>git reset</h3><p>还原以前的版本：</p>
+<pre><code>git rm --cached b.txt</code></pre><h3 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h3><p>查看完整的提交历史</p>
+<p>输出每一个commit之间的差异信息：</p>
+<pre><code>git log -p</code></pre><h3 id="git-show"><a href="#git-show" class="headerlink" title="git show"></a>git show</h3><p>查看某次历史提交的信息：</p>
+<pre><code>git show [commit_id]</code></pre><h3 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a>git diff</h3><p>显示工作区与暂存区的差异：</p>
+<pre><code>git diff</code></pre><h3 id="git-reset"><a href="#git-reset" class="headerlink" title="git reset"></a>git reset</h3><p>还原以前的版本：</p>
 <pre><code>git reset --hard 9d9fab3bd7e53c454dee1c9a7abc01e499882815</code></pre><h3 id="git-ls-files"><a href="#git-ls-files" class="headerlink" title="git ls-files"></a>git ls-files</h3><p>查看本地仓库文件</p>
 <h3 id="git-remote"><a href="#git-remote" class="headerlink" title="git remote"></a>git remote</h3><p>操作远程仓库</p>
 <p>查看绑定的远程仓库：</p>
@@ -772,7 +775,7 @@ hint: See the &apos;Note about fast-forwards&apos; in &apos;git push --help&apos
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">165</span>
+                  <span class="site-state-item-count">167</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -783,7 +786,7 @@ hint: See the &apos;Note about fast-forwards&apos; in &apos;git push --help&apos
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -887,7 +890,7 @@ hint: See the &apos;Note about fast-forwards&apos; in &apos;git push --help&apos
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#git-init"><span class="nav-number">1.</span> <span class="nav-text">git init</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-add"><span class="nav-number">2.</span> <span class="nav-text">git add</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-commit"><span class="nav-number">3.</span> <span class="nav-text">git commit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-status"><span class="nav-number">4.</span> <span class="nav-text">git status</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-clone"><span class="nav-number">5.</span> <span class="nav-text">git clone</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-rm"><span class="nav-number">6.</span> <span class="nav-text">git rm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-log"><span class="nav-number">7.</span> <span class="nav-text">git log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-reset"><span class="nav-number">8.</span> <span class="nav-text">git reset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-ls-files"><span class="nav-number">9.</span> <span class="nav-text">git ls-files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-remote"><span class="nav-number">10.</span> <span class="nav-text">git remote</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-push"><span class="nav-number">11.</span> <span class="nav-text">git push</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-pull"><span class="nav-number">12.</span> <span class="nav-text">git pull</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-fetch"><span class="nav-number">13.</span> <span class="nav-text">git fetch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见git文件作用"><span class="nav-number">14.</span> <span class="nav-text">常见git文件作用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#git-init"><span class="nav-number">1.</span> <span class="nav-text">git init</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-add"><span class="nav-number">2.</span> <span class="nav-text">git add</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-commit"><span class="nav-number">3.</span> <span class="nav-text">git commit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-status"><span class="nav-number">4.</span> <span class="nav-text">git status</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-clone"><span class="nav-number">5.</span> <span class="nav-text">git clone</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-rm"><span class="nav-number">6.</span> <span class="nav-text">git rm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-log"><span class="nav-number">7.</span> <span class="nav-text">git log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-show"><span class="nav-number">8.</span> <span class="nav-text">git show</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-diff"><span class="nav-number">9.</span> <span class="nav-text">git diff</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-reset"><span class="nav-number">10.</span> <span class="nav-text">git reset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-ls-files"><span class="nav-number">11.</span> <span class="nav-text">git ls-files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-remote"><span class="nav-number">12.</span> <span class="nav-text">git remote</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-push"><span class="nav-number">13.</span> <span class="nav-text">git push</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-pull"><span class="nav-number">14.</span> <span class="nav-text">git pull</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-fetch"><span class="nav-number">15.</span> <span class="nav-text">git fetch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见git文件作用"><span class="nav-number">16.</span> <span class="nav-text">常见git文件作用</span></a></li></ol></div>
             
 
           </div>

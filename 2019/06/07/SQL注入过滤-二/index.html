@@ -126,17 +126,17 @@
 
 
 
-<meta name="description" content="最近这段时间参加了一些比赛，碰到些SQL注入的题，但自己以前没有碰到这些类型的。。。最后都没有做出来，现在总结一下">
+<meta name="description" content="继续总结，接着上篇：https://www.gtfly.top/2018/11/23/SQL注入过滤/">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SQL注入过滤(二)">
+<meta property="og:title" content="SQL Bypass Tricks(二)">
 <meta property="og:url" content="www.gtfly.top/2019/06/07/SQL注入过滤-二/index.html">
 <meta property="og:site_name" content="gtfly">
-<meta property="og:description" content="最近这段时间参加了一些比赛，碰到些SQL注入的题，但自己以前没有碰到这些类型的。。。最后都没有做出来，现在总结一下">
+<meta property="og:description" content="继续总结，接着上篇：https://www.gtfly.top/2018/11/23/SQL注入过滤/">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-08T19:13:46.000Z">
+<meta property="og:updated_time" content="2019-08-30T08:34:16.372Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SQL注入过滤(二)">
-<meta name="twitter:description" content="最近这段时间参加了一些比赛，碰到些SQL注入的题，但自己以前没有碰到这些类型的。。。最后都没有做出来，现在总结一下">
+<meta name="twitter:title" content="SQL Bypass Tricks(二)">
+<meta name="twitter:description" content="继续总结，接着上篇：https://www.gtfly.top/2018/11/23/SQL注入过滤/">
 
 
 
@@ -183,7 +183,7 @@
     })();
 </script>
 
-  <title>SQL注入过滤(二) | gtfly</title>
+  <title>SQL Bypass Tricks(二) | gtfly</title>
   
 
 
@@ -385,7 +385,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SQL注入过滤(二)</h1>
+          <h1 class="post-title" itemprop="name headline">SQL Bypass Tricks(二)</h1>
         
 
         <div class="post-meta">
@@ -413,8 +413,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-06-09T03:13:46+08:00">
-                2019-06-09
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-30T16:34:16+08:00">
+                2019-08-30
               </time>
             
           </span>
@@ -473,7 +473,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k 字
+                  1.3k 字
                 </span>
               
 
@@ -489,7 +489,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5 分钟
+                  6 分钟
                 </span>
               
             </div>
@@ -510,7 +510,7 @@
       
 
       
-        <p>最近这段时间参加了一些比赛，碰到些SQL注入的题，但自己以前没有碰到这些类型的。。。最后都没有做出来，现在总结一下</p>
+        <p>继续总结，接着上篇：<a href="https://www.gtfly.top/2018/11/23/SQL注入过滤/">https://www.gtfly.top/2018/11/23/SQL注入过滤/</a></p>
 <a id="more"></a>
 
 <h3 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h3><p>强网杯<code>随便注</code></p>
@@ -641,9 +641,17 @@ mysql&gt; select 1 and 1=0 and pow(999,999);
 | fff |
 | ddd |
 +-----+
-3 rows in set (0.00 sec)</code></pre><hr>
+3 rows in set (0.00 sec)</code></pre><h3 id="多参数请求拆分"><a href="#多参数请求拆分" class="headerlink" title="多参数请求拆分"></a>多参数请求拆分</h3><p>对于多个参数拼接到同一条SQL语句中的情况，可以将注入语句分割插入</p>
+<p>例如请求URL时，GET参数格式如下：</p>
+<pre><code>?a=payload1&amp;b=payload2</code></pre><p>将GET的参数a和参数b拼接到SQL语句中，SQL语句如下所示。</p>
+<pre><code>and a=payload1 and b=payload2</code></pre><p>这时就可以将注入语句进行拆分，如下所示：</p>
+<pre><code>a=union/*&amp;b=*/select 1,2,3,4</code></pre><p>最终将参数a和参数b拼接，得到的SQL语句如下所示：</p>
+<pre><code>and a=union /*and b=*/select 1,2,3,4</code></pre><h3 id="HTTP参数污染"><a href="#HTTP参数污染" class="headerlink" title="HTTP参数污染"></a>HTTP参数污染</h3><p>当一个参数出现多次，不同的中间件可能会解析为不同的结果，例如：</p>
+<pre><code>?color=red&amp;color=blue</code></pre><p>利用实例：<a href="https://www.secpulse.com/archives/46149.html" target="_blank" rel="noopener">https://www.secpulse.com/archives/46149.html</a></p>
+<hr>
 <p>参考链接：</p>
 <p><a href="https://xz.aliyun.com/t/4904" target="_blank" rel="noopener">https://xz.aliyun.com/t/4904</a><br><a href="https://www.ctfwp.com/articals/2019national.html#%E5%85%A8%E5%AE%87%E5%AE%99%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84sql" target="_blank" rel="noopener">https://www.ctfwp.com/articals/2019national.html#%E5%85%A8%E5%AE%87%E5%AE%99%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84sql</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzIzMTc1MjExOQ==&mid=2247485809&idx=1&sn=5bde7da3fb89627829e037d2df960e7b&chksm=e89e21a9dfe9a8bf6cde9b14462193f5865a8ad78d75e77fb567717447a837cc189e42d41e27&mpshare=1&scene=23&srcid=#rd" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MzIzMTc1MjExOQ==&amp;mid=2247485809&amp;idx=1&amp;sn=5bde7da3fb89627829e037d2df960e7b&amp;chksm=e89e21a9dfe9a8bf6cde9b14462193f5865a8ad78d75e77fb567717447a837cc189e42d41e27&amp;mpshare=1&amp;scene=23&amp;srcid=#rd</a></p>
+<p><a href="https://blog.csdn.net/weixin_41850404/article/details/86511683" target="_blank" rel="noopener">https://blog.csdn.net/weixin_41850404/article/details/86511683</a></p>
 
       
     </div>
@@ -703,7 +711,7 @@ mysql&gt; select 1 and 1=0 and pow(999,999);
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="www.gtfly.top/2019/06/07/SQL注入过滤-二/" title="SQL注入过滤(二)">www.gtfly.top/2019/06/07/SQL注入过滤-二/</a>
+    <a href="www.gtfly.top/2019/06/07/SQL注入过滤-二/" title="SQL Bypass Tricks(二)">www.gtfly.top/2019/06/07/SQL注入过滤-二/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -819,7 +827,7 @@ mysql&gt; select 1 and 1=0 and pow(999,999);
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">165</span>
+                  <span class="site-state-item-count">167</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -830,7 +838,7 @@ mysql&gt; select 1 and 1=0 and pow(999,999);
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -934,7 +942,7 @@ mysql&gt; select 1 and 1=0 and pow(999,999);
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#堆叠注入"><span class="nav-number">1.</span> <span class="nav-text">堆叠注入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法一-更改表名列名"><span class="nav-number">1.1.</span> <span class="nav-text">方法一.更改表名列名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法二-使用预处理语句直接查询"><span class="nav-number">1.2.</span> <span class="nav-text">方法二.使用预处理语句直接查询</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#盲注过滤条件语句、延迟函数"><span class="nav-number">2.</span> <span class="nav-text">盲注过滤条件语句、延迟函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在不知道mysql列名的情况下注入"><span class="nav-number">3.</span> <span class="nav-text">在不知道mysql列名的情况下注入</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#堆叠注入"><span class="nav-number">1.</span> <span class="nav-text">堆叠注入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法一-更改表名列名"><span class="nav-number">1.1.</span> <span class="nav-text">方法一.更改表名列名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法二-使用预处理语句直接查询"><span class="nav-number">1.2.</span> <span class="nav-text">方法二.使用预处理语句直接查询</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#盲注过滤条件语句、延迟函数"><span class="nav-number">2.</span> <span class="nav-text">盲注过滤条件语句、延迟函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在不知道mysql列名的情况下注入"><span class="nav-number">3.</span> <span class="nav-text">在不知道mysql列名的情况下注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多参数请求拆分"><span class="nav-number">4.</span> <span class="nav-text">多参数请求拆分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP参数污染"><span class="nav-number">5.</span> <span class="nav-text">HTTP参数污染</span></a></li></ol></div>
             
 
           </div>

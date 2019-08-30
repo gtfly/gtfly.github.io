@@ -135,7 +135,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/i7uOfbm.png">
 <meta property="og:image" content="https://i.imgur.com/4a9wap3.png">
-<meta property="og:updated_time" content="2019-04-24T21:50:14.000Z">
+<meta property="og:updated_time" content="2019-08-28T12:49:23.411Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="php类与对象">
 <meta name="twitter:description" content="类与对象一个类可以包含有属于自己的常量，变量（称为”属性”）以及函数（称为”方法”）">
@@ -416,8 +416,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-04-25T05:50:14+08:00">
-                2019-04-25
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-28T20:49:23+08:00">
+                2019-08-28
               </time>
             
           </span>
@@ -476,7 +476,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  839 字
+                  965 字
                 </span>
               
 
@@ -577,12 +577,12 @@ echo $a;
 ?&gt;</code></pre><p>运行显示</p>
 <p><img src="https://i.imgur.com/i7uOfbm.png" alt></p>
 <p>注：该方法要有个返回值</p>
-<h4 id="sleep-与wakeup"><a href="#sleep-与wakeup" class="headerlink" title="sleep()与wakeup()"></a><strong>sleep()与</strong>wakeup()</h4><p>serialize()函数会检查类中是否存在一个魔法方法__sleep(),如果存在，该方法会先被调用</p>
+<h4 id="sleep-与-wakeup"><a href="#sleep-与-wakeup" class="headerlink" title="__sleep() 与 __wakeup()"></a>__sleep() 与 __wakeup()</h4><p>serialize()函数会检查类中是否存在一个魔法方法__sleep(),如果存在，该方法会先被调用</p>
 <p>unserialize()函数会检查类中是否存在__wakeup()，如果存在，该方法会先被调用</p>
-<h4 id="construct-与destruct"><a href="#construct-与destruct" class="headerlink" title="construct()与destruct()"></a><strong>construct()与</strong>destruct()</h4><p>__construct():<br>具有构造函数的类会在每次创建新对象时先调用此方法，所以非常适合在使用对象之前做一些初始化工作。</p>
+<h4 id="construct-与-destruct"><a href="#construct-与-destruct" class="headerlink" title="__construct() 与 __destruct()"></a>__construct() 与 __destruct()</h4><p>__construct():<br>具有构造函数的类会在每次创建新对象时先调用此方法，所以非常适合在使用对象之前做一些初始化工作。</p>
 <p>__destruct():<br>析构函数会在到某个对象的所有引用都被删除或者当对象被显式销毁时执行。</p>
 <p>可以使用unset()来人为主动销毁一个对象；当一个对象没有变量指向它的时候，就会被销毁，如果不销毁，则系统在程序运行完全结果后，会去销毁对象；并且此时销毁的顺序跟其创建的顺序相反</p>
-<h4 id="sleep-、wakeup-、construct-与destruct-执行顺序"><a href="#sleep-、wakeup-、construct-与destruct-执行顺序" class="headerlink" title="sleep()、wakeup()、construct()与destruct()执行顺序"></a><strong>sleep()、</strong>wakeup()、<strong>construct()与</strong>destruct()执行顺序</h4><pre><code>&lt;?php
+<h4 id="sleep-、-wakeup-、-construct-与-destruct-执行顺序"><a href="#sleep-、-wakeup-、-construct-与-destruct-执行顺序" class="headerlink" title="__sleep()、__wakeup()、__construct()与 __destruct() 执行顺序"></a>__sleep()、__wakeup()、__construct()与 __destruct() 执行顺序</h4><pre><code>&lt;?php
 class user {
     function __construct() { 
         echo &apos;make&apos;.&quot;&lt;br&gt;&quot;;
@@ -609,6 +609,12 @@ echo $s;
 echo &quot;&lt;br&gt;&quot;;
 $u2 = unserialize($s); 
 ?&gt;</code></pre><p><img src="https://i.imgur.com/4a9wap3.png" alt></p>
+<h4 id="call"><a href="#call" class="headerlink" title="__call()"></a>__call()</h4><p>在对象中调用一个不可访问的方法时，<code>__call()</code>会被调用</p>
+<h4 id="invoke"><a href="#invoke" class="headerlink" title="__invoke()"></a>__invoke()</h4><p>尝试以调用函数的方式调用一个对象时，<code>__invoke()</code>方法会被自动调用(PHP&gt;=5.3.0)</p>
+<h4 id="set"><a href="#set" class="headerlink" title="__set()"></a>__set()</h4><p>在给不可访问属性赋值时，<code>__set()</code>会被调用</p>
+<h4 id="get"><a href="#get" class="headerlink" title="__get()"></a>__get()</h4><p>读取不可访问属性的值时，<code>__get()</code>会被调用</p>
+<h4 id="isset"><a href="#isset" class="headerlink" title="__isset()"></a>__isset()</h4><p>当对不可访问属性调用<code>isset()</code>或<code>empty()</code>时，<code>__isset()</code>会被调用</p>
+<h4 id="unset"><a href="#unset" class="headerlink" title="__unset()"></a>__unset()</h4><p>当对不可访问属性调用<code>unset()</code>时，<code>__unset()</code>会被调用</p>
 
       
     </div>
@@ -784,7 +790,7 @@ $u2 = unserialize($s);
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">165</span>
+                  <span class="site-state-item-count">167</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -795,7 +801,7 @@ $u2 = unserialize($s);
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -899,7 +905,7 @@ $u2 = unserialize($s);
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#类与对象"><span class="nav-number">1.</span> <span class="nav-text">类与对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#声明"><span class="nav-number">1.1.</span> <span class="nav-text">声明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#属性和方法的访问修饰符："><span class="nav-number">1.2.</span> <span class="nav-text">属性和方法的访问修饰符：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例子"><span class="nav-number">1.3.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#继承"><span class="nav-number">1.4.</span> <span class="nav-text">继承</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#魔法方法"><span class="nav-number">2.</span> <span class="nav-text">魔法方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#toString-NaN"><span class="nav-number">2.1.</span> <span class="nav-text">__toString()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sleep-与wakeup"><span class="nav-number">2.2.</span> <span class="nav-text">sleep()与wakeup()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#construct-与destruct"><span class="nav-number">2.3.</span> <span class="nav-text">construct()与destruct()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sleep-、wakeup-、construct-与destruct-执行顺序"><span class="nav-number">2.4.</span> <span class="nav-text">sleep()、wakeup()、construct()与destruct()执行顺序</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#类与对象"><span class="nav-number">1.</span> <span class="nav-text">类与对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#声明"><span class="nav-number">1.1.</span> <span class="nav-text">声明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#属性和方法的访问修饰符："><span class="nav-number">1.2.</span> <span class="nav-text">属性和方法的访问修饰符：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例子"><span class="nav-number">1.3.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#继承"><span class="nav-number">1.4.</span> <span class="nav-text">继承</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#魔法方法"><span class="nav-number">2.</span> <span class="nav-text">魔法方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#toString-NaN"><span class="nav-number">2.1.</span> <span class="nav-text">__toString()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sleep-与-wakeup"><span class="nav-number">2.2.</span> <span class="nav-text">__sleep() 与 __wakeup()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#construct-与-destruct"><span class="nav-number">2.3.</span> <span class="nav-text">__construct() 与 __destruct()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sleep-、-wakeup-、-construct-与-destruct-执行顺序"><span class="nav-number">2.4.</span> <span class="nav-text">__sleep()、__wakeup()、__construct()与 __destruct() 执行顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#call"><span class="nav-number">2.5.</span> <span class="nav-text">__call()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke"><span class="nav-number">2.6.</span> <span class="nav-text">__invoke()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#set"><span class="nav-number">2.7.</span> <span class="nav-text">__set()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get"><span class="nav-number">2.8.</span> <span class="nav-text">__get()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#isset"><span class="nav-number">2.9.</span> <span class="nav-text">__isset()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#unset"><span class="nav-number">2.10.</span> <span class="nav-text">__unset()</span></a></li></ol></li></ol></div>
             
 
           </div>
