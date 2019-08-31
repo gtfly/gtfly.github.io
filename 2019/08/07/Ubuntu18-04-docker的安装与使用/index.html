@@ -133,7 +133,7 @@
 <meta property="og:site_name" content="gtfly">
 <meta property="og:description" content="学习学习docker以备搭建题目环境">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-08T03:16:55.651Z">
+<meta property="og:updated_time" content="2019-08-31T13:50:25.151Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu18.04 docker的安装与使用">
 <meta name="twitter:description" content="学习学习docker以备搭建题目环境">
@@ -413,8 +413,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-08T11:16:55+08:00">
-                2019-08-08
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-31T21:50:25+08:00">
+                2019-08-31
               </time>
             
           </span>
@@ -473,7 +473,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.6k 字
+                  1.7k 字
                 </span>
               
 
@@ -489,7 +489,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6 分钟
+                  7 分钟
                 </span>
               
             </div>
@@ -524,11 +524,15 @@
 <pre><code>sudo docker images</code></pre><p>2.搜索镜像：</p>
 <pre><code>sudo docker search 镜像名称</code></pre><p>3.获取镜像：</p>
 <pre><code>sudo docker pull 镜像名称</code></pre><p>4.运行镜像：</p>
-<pre><code>sudo docker run -d --name 容器名称 -p 80:80 镜像名称</code></pre><p>其中：</p>
+<pre><code>sudo docker run -d --name 容器名称 -p 80:80 镜像名称</code></pre><p>相关选项：</p>
 <ul>
 <li>-d：后台运行</li>
 <li>-name：容器名称(自己命名)</li>
 <li>-p：指定docker运行此镜像所使用的端口，第一个是外网端口，第二个是内网端口</li>
+<li>–privileged：使用该参数，container内的root拥有真正的root权限</li>
+<li>-i：以交互模式运行容器</li>
+<li>-t：为容器重新分配一个伪输入终端</li>
+<li>–link 其他容器：将该容器与其他容器进行连接</li>
 </ul>
 <p>5.删除镜像：</p>
 <pre><code>sudo docker rmi IMAGE-ID/name</code></pre><p>其中，<code>IMAGE-ID</code>可在镜像列表中查看；只需使用IMAGE ID前四位即可；也可以使用镜像的名字</p>
